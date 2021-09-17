@@ -108,8 +108,22 @@ Item {
                 if (index < 0 || index >= count) {
                     return
                 }
-                realpatient.visible=true
 
+                var tw = 0;
+                var tw0=0;
+                var indexX=0;
+                for (var i = 0; i < treatcaseHeader.widthList.length; ++i) {
+
+                    tw += treatcaseHeader.widthList[i]
+                    if (mouseX>=tw0 &&mouseX<tw && i>3){
+                        indexX=i
+                        break;
+                    }
+                    tw0+=treatcaseHeader.widthList[i]
+                }
+                if (indexX==4){
+                 treatmanagerCheck.visible=true;
+                }
 
                 //realpatient2.visible=true
 

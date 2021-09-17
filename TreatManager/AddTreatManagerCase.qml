@@ -123,7 +123,6 @@ Rectangle {
                     btnImgHovered:imgaeshprefix+"images/sy-guanbi-fz.png"
                     onClicked: {
                           addTreatManager.visible=false;
-                        treatmanagerment.visible=true;
                     }
                 }
 
@@ -484,7 +483,7 @@ Rectangle {
             id: inputPanel1
             z: 99
             //更改x,y即可更改键盘位置
-            x: inputdoctorname.x
+            x: inputcasename.x
             y: 200
 
             //更改width即可更改键盘大小

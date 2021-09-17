@@ -13,7 +13,7 @@ QVariant addPatientManager(QSqlQuery &q, const QString &patientname, int patient
     return q.lastInsertId();
 }
 
-QVariant addPatientCase(QSqlQuery &q, const QString &patientname, int patientid, const QString &pcase,  const QString &treatment,const QString &doctor, QDate checkdate, int state)
+QVariant addPatientCase(QSqlQuery &q, const QString &patientname, int patientid, const QString &pcase,  const QString &treatment,const QString &doctor, QDate checkdate, int state ,QDate treatdate)
 {
     q.addBindValue(patientname);
     q.addBindValue(patientid);
@@ -22,6 +22,7 @@ QVariant addPatientCase(QSqlQuery &q, const QString &patientname, int patientid,
     q.addBindValue(doctor);
     q.addBindValue(checkdate);
     q.addBindValue(state);
+    q.addBindValue(treatdate);
     q.exec();
      return q.lastInsertId();
 }
@@ -73,7 +74,7 @@ const auto PATIENTSMANAGER_SQL = QLatin1String(R"(
     )");
 
 const auto PATIENTSCASE_SQL =  QLatin1String(R"(
-    create table patientscase(id integer primary key, patientname varchar,patientid integer, pcase varchar, treatment varchar,doctor varchar, checkdate date,state integer)
+    create table patientscase(id integer primary key, patientname varchar,patientid integer, pcase varchar, treatment varchar,doctor varchar, checkdate date,state integer,treatdate date)
     )");
 
 const auto DOCTORMANAGER_SQL =  QLatin1String(R"(
@@ -99,8 +100,8 @@ const auto INSERT_PATIENTSMANAGER_SQL = QLatin1String(R"(
     )");
 
 const auto INSERT_PATIENTSCASE_SQL = QLatin1String(R"(
-    insert into patientscase(patientname,patientid, pcase, treatment,doctor, checkdate, state)
-                      values(?, ?, ?, ?, ?,?,?)
+    insert into patientscase(patientname,patientid, pcase, treatment,doctor, checkdate, state,treatdate)
+                      values(?, ?, ?, ?, ?,?,?,?)
     )");
 
 const auto INSERT_DOCTORMANAGER_SQL = QLatin1String(R"(
@@ -165,9 +166,10 @@ QSqlError initDb()
     if (!q.prepare(INSERT_PATIENTSCASE_SQL))
         return q.lastError();
 
-    QVariant sfiction = addPatientCase(q, QStringLiteral("王小小"),1111,QStringLiteral("病症1"),QStringLiteral("经络疗法"),QStringLiteral("王医生"),now,1);
-    QVariant fiction = addPatientCase(q, QStringLiteral("王小小"),1111,QStringLiteral("病症1"),QStringLiteral("经络疗法1"),QStringLiteral("张医生"),now,1);
-    QVariant fantasy = addPatientCase(q, QStringLiteral("王小小"),1111,QStringLiteral("病症1"),QStringLiteral("经络疗法2"),QStringLiteral("李医生"),now,1);
+    QVariant sfiction = addPatientCase(q, QStringLiteral("王小小"),1111,QStringLiteral("病症1"),QStringLiteral("经络疗法"),QStringLiteral("王医生"),now,1,now
+                                       );
+    QVariant fiction = addPatientCase(q, QStringLiteral("王小小"),1111,QStringLiteral("病症1"),QStringLiteral("经络疗法1"),QStringLiteral("张医生"),now,1,now);
+    QVariant fantasy = addPatientCase(q, QStringLiteral("王小小"),1111,QStringLiteral("病症1"),QStringLiteral("经络疗法2"),QStringLiteral("李医生"),now,1,now);
 
     if (!q.prepare(INSERT_DOCTORMANAGER_SQL))
         return q.lastError();

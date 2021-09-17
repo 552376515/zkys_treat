@@ -33,7 +33,11 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     engine.addImportPath(TaoQuickImportPath);
     engine.rootContext()->setContextProperty("taoQuickImagePath", TaoQuickImagePath);
+
+    engine.rootContext()->setContextProperty("mainImageResoucePath",MainImageResourcePath);
     DeviceAddModel model;
+
+
 
     engine.rootContext()->setContextProperty("deviceAddModel", &model);
 

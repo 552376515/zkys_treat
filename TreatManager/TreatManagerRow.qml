@@ -47,11 +47,12 @@ Rectangle {
                     text: index>3 && dataObj ? (qsTr(String(dataObj[roles[index]])) + CusConfig.transString) : ""
                     anchors.fill: parent
                     anchors.centerIn: parent
+                    width:67
+                    height:36
                     font.pixelSize: 14
                     textColor: "white"
                     backgroundColorNormal: "#3AA3AF"
                     backgroundColorHovered: "#C48433"
-
                     visible: index>3
                 }
 

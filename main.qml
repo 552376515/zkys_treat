@@ -19,7 +19,7 @@ Window {
     color: "#ffffff"
 
     property int loginrole: -1 //0:普通医生 2:系统管理员
-    property string imgaeshprefix: "file:///Users/xjt/Downloads/qtDemo0825/qtDemo/Resource/"
+    property string imgaeshprefix:"file:///./Resource/"
 
     property string doctorloginname: "wang111"
     property int showIndex: 0
@@ -32,8 +32,17 @@ Window {
     property string currpatientAge: ""
     property string currpatientPhone: ""
     property string currpatientRegtime: ""
+    property string currglcasename: "痛风"
+    property string currpatientcasename: "痛风"
+    property string currgltreatmentname: "经络疗法1"
+    Component.onCompleted: {
+        if (typeof (mainImageResoucePath) != "undefined" && mainImageResoucePath !== null && mainImageResoucePath.length > 0) {
+            imgaeshprefix = mainImageResoucePath
+        }
+    }
+
     function loadPatient(){
-        loginrole=2
+        loginrole=0
         deviceAddModel.initData()
         patientCaseModel.initCaseData()
         //showIndex=4;
@@ -348,6 +357,17 @@ Window {
         }
     }
 
+    Rectangle{
+        id:treatmanagerCheck
+        width: window.width
+        height: window.height
+        visible: false
+        color: "transparent"
+        TreatManagerCheck{
+            width: addTreatManager.width
+            height: addTreatManager.height
+        }
+    }
 
 
     //设置音频

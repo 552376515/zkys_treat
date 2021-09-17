@@ -7,40 +7,45 @@ import QtQuick.VirtualKeyboard 2.1
 import QtQuick.VirtualKeyboard.Settings 2.1
 
 Rectangle {
-    id:patientdata
+    id:checktreatmananger
     width: parent.width
     height: parent.height
+
     anchors.fill: parent
     color: Qt.rgba(0/255,0/255,0/255,1)
     opacity: 0.8
+    property int managerWidth : 854
+    property int managerHeight: 758
+    property int rightWidth: 215
+    property int managerHeadHeight: 58
     Rectangle{
-        id:addcasedata1
-        x:(addCaseTreatMent.width-1130)/2.0
-        y:(addCaseTreatMent.height-750)/2.0+20
-        width: 1130
-        height: 750
+        id:checkreatcase1
+        x:(checktreatmananger.width-managerWidth)/2.0
+        y:(checktreatmananger.height-managerHeight)/2.0+20
+        width: managerWidth
+        height: managerHeight
        // radius: 20
         border.color: "blue"
         border.width: 1
         color: "white"
         opacity: 1
         Rectangle{
-            id:addcasedatahead
-            width: addcasedata1.width
-            height: 58
+            id:checktreathead
+            width: checkreatcase1.width
+            height: managerHeadHeight
             opacity:1
             color: "#003b42"
             Row{
                 Rectangle{
-                    id:addLeftHeadname
+                    id:checkLeftHeadname
                     width: 80
-                    height: addcasedatahead.height
+                    height: checktreathead.height
                     color: "transparent"
                     Text {
-                        id: addcasename
-                        width: addLeftHeadname.width
-                        height: addcasedatahead.height
-                        text: qsTr("病症:")
+                        id: checkcasename
+                        width: checkcasename.contentWidth+50
+                        height: checkLeftHeadname.height
+                        text: qsTr("病症:"+currglcasename)
                         color: "white"
                         font.pixelSize: 16 		//字体像素大小，缺省为12
                         font.bold: true  		//字体是否加粗，缺省为false
@@ -51,31 +56,11 @@ Rectangle {
                 }
 
 
-                TextField{
-                    id:inputcasename
-                    width: 196
-                    height: 30
-                    y:(addcasedatahead.height-inputcasename.height)/2.0
-
-                    placeholderText: "点击输入病症名称"
-                    focus: true
-                    echoMode: TextInput.Normal
-                    onAccepted: {
-                        color:"#999999"
-                    }
-                    // 当选择输入框的时候才显示键盘
-                    onPressed: {
-                               inputX = x
-                               inputY = y + height
-                               inputPanel1.visible = true
-                    }
-                }
-
                 Text {
-                    id: addcasemanager1
-                    width: 114
-                    height: addcasedatahead.height
-                    text: qsTr("处方名称:")
+                    id: checkcasemanager1
+                    width: checkcasemanager1.contentWidth+70
+                    height: checkLeftHeadname.height
+                    text: qsTr("处方名称:"+currgltreatmentname)
                     color: "white"
                     font.pixelSize: 16 		//字体像素大小，缺省为12
                     font.bold: true  		//字体是否加粗，缺省为false
@@ -83,32 +68,13 @@ Rectangle {
                     verticalAlignment: Text.AlignVCenter 	//垂直居中，控件必须有height才可以使用
                     horizontalAlignment: Text.AlignRight 	//水平居中，控件必须有width才可以使用
                 }
-                TextField{
-                    id:inputtreatname
-                    width: 196
-                    height: 30
-                    y:(addcasedatahead.height-inputtreatname.height)/2.0
-
-                    placeholderText: "点击输入处方名称"
-                    focus: true
-                    echoMode: TextInput.Normal
-                    onAccepted: {
-                        color:"#999999"
-                    }
-                    // 当选择输入框的时候才显示键盘
-                    onPressed: {
-                               inputX = x
-                               inputY = y + height
-                               inputPanel1.visible = true
-                    }
-                }
 
 
 
                 Rectangle{
                     id:addspace2
-                    width: addcasedatahead.width-addLeftHeadname.width-inputcasename.width-addcasemanager1.width-inputtreatname.width-addcaseQuitBtn.width
-                    height: addcasedatahead.height
+                    width: checktreathead.width-checkLeftHeadname.width-checkcasemanager1.width-addcaseQuitBtn.width-30
+                    height: checkLeftHeadname.height
                     color: "transparent"
                 }
 
@@ -116,14 +82,13 @@ Rectangle {
                     id:addcaseQuitBtn
                     width: 30
                     height: 30
-                    y:(addcasedatahead.height-addcaseQuitBtn.height)/2.0
+                    y:(checktreathead.height-addcaseQuitBtn.height)/2.0
                    // anchors.left: addcasedataheadButton.right
                    // anchors.leftMargin: 60
                     btnImgUrl:imgaeshprefix+"images/ys-guanbi.png"
                     btnImgHovered:imgaeshprefix+"images/sy-guanbi-fz.png"
                     onClicked: {
-                          addTreatManager.visible=false;
-                        treatmanagerment.visible=true;
+                          treatmanagerCheck.visible=false;
                     }
                 }
 
@@ -134,11 +99,9 @@ Rectangle {
         Rectangle{
             id:middlecaselist
 
-            width: 580
-            height: addcasedata1.height-addcasedatahead.height
-            anchors.left: addcasedatalist.right
-            anchors.leftMargin: 0
-            anchors.top: addcasedatahead.bottom
+            width: 638
+            height: checkreatcase1.height-checktreathead.height
+            anchors.top: checktreathead.bottom
             anchors.topMargin: 0
             color: "white"
             opacity: 1
@@ -228,6 +191,46 @@ Rectangle {
                 }
             }
         }
+
+        Rectangle{
+            id:rightcontrolbuttons
+            width: 215
+            height:addcasedata1.height-addcasedatahead.height
+            anchors.left: middlecaselist.right
+            anchors.leftMargin: 0
+            anchors.top: addcasedatahead.bottom
+            anchors.topMargin: 0
+            color: "#dddddd"
+
+            CusButton_Image{
+                id:savecasebutton
+                width: 161
+                height: 45
+
+                x:28
+                y:550
+                btnImgUrl:imgaeshprefix+"images/ys-tianjiazhihuanzhe.png"
+                btnImgHovered:imgaeshprefix+"images/ys-tianjiazhihuanzhe-fz.png"
+                onClicked:{
+                    if (jingluoplanModel.rowCount()>0){
+
+                    }
+                }
+            }
+            CusButton_Image{
+                id:cancelcasebutton
+                width: 161
+                height: 45
+                x:28
+                y:savecasebutton.y+savecasebutton.height+34
+                btnImgUrl:imgaeshprefix+"images/ys-fanhui.png"
+                btnImgHovered:imgaeshprefix+"images/ys-fanhui-fz.png"
+                onClicked:{
+                    addCaseTreatMent.visible=false;
+                }
+            }
+        }
+
 
     }
 
