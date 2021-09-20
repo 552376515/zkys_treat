@@ -46,6 +46,9 @@ SOURCES += \
     DeviceAddTable/ChoiseCaseModel.cpp \
         DeviceAddTable/DeviceAddItem.cpp \
         DeviceAddTable/DeviceAddModel.cpp \
+    DeviceAddTable/DoctorManageItem.cpp \
+    DeviceAddTable/DoctorManagerModel.cpp \
+    DeviceAddTable/GLPatientManagerModel.cpp \
     DeviceAddTable/PatientCaseListModel.cpp \
         DeviceAddTable/PatientCaseModel.cpp \
         DeviceAddTable/PatientDb.cpp \
@@ -80,6 +83,9 @@ HEADERS += \
     DeviceAddTable/ChoiseCaseModel.h \
     DeviceAddTable/DeviceAddItem.h \
     DeviceAddTable/DeviceAddModel.h \
+    DeviceAddTable/DoctorManageItem.h \
+    DeviceAddTable/DoctorManagerModel.h \
+    DeviceAddTable/GLPatientManagerModel.h \
     DeviceAddTable/PatientCaseListModel.h \
     DeviceAddTable/PatientCaseModel.h \
     DeviceAddTable/PatientPresAddModel.h \

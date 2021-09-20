@@ -29,5 +29,6 @@ bool DeviceAddItem::match(const QString &key)
     if (m_regtime.contains(key, Qt::CaseInsensitive)) {
         return true;
     }
+
     return false;
 }

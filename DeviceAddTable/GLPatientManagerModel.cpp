@@ -1,4 +1,4 @@
-﻿#include "DeviceAddModel.h"
+#include "GLPatientManagerModel.h"
 #include "DeviceAddItem.h"
 #include <QCoreApplication>
 #include <QEventLoop>
@@ -14,34 +14,35 @@
 const static QString nameTemplate("item %1");
 const static QString ipTemplate("%1.%2.%3.%4");
 const static QString modelTemplate("model %1");
-const static QStringList sHeaderRoles = { "name","pno","gender", "age","phone", "regtime" };
-const static QStringList sHeaders={"姓名","编号","性别","年龄","手机号","注册时间"};
+const static QStringList glHeaderRoles = { "name","pno","gender", "age","phone", "regtime" ,"lasttreattime","binddoctor"};
+const static QStringList glHeaders={"姓名","编号","性别","年龄","手机号","注册时间","最后调理时间","绑定医生"};
 const auto INSERT_PATIENTSMANAGER_SQL = QLatin1String(R"(
     insert into patientsmanager(patientname,patientnum,gender, age,phone,regtime,doctor,lasttreattime) values(?, ?, ?, ?, ?, ?,?,?)
     )");
-class DeviceAddModelPrivate
+class GLPatientManagerModelPrivate
 {
 public:
     std::default_random_engine randomEngine;
     std::uniform_int_distribution<uint32_t> u65535 { 0, 0xffffffff };
 };
-DeviceAddModel::DeviceAddModel(QObject *parent) : QuickListModel(parent), d(new DeviceAddModelPrivate)
+
+GLPatientManagerModel::GLPatientManagerModel(QObject *parent) : QuickListModel(parent), d(new GLPatientManagerModelPrivate)
 {
-    setHeaderRoles(sHeaderRoles);
-    setTableHeaders(sHeaders);
+    setHeaderRoles(glHeaderRoles);
+    setTableHeaders(glHeaders);
 }
 
-DeviceAddModel::~DeviceAddModel()
+GLPatientManagerModel::~GLPatientManagerModel()
 {
     delete d;
 }
 
-void DeviceAddModel::sortByRole()
+void GLPatientManagerModel::sortByRole()
 {
     if (mDatas.count() <= 1) {
         return;
     }
-    int index = sHeaderRoles.indexOf(mSortRole);
+    int index = glHeaderRoles.indexOf(mSortRole);
     switch (index) {
     case 0: {
         sortByName(mSortOrder);
@@ -60,7 +61,7 @@ void DeviceAddModel::sortByRole()
     }
     updateAlternate();
 }
-void DeviceAddModel::initData()
+void GLPatientManagerModel::initData()
 {
     const int N = 50000;
 
@@ -98,20 +99,13 @@ void DeviceAddModel::initData()
             item->set_phone(query.value("phone").toString());
             item->set_regtime(query.value("regtime").toString());
             item->set_online(false);
+            item->set_binddoctor(query.value("doctor").toString());
+            item->set_lasttreattime(query.value("lasttreattime").toString());
             objs.append(item);
             qDebug()<<query.value("patientname").toString();
         }
 #else
 
-
-    for (int i = 0; i < N; ++i) {
-        auto item = genOne(i);
-        objs.append(item);
-        //        if (i % 5 == 0)
-        //        {
-        //            qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
-        //        }
-    }
 #endif
     auto c2 = std::chrono::high_resolution_clock::now();
     auto micro = std::chrono::duration_cast<std::chrono::milliseconds>(c2 - c1).count();
@@ -119,7 +113,7 @@ void DeviceAddModel::initData()
     resetData(objs);
 }
 
-void DeviceAddModel::addOne(const QString patientStr)
+void GLPatientManagerModel::addOne(const QString patientStr)
 {
     const QStringList list=patientStr.split("@");
     if (list.length()==5){
@@ -149,7 +143,7 @@ void DeviceAddModel::addOne(const QString patientStr)
     //append({ item });
 }
 
-void DeviceAddModel::addMulti(int count)
+void GLPatientManagerModel::addMulti(int count)
 {
     QList<QuickListItemBase *> objs;
     objs.reserve(count);
@@ -165,7 +159,7 @@ void DeviceAddModel::addMulti(int count)
     append(objs);
 }
 
-void DeviceAddModel::insertBeforeSelected()
+void GLPatientManagerModel::insertBeforeSelected()
 {
     if (mDatas.count() <= 0) {
         auto item = genOne(d->u65535(d->randomEngine));
@@ -186,18 +180,18 @@ void DeviceAddModel::insertBeforeSelected()
     }
 }
 
-void DeviceAddModel::insertBeforeRow(int row)
+void GLPatientManagerModel::insertBeforeRow(int row)
 {
     auto item = genOne(d->u65535(d->randomEngine));
     insert(row, { item });
 }
 
-void DeviceAddModel::clearAll()
+void GLPatientManagerModel::clearAll()
 {
     clear();
 }
 
-void DeviceAddModel::removeSelected()
+void GLPatientManagerModel::removeSelected()
 {
     for (int i = 0; i < mDatas.count();) {
         const auto &obj = mDatas.at(i);
@@ -209,7 +203,7 @@ void DeviceAddModel::removeSelected()
     }
 }
 
-void DeviceAddModel::removeChecked()
+void GLPatientManagerModel::removeChecked()
 {
     for (int i = 0; i < mDatas.count();) {
         const auto &obj = mDatas.at(i);
@@ -221,12 +215,12 @@ void DeviceAddModel::removeChecked()
     }
 }
 
-void DeviceAddModel::removeRow(int row)
+void GLPatientManagerModel::removeRow(int row)
 {
     removeAt(row);
 }
 
-void DeviceAddModel::sortByName(Qt::SortOrder order)
+void GLPatientManagerModel::sortByName(Qt::SortOrder order)
 {
     QList<QuickListItemBase *> copyObjs = mDatas;
     if (order == Qt::SortOrder::AscendingOrder) {
@@ -242,7 +236,7 @@ void DeviceAddModel::sortByName(Qt::SortOrder order)
     emit dataChanged(index(0, 0), index(mDatas.count() - 1, 0));
 }
 
-void DeviceAddModel::sortByAddress(Qt::SortOrder order)
+void GLPatientManagerModel::sortByAddress(Qt::SortOrder order)
 {
     QList<QuickListItemBase *> copyObjs = mDatas;
     if (order == Qt::SortOrder::AscendingOrder) {
@@ -258,7 +252,7 @@ void DeviceAddModel::sortByAddress(Qt::SortOrder order)
     emit dataChanged(index(0, 0), index(mDatas.count() - 1, 0));
 }
 
-void DeviceAddModel::sortByModel(Qt::SortOrder order)
+void GLPatientManagerModel::sortByModel(Qt::SortOrder order)
 {
     QList<QuickListItemBase *> copyObjs = mDatas;
     if (order == Qt::SortOrder::AscendingOrder) {
@@ -274,7 +268,7 @@ void DeviceAddModel::sortByModel(Qt::SortOrder order)
     emit dataChanged(index(0, 0), index(mDatas.count() - 1, 0));
 }
 
-DeviceAddItem *DeviceAddModel::genOne(uint32_t value)
+DeviceAddItem *GLPatientManagerModel::genOne(uint32_t value)
 {
     auto item = new DeviceAddItem;
     item->set_online(value % 2 == 0);
@@ -288,7 +282,7 @@ DeviceAddItem *DeviceAddModel::genOne(uint32_t value)
     item->set_regtime(modelTemplate.arg(value % 2 == 0 ? value : 0xffffffff - value));
     return item;
 }
-void DeviceAddModel::doUpdateName(int row, const QString &name)
+void GLPatientManagerModel::doUpdateName(int row, const QString &name)
 {
     if (row < 0 || row >= rowCount({})) {
         return;
@@ -301,7 +295,7 @@ void DeviceAddModel::doUpdateName(int row, const QString &name)
 }
 
 
-void DeviceAddModel::saveTxtItems()
+void GLPatientManagerModel::saveTxtItems()
 {
     QFile file("testdata.txt");
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -335,7 +329,7 @@ void DeviceAddModel::saveTxtItems()
     }
 }
 
-void DeviceAddModel::genTxtItems()
+void GLPatientManagerModel::genTxtItems()
 {
     QList<QuickListItemBase *> objs;
 //    objs.reserve(count);

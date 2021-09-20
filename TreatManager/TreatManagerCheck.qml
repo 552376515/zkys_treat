@@ -195,11 +195,11 @@ Rectangle {
         Rectangle{
             id:rightcontrolbuttons
             width: 215
-            height:addcasedata1.height-addcasedatahead.height
+            height:checkreatcase1.height-checktreathead.height
             anchors.left: middlecaselist.right
             anchors.leftMargin: 0
-            anchors.top: addcasedatahead.bottom
-            anchors.topMargin: 0
+//            anchors.top: addcasedatahead.bottom
+//            anchors.topMargin: 0
             color: "#dddddd"
 
             CusButton_Image{

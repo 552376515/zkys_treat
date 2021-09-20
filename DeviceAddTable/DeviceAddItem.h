@@ -14,6 +14,9 @@ class DeviceAddItem : public QuickListItemBase
     AUTO_PROPERTY(QString, phone, "")
     AUTO_PROPERTY(QString, regtime, "")
     AUTO_PROPERTY(bool, online, false)
+    AUTO_PROPERTY(QString,binddoctor,"")
+    AUTO_PROPERTY(QString,lasttreattime,"")
+
 
 public:
     explicit DeviceAddItem(QObject *parent = nullptr);

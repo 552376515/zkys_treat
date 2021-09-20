@@ -39,24 +39,24 @@ Item {
                     color: "#000000"
 
                 }
-                Rectangle{
-                    id:camerapicklbl1
+//                Rectangle{
+//                    id:camerapicklbl1
+//                    width: 160
+//                    height: camerapick.height
+//                    color: "transparent"
+//                    border.color: "#6d6d6d"
+//                    border.width: 1
+//                    Text{
+//                        text: qsTr(pickrobotname)
+//                        font.pixelSize: 14
+//                        color: "#999999"
+//                    }
+//                }
+                CusComboBox {
+                    model: ["1号机器人", "2号机器人"]
                     width: 160
-                    height: camerapick.height
-                    color: "transparent"
-                    border.color: "#6d6d6d"
-                    border.width: 1
-                    Text{
-                        text: qsTr(pickrobotname)
-                        font.pixelSize: 14
-                        color: "#999999"
-                    }
-                }
-                Button{
-                    id:camreapickbtn
-                    width:30
-                    height:30
-                    text:qsTr("点击")
+                    height: 30
+                    displayText: qsTr(currentText)
                 }
 
                 Text{
@@ -69,106 +69,11 @@ Item {
                     horizontalAlignment: Text.AlignRight
                 }
 
-
-                Rectangle{
-                    id:cameraindex
-                    width: 100
+                CusComboBox {
+                    model: ["顶部摄像头", "左侧摄像头", "右侧摄像头"]
+                    width: 211
                     height: 30
-                    border.color: "#6d6d6d"
-                    border.width: 1
-                    Text{
-                        text:qsTr(pickcameraname)
-                        font.pixelSize: 14
-                        color: "#333333"
-                    }
-                }
-
-
-                CusPopup{
-                    id:robotpopup
-                    visible:false
-                    //show:false
-                    Column{
-                        anchors.fill: parent
-                        CusTextButton{
-                            id:robotpopup1
-                            font.pointSize:16
-                            text:"1号机器人"
-                            textColor:"#999999"
-                            backgroundColorNormal:"#78C8E2"
-                            backgroundColorPressed:"#007393"
-                            selected:deviceindex==0
-                            onClicked:{
-
-                            }
-
-                        }
-                        CusTextButton{
-                            id:robotpopup2
-                            font.pointSize:16
-                            text:"2号机器人"
-                            textColor:"#999999"
-                            backgroundColorNormal:"#78C8E2"
-                            backgroundColorPressed:"#007393"
-                            selected:deviceindex==1
-                            onClicked:{
-
-                            }
-
-                        }
-
-                    }
-
-                }
-
-                CusPopup{
-                    id:camerapopup
-                    visible:false
-                    //show:false
-                    Column{
-                        anchors.fill: parent
-                        CusTextButton{
-                            id:camerapopup1
-                            font.pointSize:16
-                            text:"1号相机"
-                            textColor:"#999999"
-                            backgroundColorNormal:"#78C8E2"
-                            backgroundColorPressed:"#007393"
-                            selected:cameraindex===0
-                            onClicked:{
-                                pickcameraname=camerapopup1.text;
-                            }
-
-                        }
-                        CusTextButton{
-                            id:camerapopup2
-                            font.pointSize:16
-                            text:"2号相机"
-                            textColor:"#999999"
-                            backgroundColorNormal:"#78C8E2"
-                            backgroundColorPressed:"#007393"
-                            selected:cameraindex===1
-                            onClicked:{
-                                pickcameraname=camerapopup2.text;
-                            }
-
-                        }
-                        CusTextButton{
-                            id:camerapopup3
-                            font.pointSize:16
-                            text:"3号相机"
-                            textColor:"#999999"
-                            backgroundColorNormal:"#78C8E2"
-                            backgroundColorPressed:"#007393"
-                            selected:cameraindex===2
-                            onClicked:{
-                                pickcameraname=camerapopup3.text;
-                            }
-
-                        }
-
-                    }
-
+                    displayText: qsTr(currentText)
                 }
 
             }
@@ -474,26 +379,20 @@ Item {
         anchors.top: devicebiaodinginputRect.bottom
         anchors.topMargin: 0
         color: "#f2f2f2"
+
         Rectangle{
             id:inputcameraleftrect
-            width: 200
+            width: 160
             height: 30
             y:(biaodingbottom.height-inputcameraleftrect.height)/2.0
             x:80
             border.color: "#e7e6e6"
             border.width: 1
-            Text{
-                id:leftpick
+            CusComboBox {
+                model: ["1号机器人", "2号机器人"]
                 width: 160
                 height: 30
-                text:qsTr(robotpickleft)
-                color: "#000000"
-                font.pixelSize: 14
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-            }
-            CusButton_Image{
-
+                displayText: qsTr(currentText)
             }
         }
 

@@ -12,8 +12,12 @@
 #include "DeviceAddTable/PatientCaseListModel.h"
 #include "Patient/ShowImage.h"
 #include "DeviceAddTable/PatientPresAddModel.h"
-#include "DeviceAddTable/ChoiseCaseModel.h"
-#include "DeviceAddTable/TreatCaseModel.h"
+#include "DeviceAddTable/ChoiseCaseModel.h" //管理界面
+#include "DeviceAddTable/TreatCaseModel.h"  //管理界面 处方管理
+#include "DeviceAddTable/GLPatientManagerModel.h" //管理界面 患者管理
+#include "DeviceAddTable/DoctorManagerModel.h" //管理界面 用户管理
+
+
 
 static QObject *byteArrayTools_factory(QQmlEngine *, QJSEngine *)
 {
@@ -36,13 +40,12 @@ int main(int argc, char *argv[])
 
     engine.rootContext()->setContextProperty("mainImageResoucePath",MainImageResourcePath);
     DeviceAddModel model;
+    engine.rootContext()->setContextProperty("deviceAddModel", &model); //医生界面 病人列表
 
 
-
-    engine.rootContext()->setContextProperty("deviceAddModel", &model);
 
     PatientCaseModel model1;
-    engine.rootContext()->setContextProperty("patientCaseModel", &model1);
+    engine.rootContext()->setContextProperty("patientCaseModel", &model1); //医生界面 病例
 
     PatientCaseListModel  model2;
 
@@ -57,7 +60,7 @@ int main(int argc, char *argv[])
 
 
     model2.addModel(parm2);
-    engine.rootContext()->setContextProperty("jingluoplanModel",&model2);
+    engine.rootContext()->setContextProperty("jingluoplanModel",&model2);  //开处方用的部分
 
     PatientPresAddModel addmodel;
     PatientCasePresParaModel aparam1;
@@ -68,6 +71,12 @@ int main(int argc, char *argv[])
     addmodel.addModel(aparam1);
     addmodel.addModel(aparam1);
     engine.rootContext()->setContextProperty("casedatalistModel",&addmodel);
+
+
+    GLPatientManagerModel glModel;
+     engine.rootContext()->setContextProperty("glpatientModel", &glModel);
+    DoctorManagerModel gldoctorModel;
+     engine.rootContext()->setContextProperty("gldoctorModel", &gldoctorModel);
 
     TreatCaseModel caseModel;
     engine.rootContext()->setContextProperty("treatcaseModel",&caseModel);

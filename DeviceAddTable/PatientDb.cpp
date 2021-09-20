@@ -1,6 +1,6 @@
 ﻿#include "PatientDb.h"
 QSqlDatabase mysql;
-QVariant addPatientManager(QSqlQuery &q, const QString &patientname, int patientnum,const QString &gender, int age,const QString &phone, QDate regtime, const QString &doctor)
+QVariant addPatientManager(QSqlQuery &q, const QString &patientname, int patientnum,const QString &gender, int age,const QString &phone, QDate regtime, const QString &doctor,const QDate &lasttreattime)
 {
     q.addBindValue(patientname);
     q.addBindValue(patientnum);
@@ -9,6 +9,7 @@ QVariant addPatientManager(QSqlQuery &q, const QString &patientname, int patient
     q.addBindValue(phone);
     q.addBindValue(regtime);
     q.addBindValue(doctor);
+    q.addBindValue(lasttreattime);
     q.exec();
     return q.lastInsertId();
 }
@@ -27,10 +28,14 @@ QVariant addPatientCase(QSqlQuery &q, const QString &patientname, int patientid,
      return q.lastInsertId();
 }
 
-QVariant addDoctorManager(QSqlQuery &q, const QString &name, QDate birthdate, int managertype)
+QVariant addDoctorManager(QSqlQuery &q, const QString &name, const QString doctorid, QDate regtime, const QString doctorstate, const QString managertype)
 {
+    //   create table doctormanager(id integer primary key, name varchar, doctorid varchar, regtime date,doctorstate int,  managertype integer)
+
     q.addBindValue(name);
-    q.addBindValue(birthdate);
+    q.addBindValue(doctorid);
+    q.addBindValue(regtime);
+    q.addBindValue(doctorstate);
     q.addBindValue(managertype);
     q.exec();
     return q.lastInsertId();
@@ -70,7 +75,7 @@ QVariant addGlTreatmentPlan(QSqlQuery &q,const QString &treatmentname,const QStr
 
 const auto PATIENTSMANAGER_SQL = QLatin1String(R"(
                                                create table patientsmanager(id integer primary key, patientname varchar, patientnum integer,gender varchar,
-                       age integer, phone varchar, regtime date, doctor varchar)
+                       age integer, phone varchar, regtime date, doctor varchar,lasttreattime varchar)
     )");
 
 const auto PATIENTSCASE_SQL =  QLatin1String(R"(
@@ -78,7 +83,7 @@ const auto PATIENTSCASE_SQL =  QLatin1String(R"(
     )");
 
 const auto DOCTORMANAGER_SQL =  QLatin1String(R"(
-    create table doctormanager(id integer primary key, name varchar, birthdate date, managertype integer)
+    create table doctormanager(id integer primary key, name varchar, doctorid varchar, regtime date,doctorstate int,  managertype integer)
     )");
 
 
@@ -96,7 +101,7 @@ const auto GLTREATMENTCASEPLAN_SQL = QLatin1String(R"(
 
 
 const auto INSERT_PATIENTSMANAGER_SQL = QLatin1String(R"(
-    insert into patientsmanager(patientname,patientnum,gender, age,phone,regtime,doctor) values(?, ?, ?, ?, ?, ?,?)
+    insert into patientsmanager(patientname,patientnum,gender, age,phone,regtime,doctor,lasttreattime) values(?, ?, ?, ?, ?, ?,?,?)
     )");
 
 const auto INSERT_PATIENTSCASE_SQL = QLatin1String(R"(
@@ -105,7 +110,7 @@ const auto INSERT_PATIENTSCASE_SQL = QLatin1String(R"(
     )");
 
 const auto INSERT_DOCTORMANAGER_SQL = QLatin1String(R"(
-    insert into doctormanager(name,birthdate,managertype ) values(?,?,?)
+    insert into doctormanager(name,doctorid,regtime,doctorstate,managertype ) values(?,?,?,?,?)
     )");
 
 
@@ -159,9 +164,9 @@ QSqlError initDb()
         return q.lastError();
     QDate now=QDate::currentDate();
     //string str1="王小小";
-    QVariant asimovId = addPatientManager(q, QStringLiteral("王小小"),1111,QStringLiteral("男"),29,QLatin1String("13500000009"), now,QLatin1String("wang"));
-    QVariant greeneId = addPatientManager(q, QStringLiteral("李小小"),1112,QStringLiteral("女"),29,QLatin1String("13500000019"), now,QLatin1String("wang"));
-    QVariant pratchettId = addPatientManager(q, QStringLiteral("张小小"),1113,QStringLiteral("女"),29,QLatin1String("13500000029"), now,QLatin1String("wang"));
+    QVariant asimovId = addPatientManager(q, QStringLiteral("王小小"),1111,QStringLiteral("男"),29,QLatin1String("13500000009"), now,QLatin1String("wang"),now);
+    QVariant greeneId = addPatientManager(q, QStringLiteral("李小小"),1112,QStringLiteral("女"),29,QLatin1String("13500000019"), now,QLatin1String("wang"),now);
+    QVariant pratchettId = addPatientManager(q, QStringLiteral("张小小"),1113,QStringLiteral("女"),29,QLatin1String("13500000029"), now,QLatin1String("wang"),now);
 
     if (!q.prepare(INSERT_PATIENTSCASE_SQL))
         return q.lastError();
@@ -173,7 +178,10 @@ QSqlError initDb()
 
     if (!q.prepare(INSERT_DOCTORMANAGER_SQL))
         return q.lastError();
-    addDoctorManager(q, QLatin1String("李医生"), QDate(1971,7,18), 3);
+        addDoctorManager(q, QStringLiteral("李医生"),"001", QDate(1971,7,18), QStringLiteral("启用"),QStringLiteral("医生"));
+        addDoctorManager(q, QStringLiteral("李医生"),"002", QDate(1971,7,18), QStringLiteral("启用"),QStringLiteral("管理者"));
+        addDoctorManager(q, QStringLiteral("李医生"),"003", QDate(1971,7,18), QStringLiteral("禁用"),QStringLiteral("医生"));
+        addDoctorManager(q, QStringLiteral("李医生"),"004", QDate(1971,7,18), QStringLiteral("禁用"),QStringLiteral("管理者"));
 
 
     if (!q.prepare(INSERT_PATIENTSPRESCRIPT_SQL))

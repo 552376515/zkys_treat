@@ -95,5 +95,43 @@
         <file>TreatManager/TreatManagerRow.qml</file>
         <file>TreatManager/AddTreatManagerCase.qml</file>
         <file>TreatManager/TreatManagerCheck.qml</file>
+        <file>PatientManager/GLPatientManager.qml</file>
+        <file>Resource/images/gl-hz-beifen-fz.png</file>
+        <file>Resource/images/gl-hz-beifen.png</file>
+        <file>Resource/images/gl-hz-daochu-fz.png</file>
+        <file>Resource/images/gl-hz-daochu.png</file>
+        <file>Resource/images/gl-hz-daoru-fz.png</file>
+        <file>Resource/images/gl-hz-daoru.png</file>
+        <file>Resource/images/gl-hz-shanchu-fz.png</file>
+        <file>Resource/images/gl-hz-shanchu.png</file>
+        <file>PatientManager/DateTimeEdit.qml</file>
+        <file>PatientManager/ListButton.qml</file>
+        <file>Resource/images/gl-chongzhi-fz.png</file>
+        <file>Resource/images/gl-chongzhi.png</file>
+        <file>Resource/images/gl-chongzhimima-fz.png</file>
+        <file>Resource/images/gl-chongzhimima.png</file>
+        <file>Resource/images/gl-jinyong-fz.png</file>
+        <file>Resource/images/gl-jinyong.png</file>
+        <file>Resource/images/gl-qiyong-fz.png</file>
+        <file>Resource/images/gl-qiyong.png</file>
+        <file>Resource/images/gl-xiugai-fz.png</file>
+        <file>Resource/images/gl-xiugai.png</file>
+        <file>UserManageQml/UserManager.qml</file>
+        <file>UserManageQml/UserManageRow.qml</file>
+        <file>DeviceManagerQml/DeviceParamSet.qml</file>
+        <file>TestManage/TestManage.qml</file>
+        <file>TestManage/TestRightControl.qml</file>
+        <file>Resource/images/distinguish-fz.png</file>
+        <file>Resource/images/distinguish.png</file>
+        <file>Resource/images/start-cs.png</file>
+        <file>Resource/images/start.png</file>
+        <file>Resource/images/distinguish-jg.png</file>
+        <file>TestManage/TestManageSuccess.qml</file>
+        <file>Resource/images/gl-kaishidaoru-fz.png</file>
+        <file>Resource/images/gl-kaishidaoru.png</file>
+        <file>Resource/images/gl-piliang-qvxiao-fz.png</file>
+        <file>Resource/images/gl-piliang-qvxiao.png</file>
+        <file>Resource/images/gl-tuozhuaiqv.png</file>
+        <file>PatientManager/PatientPiliangImport.qml</file>
     </qresource>
 </RCC>

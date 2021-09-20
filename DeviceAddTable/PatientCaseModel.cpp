@@ -91,7 +91,7 @@ void PatientCaseModel::initCaseData(){
         }
         auto c2 = std::chrono::high_resolution_clock::now();
         auto micro = std::chrono::duration_cast<std::chrono::milliseconds>(c2 - c1).count();
-        qWarning() << "general" << N << "cost" << micro << "ms";
+        //qWarning() << "general" << N << "cost" << micro << "ms";
         resetData(objs);
 }
 

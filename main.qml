@@ -5,6 +5,10 @@ import TaoQuick 1.0
 import QtMultimedia 5.12
 import "DeviceManagerQml"
 import "TreatManager"
+import "PatientManager"
+
+import "UserManageQml"
+import "TestManage"
 //import zmq.Components 1.0
 Window {
     id: window
@@ -19,7 +23,8 @@ Window {
     color: "#ffffff"
 
     property int loginrole: -1 //0:普通医生 2:系统管理员
-    property string imgaeshprefix:"file:///./Resource/"
+    property string imgaeshprefix:mainImageResoucePath//
+    //"file:///./Resource/"
 
     property string doctorloginname: "wang111"
     property int showIndex: 0
@@ -35,22 +40,49 @@ Window {
     property string currglcasename: "痛风"
     property string currpatientcasename: "痛风"
     property string currgltreatmentname: "经络疗法1"
-    Component.onCompleted: {
-        if (typeof (mainImageResoucePath) != "undefined" && mainImageResoucePath !== null && mainImageResoucePath.length > 0) {
-            imgaeshprefix = mainImageResoucePath
-        }
-    }
+//    Component.onCompleted: {
+//        if (typeof (mainImageResoucePath) != "undefined" && mainImageResoucePath !== null && mainImageResoucePath.length > 0) {
+//            imgaeshprefix = mainImageResoucePath
+//        }
+//    }
 
     function loadPatient(){
-        loginrole=0
-        deviceAddModel.initData()
-        patientCaseModel.initCaseData()
+        loginrole=2
+        if (loginrole==2){
+            glpatientmanager.visible=true
+            glpatientModel.initData();
+        }else{
+            deviceAddModel.initData()
+            patientCaseModel.initCaseData()
+        }
+
+
         //showIndex=4;
         //realpatient2.visible=true;
        // playMusic.play()
         console.log("screen width="+Screen.desktopAvailableWidth +" height="+Screen.desktopAvailableHeight)
 
     }
+
+    function closeAllView(){
+        if (loginrole==0){
+            realpatient.visible=false
+            realpatient1.visible=false
+            realpatient2.visible=false
+            patientManagerRect.visible=false
+
+        }
+        if (loginrole==2){
+            gldoctormanager.visible=false
+            treatmanagerment.visible=false
+            deviceManagernew.visible=false
+            glpatientmanager.visible=false
+            paramDeviceset.visible=false
+            testmanage.visible=false
+        }
+
+    }
+
     Rectangle{
         id:zhongkeheader
         width: window.width
@@ -80,6 +112,15 @@ Window {
         backgroundColorPressed:"#ededed"
         selected:showIndex==1
         onClicked: {
+            closeAllView();
+            showIndex=1
+            if (loginrole==2){
+
+                glpatientmanager.visible=true
+            }
+            if (loginrole==0){
+                patientManagerRect.visible=true
+            }
 
         }
     }
@@ -99,6 +140,16 @@ Window {
         selected:showIndex==2
         onClicked: {
 
+            closeAllView();
+            showIndex=2
+            if (loginrole==2){
+                gldoctormanager.visible=true;
+                gldoctorModel.initCaseData();
+            }
+            if (loginrole==0){
+                realpatient.visible=true
+            }
+
         }
     }
 
@@ -116,11 +167,10 @@ Window {
         backgroundColorPressed:"#ededed"
         selected:showIndex==3
         onClicked: {
+            closeAllView()
             showIndex=3
             deviceManagernew.visible=true
-            realpatient.visible=false
-            realpatient1.visible=false
-            realpatient2.visible=false
+
         }
     }
 
@@ -138,11 +188,58 @@ Window {
         backgroundColorPressed:"#ededed"
         selected:showIndex==4
         onClicked: {
+
+            closeAllView();
             showIndex=4;
             treatmanagerment.visible=true;
             treatcaseModel.initTreatData();
         }
     }
+
+    CusButton{
+        id:sub5
+        text: "参数设置"
+       // anchors.topMargin: 20
+        anchors.left: sub4.right
+        anchors.leftMargin: 20
+        y:26
+        height: zhongkeheader.height-sub5.y
+        width: 122
+        visible:(loginrole==2)
+        backgroundColorNormal:"transparent"
+        backgroundColorPressed:"#ededed"
+        selected:showIndex==5
+        onClicked: {
+
+            closeAllView();
+            showIndex=5;
+            paramDeviceset.visible=true;
+
+        }
+    }
+
+    CusButton{
+        id:sub6
+        text: "调理测试"
+       // anchors.topMargin: 20
+        anchors.left: sub5.right
+        anchors.leftMargin: 20
+        y:26
+        height: zhongkeheader.height-sub5.y
+        width: 122
+        visible:(loginrole==2)
+        backgroundColorNormal:"transparent"
+        backgroundColorPressed:"#ededed"
+        selected:showIndex==6
+        onClicked: {
+
+            closeAllView();
+            showIndex=6;
+            testmanage.visible=true;
+
+        }
+    }
+
 
     Image {
         id: doctorImg
@@ -186,11 +283,10 @@ Window {
         //color:"#181818"
         height:20
         onClicked:{
+            closeAllView()
             showIndex=0
             login.visible=true
-            realpatient.visible=false
-            realpatient1.visible=false
-            realpatient2.visible=false
+
            // deviceAddModel.initData()
         }
     }
@@ -219,7 +315,7 @@ Window {
         x: ( Screen.desktopAvailableWidth-screenWidth)/2.0
         y: (Screen.desktopAvailableHeight-screenHeight)/2.0
         id:patientManagerRect
-        visible: showIndex==1
+        visible: showIndex==1 && loginrole==0
         PatientTableView{
             id:patientManager
             width: screenWidth
@@ -231,7 +327,8 @@ Window {
 
 
 
-    Rectangle{
+
+    Rectangle{//新增患者
         id:addnewpt
 
         width: window.width
@@ -244,7 +341,7 @@ Window {
         }
     }
 
-    Rectangle{
+    Rectangle{//医生角色 实时画面
         id:realpatient
         y:zhongkeheader.height
         width: window.width
@@ -256,7 +353,7 @@ Window {
         }
     }
 
-    Rectangle{
+    Rectangle{//医生角色 动画
         id:realpatient1
         y:zhongkeheader.height
         width: window.width
@@ -268,7 +365,7 @@ Window {
         }
     }
 
-    Rectangle{
+    Rectangle{//医生角色 识别
         id:realpatient2
         y:zhongkeheader.height
         width: window.width
@@ -280,24 +377,53 @@ Window {
         }
     }
 
-    Rectangle{
+    Rectangle{//管理角色患者管理
+        id:glpatientmanager
+        y:zhongkeheader.height
+        width: window.width
+        height: window.height-zhongkeheader.height
+        visible: showIndex==1 && loginrole==2
+        color: "#ededed"
+        GLPatientManager{
+            width: glpatientmanager.width
+            height: glpatientmanager.height
+        }
+
+    }
+
+    Rectangle{//管理角色 用户管理
+        id:gldoctormanager
+        y:zhongkeheader.height
+        width: window.width
+        height: window.height-zhongkeheader.height
+        visible: showIndex==2 && loginrole==2
+        color: "#ededed"
+        UserManager{
+            width: gldoctormanager.width
+            height: gldoctormanager.height
+        }
+
+    }
+
+
+    Rectangle{//设备管理 医生和管理角色都有此功能
         id:deviceManagernew
         y:zhongkeheader.height
         width: window.width
         height: window.height-zhongkeheader.height
-        visible: false
+        visible: showIndex==3
         DeviceManager{
             width: deviceManagernew.width
             height: deviceManagernew.height
         }
 
     }
-    Rectangle{
+    Rectangle{//管理角色 处方管理
         id:treatmanagerment
         width: window.width
         height: window.height-zhongkeheader.height
         y:zhongkeheader.height
-        visible: false
+        visible: showIndex==4
         color: "transparent"
         TreatManager{
             width: treatmanagerment.width
@@ -305,8 +431,36 @@ Window {
         }
 
     }
+    Rectangle{//管理角色 参数设置
+        id:paramDeviceset
+        width: window.width
+        height: window.height-zhongkeheader.height
+        y:zhongkeheader.height
+        visible: showIndex==5
+        color: "transparent"
+        DeviceParamSet{
+            width: treatmanagerment.width
+            height: treatmanagerment.height
+        }
 
-    Rectangle{
+    }
+
+    Rectangle{//管理角色 调理测试
+        id:testmanage
+        width: window.width
+        height: window.height-zhongkeheader.height
+        y:zhongkeheader.height
+        visible: showIndex==6
+        color: "transparent"
+        TestManage{
+            width: testmanage.width
+            height: testmanage.height
+        }
+
+    }
+
+
+    Rectangle{//查看病人资料
         id:patientdatacheck
 
         width: window.width
@@ -319,7 +473,7 @@ Window {
         }
     }
 
-    Rectangle{
+    Rectangle{ //开处方
         id:addCaseTreatMent
 //        x: (window.width-screenWidth)/2.0
 //        y: (window.height-screenHeight)/2.0
@@ -333,7 +487,7 @@ Window {
         }
     }
 
-    Rectangle{
+    Rectangle{//选择处方
         id:choiseCaseTreatMent
         width: window.width
         height: window.height
@@ -369,6 +523,31 @@ Window {
         }
     }
 
+    Rectangle{
+        id:testmanageSuccess
+        width: window.width
+        height: window.height
+        visible: false
+        color: "transparent"
+        TestManageSuccess{
+            width: testmanageSuccess.width
+            height: testmanageSuccess.height
+        }
+
+    }
+
+    Rectangle{
+        id:patientImport
+        width: window.width
+        height: window.height
+        visible: false
+        color: "transparent"
+        PatientPiliangImport{
+            width: patientImport.width
+            height: patientImport.height
+        }
+
+    }
 
     //设置音频
        MediaPlayer {
