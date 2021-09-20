@@ -9,6 +9,7 @@ import "PatientManager"
 
 import "UserManageQml"
 import "TestManage"
+import "DoctorRoleQml"
 //import zmq.Components 1.0
 Window {
     id: window
@@ -70,6 +71,7 @@ Window {
             realpatient1.visible=false
             realpatient2.visible=false
             patientManagerRect.visible=false
+            paramDeviceset.visible=false
 
         }
         if (loginrole==2){
@@ -155,7 +157,7 @@ Window {
 
     CusButton {
         id:sub3
-        text: "设备管理"
+        text:loginrole==0 ? "设备管理":"处方管理"
        // anchors.topMargin: 20
         anchors.left: sub2.right
         anchors.leftMargin: 20
@@ -169,14 +171,22 @@ Window {
         onClicked: {
             closeAllView()
             showIndex=3
-            deviceManagernew.visible=true
+            if (loginrole==2){
+                treatmanagerment.visible=true;
+                treatcaseModel.initTreatData();
+            }
+
+            if (loginrole==0){
+                paramDeviceset.visible=true;
+            }
+
 
         }
     }
 
     CusButton{
         id:sub4
-        text: "处方管理"
+        text: "设备管理"
        // anchors.topMargin: 20
         anchors.left: sub3.right
         anchors.leftMargin: 20
@@ -191,8 +201,8 @@ Window {
 
             closeAllView();
             showIndex=4;
-            treatmanagerment.visible=true;
-            treatcaseModel.initTreatData();
+            deviceManagernew.visible=true
+
         }
     }
 
@@ -411,7 +421,7 @@ Window {
         y:zhongkeheader.height
         width: window.width
         height: window.height-zhongkeheader.height
-        visible: showIndex==3
+        visible: showIndex==4
         DeviceManager{
             width: deviceManagernew.width
             height: deviceManagernew.height
@@ -423,7 +433,7 @@ Window {
         width: window.width
         height: window.height-zhongkeheader.height
         y:zhongkeheader.height
-        visible: showIndex==4
+        visible: showIndex==3
         color: "transparent"
         TreatManager{
             width: treatmanagerment.width
@@ -436,7 +446,7 @@ Window {
         width: window.width
         height: window.height-zhongkeheader.height
         y:zhongkeheader.height
-        visible: showIndex==5
+        visible: (showIndex==5&& loginrole==2) ||(loginrole==0 && showIndex==3)
         color: "transparent"
         DeviceParamSet{
             width: treatmanagerment.width
@@ -545,6 +555,45 @@ Window {
         PatientPiliangImport{
             width: patientImport.width
             height: patientImport.height
+        }
+
+    }
+
+    Rectangle{
+        id:jingluoshibieshibai
+        width: window.width
+        height: window.height
+        visible: false
+        color: "transparent"
+        JingluoShibieFail{
+            width: jingluoshibieshibai.width
+            height: jingluoshibieshibai.height
+        }
+
+    }
+
+    Rectangle{
+        id:zantingshibiemess
+        width: window.width
+        height: window.height
+        visible: false
+        color: "transparent"
+        ZantingTiaoliMess{
+            width: zantingshibiemess.width
+            height: zantingshibiemess.height
+        }
+
+    }
+
+    Rectangle{
+        id:canceltreatManage
+        width: window.width
+        height: window.height
+        visible: false
+        color: "transparent"
+        CancelTreatManager{
+            width: canceltreatManage.width
+            height: canceltreatManage.height
         }
 
     }

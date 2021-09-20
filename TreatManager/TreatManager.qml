@@ -2,7 +2,7 @@ import QtQuick 2.0
 import TaoQuick 1.0
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Styles 1.4
-import "../"
+import "../DoctorRoleQml"
 Item {
     id:treatmanager
     width: parent

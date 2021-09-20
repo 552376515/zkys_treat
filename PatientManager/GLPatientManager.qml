@@ -4,7 +4,7 @@ import TaoQuick 1.0
 import QtQuick.Controls.Styles 1.4
 import QtQuick.VirtualKeyboard 2.1
 import QtQuick.VirtualKeyboard.Settings 2.1
-import "../"
+import "../DoctorRoleQml"
 
 Item {
     id:glpatientManagerLeft

@@ -1,22 +1,21 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>Parallelogram.qml</file>
-        <file>PatientTableHeader.qml</file>
-        <file>PatientTableRow.qml</file>
-        <file>PatientLogin.qml</file>
-        <file>PatientTableView.qml</file>
-        <file>PatientManageTable.qml</file>
-        <file>PatientCaseTable.qml</file>
+        <file>DoctorRoleQml/Parallelogram.qml</file>
+        <file>DoctorRoleQml/PatientTableHeader.qml</file>
+        <file>DoctorRoleQml/PatientTableRow.qml</file>
+        <file>DoctorRoleQml/PatientLogin.qml</file>
+        <file>DoctorRoleQml/PatientTableView.qml</file>
+        <file>DoctorRoleQml/PatientManageTable.qml</file>
+        <file>DoctorRoleQml/PatientCaseTable.qml</file>
         <file>Resource/firstlogin.png</file>
-        <file>AddNewPatient.qml</file>
-        <file>PatientTreatCorrect.qml</file>
-        <file>CaseRightControl.qml</file>
-        <file>CaseDataList.qml</file>
-        <file>AddCaseTreatment.qml</file>
-        <file>CheckCaseTreatment.qml</file>
-        <file>PatientTreatRecognize.qml</file>
-        <file>PatientTreatRoutine.qml</file>
+        <file>DoctorRoleQml/AddNewPatient.qml</file>
+        <file>DoctorRoleQml/PatientTreatCorrect.qml</file>
+        <file>DoctorRoleQml/CaseRightControl.qml</file>
+        <file>DoctorRoleQml/CaseDataList.qml</file>
+        <file>DoctorRoleQml/CheckCaseTreatment.qml</file>
+        <file>DoctorRoleQml/PatientTreatRecognize.qml</file>
+        <file>DoctorRoleQml/PatientTreatRoutine.qml</file>
         <file>Resource/middle_026_shenshang.jpg</file>
         <file>Resource/right_26_dan.jpg</file>
         <file>Resource/audios/bgm_gaoshanliushui.mp3</file>
@@ -56,7 +55,7 @@
         <file>Resource/images/ys-xuanzechufang-fz.png</file>
         <file>Resource/images/ys-xuanzechufang.png</file>
         <file>Resource/images/sy-guanbi-fz.png</file>
-        <file>ChoiseCaseTreatment.qml</file>
+        <file>DoctorRoleQml/ChoiseCaseTreatment.qml</file>
         <file>DeviceManagerQml/RobotManger.qml</file>
         <file>DeviceManagerQml/DeviceManager.qml</file>
         <file>Resource/images/gl-sb-yijianqidong-fz.png</file>
@@ -133,5 +132,20 @@
         <file>Resource/images/gl-piliang-qvxiao.png</file>
         <file>Resource/images/gl-tuozhuaiqv.png</file>
         <file>PatientManager/PatientPiliangImport.qml</file>
+        <file>DoctorRoleQml/AddCaseTreatment.qml</file>
+        <file>TestManage/JingluoShibieFail.qml</file>
+        <file>Resource/images/ys-shibieshibai.png</file>
+        <file>TestManage/ZantingTiaoliMess.qml</file>
+        <file>Resource/images/ys-zhongzhi-fz.png</file>
+        <file>Resource/images/ys-zhongzhi.png</file>
+        <file>Resource/images/ys-reshibie-fz.png</file>
+        <file>Resource/images/ys-reshibie.png</file>
+        <file>Resource/images/ys-continueshibie-fz.png</file>
+        <file>Resource/images/ys-continueshibie.png</file>
+        <file>TreatManager/CancelTreatManager.qml</file>
+        <file>Resource/images/ys-xingzeng-baocun-fz.png</file>
+        <file>Resource/images/ys-xingzeng-qvxiao-fz.png</file>
+        <file>Resource/images/gl-qvrenshanchu-fz.png</file>
+        <file>Resource/images/gl-qvrenshanchu.png</file>
     </qresource>
 </RCC>

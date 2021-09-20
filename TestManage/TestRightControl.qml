@@ -86,7 +86,10 @@ Item {
         btnImgUrl:imgaeshprefix+"images/distinguish.png"
         btnImgHovered:imgaeshprefix+"images/distinguish-fz.png"
         onClicked:{
-            testmanageSuccess.visible=true
+            //zantingshibiemess.visible=true
+            canceltreatManage.visible=true
+            //jingluoshibieshibai.visible=true
+            //testmanageSuccess.visible=true
             senderright.sendMessage(BAT.byteArrayfy("{\"msg\":\"identify\",\"args\":{\"therapybox\":\"疗法一\",\"posturebox\":\"2号姿势\"}}"));
         }
     }
