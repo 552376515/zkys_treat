@@ -434,7 +434,7 @@ Window {
         height: window.height-zhongkeheader.height
         y:zhongkeheader.height
         visible: showIndex==3
-        color: "transparent"
+        color: "#ededed"
         TreatManager{
             width: treatmanagerment.width
             height: treatmanagerment.height
@@ -509,7 +509,7 @@ Window {
             height: choiseCaseTreatMent.height
         }
     }
-    Rectangle{
+    Rectangle{//管理界面添加处方
         id:addTreatManager
         width: window.width
         height: window.height
@@ -521,7 +521,7 @@ Window {
         }
     }
 
-    Rectangle{
+    Rectangle{//管理界面 查看处方
         id:treatmanagerCheck
         width: window.width
         height: window.height
@@ -533,7 +533,7 @@ Window {
         }
     }
 
-    Rectangle{
+    Rectangle{// 经络识别成功
         id:testmanageSuccess
         width: window.width
         height: window.height
@@ -546,7 +546,7 @@ Window {
 
     }
 
-    Rectangle{
+    Rectangle{//批量导入患者
         id:patientImport
         width: window.width
         height: window.height
@@ -559,7 +559,7 @@ Window {
 
     }
 
-    Rectangle{
+    Rectangle{ //经络识别失败
         id:jingluoshibieshibai
         width: window.width
         height: window.height
@@ -572,7 +572,7 @@ Window {
 
     }
 
-    Rectangle{
+    Rectangle{//暂停识别
         id:zantingshibiemess
         width: window.width
         height: window.height
@@ -585,7 +585,7 @@ Window {
 
     }
 
-    Rectangle{
+    Rectangle{//取消此次调理
         id:canceltreatManage
         width: window.width
         height: window.height
@@ -596,6 +596,18 @@ Window {
             height: canceltreatManage.height
         }
 
+    }
+
+    Rectangle{
+        id:userPasswdReset
+        width: window.width
+        height: window.height
+        visible: false
+        color: "transparent"
+        UserPwdReset{
+            width: userPasswdReset.width
+            height: userPasswdReset.height
+        }
     }
 
     //设置音频

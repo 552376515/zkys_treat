@@ -147,5 +147,8 @@
         <file>Resource/images/ys-xingzeng-qvxiao-fz.png</file>
         <file>Resource/images/gl-qvrenshanchu-fz.png</file>
         <file>Resource/images/gl-qvrenshanchu.png</file>
+        <file>UserManageQml/UserPwdReset.qml</file>
+        <file>UserManageQml/UserPwdModify.qml</file>
+        <file>UserManageQml/AddUserManage.qml</file>
     </qresource>
 </RCC>

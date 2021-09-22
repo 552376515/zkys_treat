@@ -180,7 +180,14 @@ Item {
 
              }
 
-
+             Text {
+                 id: gongsiname
+                 text: qsTr("中科尚易中医经络调理机器人    400-0000-0000")
+                 color: "white"
+                 font.pixelSize: 16
+                 x:52
+                 y:loginid.height-28-gongsiname.contentHeight
+             }
 
              property int inputX: 0 // 键盘x坐标(动态)
              property int inputY: rect2.height // 键盘y坐标(动态)

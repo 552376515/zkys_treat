@@ -8,6 +8,7 @@ Item {
     width: parent
     height: parent
     anchors.fill: parent
+    property int bottomHeight: 60
     Rectangle{
         id:treatmanager1
         x:36
@@ -54,7 +55,7 @@ Item {
             anchors.top: treatmanagerheadRect.bottom
             anchors.topMargin: 10
             width: treatmanager1.width-treatmanagerlist.x*2
-            height: treatmanager1.height-63
+            height: treatmanager1.height-63-bottomHeight
             PatientTableHeader{
                 id: treatcaseHeader
                 width: treatmanagerlist.width
@@ -201,6 +202,19 @@ Item {
                 }
             }
         }
-         }
+        }
+
+        Rectangle{
+            anchors.top: treatmanagerlist.bottom
+            width: treatmanager1.width
+            height: bottomHeight
+            color: "#ededed"
+            CusPageIndicator{
+                anchors.centerIn: parent
+                count: 5
+                currentIndex: 4
+            }
+        }
+
     }
 }
