@@ -28,6 +28,18 @@ QVariant addPatientCase(QSqlQuery &q, const QString &patientname, int patientid,
      return q.lastInsertId();
 }
 
+QVariant addPatientCaseGL(QSqlQuery &q, int patientid, const QString &treatment,  const QString &directlay,const QString &jingluo, QDate treatdate)
+{
+
+    q.addBindValue(patientid);
+    q.addBindValue(directlay);
+    q.addBindValue(treatment);
+    q.addBindValue(jingluo);
+    q.addBindValue(treatdate);
+    q.exec();
+     return q.lastInsertId();
+}
+
 QVariant addDoctorManager(QSqlQuery &q, const QString &name, const QString doctorid, QDate regtime, const QString doctorstate, const QString managertype)
 {
     //   create table doctormanager(id integer primary key, name varchar, doctorid varchar, regtime date,doctorstate int,  managertype integer)
@@ -99,6 +111,9 @@ const auto GLTREATMENTCASEPLAN_SQL = QLatin1String(R"(
     create table treatmentplan(id integer primary key, treatmentname varchar, treatmentbody varchar, treatmentjingluo varchar)
     )");
 
+const auto PATIENTSCASEGL_SQL =  QLatin1String(R"(
+    create table patientscasegl(id integer primary key, patientid integer, treatment varchar,directlay varchar,jingluo varchar, treatdate date)
+    )");
 
 const auto INSERT_PATIENTSMANAGER_SQL = QLatin1String(R"(
     insert into patientsmanager(patientname,patientnum,gender, age,phone,regtime,doctor,lasttreattime) values(?, ?, ?, ?, ?, ?,?,?)
@@ -129,6 +144,11 @@ const auto INSERT_GLTREATMENTCASEPLAN_SQL = QLatin1String(R"(
                        values(?,?,?)
 )");
 
+const auto INSERT_PATIENTSCASEGL_SQL =  QLatin1String(R"(
+    insert into patientscasegl(patientid, treatment,directlay ,jingluo, treatdate)
+                        values(?,?,?,?,?)
+    )");
+
 QSqlError initDb()
 {
     mysql = QSqlDatabase::addDatabase("QSQLITE");
@@ -155,7 +175,11 @@ QSqlError initDb()
 
     if (!q.exec(GLTREATMENTCASE_SQL))
         return q.lastError();
+
     if (!q.exec(GLTREATMENTCASEPLAN_SQL))
+        return q.lastError();
+
+    if (!q.exec(PATIENTSCASEGL_SQL))
         return q.lastError();
 
 
@@ -176,8 +200,10 @@ QSqlError initDb()
     QVariant fiction = addPatientCase(q, QStringLiteral("王小小"),1111,QStringLiteral("病症1"),QStringLiteral("经络疗法1"),QStringLiteral("张医生"),now,1,now);
     QVariant fantasy = addPatientCase(q, QStringLiteral("王小小"),1111,QStringLiteral("病症1"),QStringLiteral("经络疗法2"),QStringLiteral("李医生"),now,1,now);
 
+
     if (!q.prepare(INSERT_DOCTORMANAGER_SQL))
         return q.lastError();
+
         addDoctorManager(q, QStringLiteral("李医生"),"001", QDate(1971,7,18), QStringLiteral("启用"),QStringLiteral("医生"));
         addDoctorManager(q, QStringLiteral("李医生"),"002", QDate(1971,7,18), QStringLiteral("启用"),QStringLiteral("管理者"));
         addDoctorManager(q, QStringLiteral("李医生"),"003", QDate(1971,7,18), QStringLiteral("禁用"),QStringLiteral("医生"));
@@ -197,9 +223,15 @@ QSqlError initDb()
 
     if (!q.prepare(INSERT_GLTREATMENTCASEPLAN_SQL))
         return q.lastError();
-    addGlTreatmentPlan(q,QStringLiteral("经络疗法1"),QStringLiteral("俯卧手向上"),"心包经络");
-    addGlTreatmentPlan(q,QStringLiteral("经络疗法1"),QStringLiteral("俯卧手向上"),"心包经络");
+    addGlTreatmentPlan(q,QStringLiteral("经络疗法1"),QStringLiteral("俯卧手向上"),QStringLiteral("心包经络"));
+    addGlTreatmentPlan(q,QStringLiteral("经络疗法1"),QStringLiteral("俯卧手向上"),QStringLiteral("心包经络"));
 
-    return QSqlError();
+    if (!q.prepare(INSERT_PATIENTSCASEGL_SQL))
+            return q.lastError();
+
+    addPatientCaseGL(q,1111,QStringLiteral("经络疗法1"),QStringLiteral("仰卧手向下"),QStringLiteral("足少阴肾经"),QDate(2021,7,15));
+     addPatientCaseGL(q,1111,QStringLiteral("经络疗法1"),QStringLiteral("仰卧手向下"),QStringLiteral("足少阴肾经"),QDate(2021,7,15));
+ //qWarning() << "general" << "dbcost1" << "ms";
+     return QSqlError();
 
 }

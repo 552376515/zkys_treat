@@ -28,7 +28,7 @@ Rectangle {
                 text: qsTr("暂停调理")
                 color: "white"
                 font.pixelSize: 16
-                height: shibieshibaiIcon.height
+                height: jingluofailHead.height
                 verticalAlignment: Text.AlignVCenter
             }
             CusButton_Image{

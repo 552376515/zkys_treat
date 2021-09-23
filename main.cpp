@@ -16,6 +16,7 @@
 #include "DeviceAddTable/TreatCaseModel.h"  //管理界面 处方管理
 #include "DeviceAddTable/GLPatientManagerModel.h" //管理界面 患者管理
 #include "DeviceAddTable/DoctorManagerModel.h" //管理界面 用户管理
+#include "DeviceAddTable/PatientCaseListNewModel.h" //添加处方界面
 
 
 
@@ -61,6 +62,9 @@ int main(int argc, char *argv[])
 
     model2.addModel(parm2);
     engine.rootContext()->setContextProperty("jingluoplanModel",&model2);  //开处方用的部分
+
+    PatientCaseListNewModel newmodel;
+    engine.rootContext()->setContextProperty("jingluoplannewModel",&newmodel);
 
     PatientPresAddModel addmodel;
     PatientCasePresParaModel aparam1;

@@ -13,6 +13,7 @@ Rectangle {
     anchors.fill: parent
     color: Qt.rgba(0/255,0/255,0/255,1)
     opacity: 0.8
+    property int curentLiaofaIndex: 0
     Rectangle{
         id:addcasedata1
         x:(addCaseTreatMent.width-1130)/2.0
@@ -285,19 +286,19 @@ Rectangle {
 
 
                                                 if (landscape_name.text=="足太阴脾经"||landscape_name.text=="手少阴心经" ||landscape_name.text=="足厥阴肝经"){
-                                                    jingluoplanModel.addCaseData("仰卧手向上 "+landscape_name.text)
+                                                    jingluoplannewModel.addCaseData("仰卧手向上 "+landscape_name.text,curentLiaofaIndex)
                                                     console.log("enter to selected")
                                                 }
                                                 if (landscape_name.text=="足少阴肾经(体前)"||landscape_name.text=="手厥阴心包经" ||landscape_name.text=="手太阴肺经" || landscape_name.text=="足阳明胃经"|| landscape_name.text=="足少阳胆经"){
-                                                    jingluoplanModel.addCaseData("仰卧手向上下 "+landscape_name.text)
+                                                    jingluoplannewModel.addCaseData("仰卧手向上下 "+landscape_name.text,curentLiaofaIndex)
                                                     console.log("enter to selected")
                                                 }
                                                 if (landscape_name.text=="手少阳三焦经"||landscape_name.text=="手阳明大肠经" ||landscape_name.text=="手太阳小肠经" || landscape_name.text=="足太阳膀胱经"){
-                                                    jingluoplanModel.addCaseData("俯卧手向上下 "+landscape_name.text)
+                                                    jingluoplannewModel.addCaseData("俯卧手向上下 "+landscape_name.text,curentLiaofaIndex)
                                                     console.log("enter to selected")
                                                 }
                                                 if (landscape_name.text=="足少阴肾经(体后)"){
-                                                    jingluoplanModel.addCaseData("俯卧脚内八 "+landscape_name.text)
+                                                    jingluoplannewModel.addCaseData("俯卧脚内八 "+landscape_name.text,curentLiaofaIndex)
                                                     console.log("enter to selected")
                                                 }
 
@@ -344,6 +345,7 @@ Rectangle {
                         verticalAlignment: Text.AlignVCenter 	//垂直居中，控件必须有height才可以使用
                         horizontalAlignment: Text.AlignHCenter 	//水平居中，控件必须有width才可以使用
                     }
+
                     Rectangle{
                         id:jingluoSpace1
                         x:10
@@ -359,52 +361,129 @@ Rectangle {
                     width: middlecaselist.width
                     height: middlecaselist.height-40
                     color: "white"
-                    ListView {
-                            anchors.fill: middlejingluoplan;
-                            model: jingluoplanModel;
-                            delegate: delegatejingluo_list
-                            spacing: 0;
+
+                    PatientTableHeader{
+                        id: caseHeader
+                        x:25
+                        width: middlejingluoplan.width-caseHeader.x*2
+                        height: 10
+                        dataObj: jingluoplannewModel
+                        headerNames: jingluoplannewModel.tableHeaders;
+                        headerRoles: jingluoplannewModel.headerRoles
+                        widthList: caseView.widthList
+                        xList: caseView.xList
+                        property real avalidWidth
+                        updateWidthList: function() {
+                            avalidWidth = width
+                           // widthList = [CusTableConstant.column0Width, avalidWidth * 0.33,avalidWidth * 0.33,avalidWidth * 0.33]
+                             widthList = [avalidWidth*3/15,avalidWidth*3/15,avalidWidth*6/15,avalidWidth/15,avalidWidth/15,avalidWidth/15]
                         }
-                        //委托
-                        Component {
-                            id: delegatejingluo_list;
-                            Rectangle {
-                                id: jingluorect;
-                                x:20
-                                width: middlejingluoplan.width-40;
-                                height: 40;
-                                color: Qt.rgba(0,0,0,0)
+                    }
+                    CusTableView {
+                        id: caseView
+                        x:caseHeader.x
+                        y:caseHeader.y+caseHeader.height
+                        width: caseHeader.avalidWidth
+                        height: middlejingluoplan.height - caseHeader.height-80
+                        model: jingluoplannewModel
+                        onPressed: {
+                            doPress(mouseX, mouseY)
+                        }
+                        onRightPressed: {
+                            var index = indexAt(mouseX, mouseY + contentY)
+                            if (index < 0 || index >= count) {
+                                return
+                            }
+                            casetableMenu.popup(mouseX, mouseY)
+                        }
+                        onReleased: {
 
-
-                                Text {
-                                    id: para_name;
-                                    text: paraName + "      "+paraCase;
-                                    font.pixelSize: 15;
-                                    anchors.centerIn: parent;
-                                    width: jingluorect.width
-                                    height:jingluorect.height
-                                    color: "#333333";
-                                    horizontalAlignment: Text.AlignLeft;
-                                    verticalAlignment: Text.AlignVCenter
-                                }
-                                Rectangle {
-                                    width: jingluorect.width
-                                    height: 1;
-                                    x:0
-                                    color: "#ececec";
-                                    anchors.bottom: parent.bottom;
-                                }
-                                MouseArea {
-                                    anchors.fill: parent
-                                    onClicked: {
-
-                                        addCaseTreatMent.visible=false;
-                                    }
-
-                                }
+                            doRelease()
+                        }
+                        onPositionChanged: {
+                            doPositionChanged(mouseX, mouseY)
+                        }
+                        onDoubleClicked: {
+                            var index = indexAt(mouseX, mouseY + contentY)
+                            if (index < 0 || index >= count) {
+                                return
                             }
 
+                            if (caseHeader.xList[1] <= mouseX
+                                    && mouseX <= caseHeader.xList[2]) {
+
+                                editInput.x = caseHeader.xList[1]
+                                editInput.y = caseView.y + (parseInt(mouseY / CusConfig.fixedHeight)) * CusConfig.fixedHeight
+                                editInput.width = caseHeader.widthList[1]
+                                editInput.height = CusConfig.fixedHeight
+                                editInput.index = index
+                                var dataObj = jingluoplannewModel.data(index)
+                                editInput.text = dataObj[jingluoplannewModel.headerRoles[0]]
+                                editInput.visible = true
+                                editInput.focus = true
+                            }
                         }
+                        Menu {
+                            id: casetableMenu
+                            MenuItem {
+                                text: qsTr("Edit row")
+                                onTriggered: {
+                                    var mouseX = tableMenu.x
+                                    var mouseY = tableMenu.y
+                                    var index = caseView.indexAt(mouseX, mouseY + caseView.contentY)
+                                    if (index < 0 || index >= caseView.count) {
+                                        return
+                                    }
+                                    if (caseHeader.xList[1] <= mouseX && mouseX <= caseHeader.xList[2]) {
+                                        editInput.x = caseHeader.xList[1]
+                                        editInput.y = caseView.y + (parseInt(mouseY / CusConfig.fixedHeight)) * CusConfig.fixedHeight
+                                        editInput.width = caseHeader.widthList[1]
+                                        editInput.height = CusConfig.fixedHeight
+                                        editInput.index = index
+                                        var dataObj = jingluoplannewModel.data(index)
+                                        editInput.text = dataObj[jingluoplannewModel.headerRoles[0]]
+                                        editInput.visible = true
+                                        editInput.focus = true
+                                    }
+                                }
+                            }
+                            MenuItem {
+                                text: qsTr("Insert before row")
+                                onTriggered: {
+                                    var mouseX = casetableMenu.x
+                                    var mouseY = casetableMenu.y
+                                    var index = caseView.indexAt(mouseX, mouseY + caseView.contentY)
+                                    if (index < 0 || index >= caseView.count) {
+                                        return
+                                    }
+                                    jingluoplannewModel.insertBeforeRow(index)
+                                }
+                            }
+                            MenuItem {
+                                text: qsTr("Remov row")
+                                onTriggered: {
+                                    var mouseX = casetableMenu.x
+                                    var mouseY = casetableMenu.y
+                                    var index = caseView.indexAt(mouseX, mouseY + caseView.contentY)
+                                    if (index < 0 || index >= caseView.count) {
+                                        return
+                                    }
+                                    jingluoplannewModel.removeRow(index)
+                                }
+                            }
+                        }
+                        delegate: AddCaseManageRow {
+                            width: caseView.width
+                            roles: caseView.model.headerRoles
+                            dataObj: model.display
+                            widthList: caseHeader.widthList
+                            xList: caseHeader.xList
+                            onCheckedChanged: {
+                            }
+                        }
+                    }
+                        //委托
+
 
 
                 }
@@ -419,6 +498,24 @@ Rectangle {
             anchors.top: addcasedatahead.bottom
             anchors.topMargin: 0
             color: "#dddddd"
+            CusComboBox {
+                id:casecombox
+                width: 120
+                model: ["手选模式", "姿势模式", "生息模式"]
+                y:27
+                x:(rightcontrolbuttons.width-casecombox.width)/2.0
+
+                displayText: qsTr(currentText)
+                onAccepted: {
+
+                }
+                onActivated: {
+                    curentLiaofaIndex=index;
+                    console.log("addcase combox index=="+index)
+                    jingluoplannewModel.changeDataByIndex(index);
+
+                }
+            }
             CusButton_Image{
                 id:starttreatbutton
                 width: 155
@@ -464,6 +561,12 @@ Rectangle {
 
     }
 
+    Component.onCompleted:{
+       // if (visible){
+        //    jingluoplannewModel.initCaseData()
+       // }
+    }
+
     property int inputX: 0 // 键盘x坐标(动态)
     property int inputY: login.height // 键盘y坐标(动态)
 
@@ -502,6 +605,7 @@ Rectangle {
                 if(!active) { visible = false }
             }
         }
+
 
 //    MouseArea{
 //        id:addCaseMoueseArea

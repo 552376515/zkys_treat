@@ -150,5 +150,12 @@
         <file>UserManageQml/UserPwdReset.qml</file>
         <file>UserManageQml/UserPwdModify.qml</file>
         <file>UserManageQml/AddUserManage.qml</file>
+        <file>DoctorRoleQml/AddCaseManageRow.qml</file>
+        <file>Resource/images/cf-shanchu-fz.png</file>
+        <file>Resource/images/cf-shanchu.png</file>
+        <file>Resource/images/cf-shangyi-fz.png</file>
+        <file>Resource/images/cf-shangyi.png</file>
+        <file>Resource/images/cf-xiayi-fz.png</file>
+        <file>Resource/images/cf-xiayi.png</file>
     </qresource>
 </RCC>

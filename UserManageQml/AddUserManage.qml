@@ -78,8 +78,8 @@ Rectangle {
             anchors.top:  originname.bottom
             anchors.topMargin: 90
             x:72
-            btnImgUrl:imgaeshprefix+"images/gl-piliang_qvxiao.png"
-            btnImgHovered:imgaeshprefix+"images/ys-piliang_qvxiao-fz.png"
+            btnImgUrl:imgaeshprefix+"images/gl-piliang-qvxiao.png"
+            btnImgHovered:imgaeshprefix+"images/ys-piliang-qvxiao-fz.png"
             onClicked:{
 
             }

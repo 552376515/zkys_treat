@@ -48,7 +48,7 @@ Window {
 //    }
 
     function loadPatient(){
-        loginrole=2
+        loginrole=0
         if (loginrole==2){
             glpatientmanager.visible=true
             glpatientModel.initData();

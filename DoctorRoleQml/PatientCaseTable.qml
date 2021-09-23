@@ -271,6 +271,7 @@ Item {
             btnImgHovered:imgaeshprefix+"images/ys-kaichufang-fz.png"
             onClicked:{
                 addCaseTreatMent.visible=true
+                jingluoplannewModel.initCaseData()
             }
 
         }
