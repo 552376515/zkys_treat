@@ -22,6 +22,8 @@ public slots:
     void addCaseData(QString dataStr,int index);
     void addModel(const PatientCaseItem &paraModel);
 
+    void swapRow(int from,int to);
+
 //    void addOne();
 //    void addMulti(int count);
 
@@ -39,6 +41,7 @@ public slots:
 private:
     void sortByName(Qt::SortOrder order);
     void sortByAddress(Qt::SortOrder order);
+    void sortByAddress1(Qt::SortOrder order);
     void sortByModel(Qt::SortOrder order);
 private:
     PatientCaseListNewModelPrivate *d;

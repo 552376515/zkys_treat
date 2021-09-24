@@ -8,6 +8,7 @@ Rectangle {
     height: visible ? CusConfig.fixedHeight : 0
     visible: dataObj ? dataObj["isVisible"] : false
 
+
     property bool isSelected: dataObj ? dataObj["isSelected"] : false
     property bool isChecked: dataObj ? dataObj["isChecked"] : false
     property bool isAlternate: dataObj ? dataObj["isAlternate"] : false
@@ -21,10 +22,10 @@ Rectangle {
     property var xList
     property var roles
     property color textColor: CusConfig.textColor
-
+//237,251,208
     signal checkedChanged(bool checked)
-    //color: isSelected ? CusConfig.controlColor_pressed : ( isAlternate ? CusConfig.controlColor : Qt.lighter(CusConfig.controlColor, 1.1) )
-    color: "transparent"
+    //color: isSelected ? CusConfig.controlColor_pressed : ( isAlternate ? CusConfig.controlColor : Qt.lighter(CusConfig.controlColor, 1.1) )//207,235,250
+    color: dataObj ?qsTr(String(dataObj[roles[0]]))==="仰卧手向上"?"#f9e4c6": qsTr(String(dataObj[roles[0]]))==="俯卧手向下" ?"#edfbd0":"#cfe7fa":"transparent"
     Repeater {
         model: roles
         Loader {
@@ -32,8 +33,10 @@ Rectangle {
             width: widthList[index]
             height: parent.height
             asynchronous: true
+
             sourceComponent: Item {
                 anchors.fill: parent
+
                 CusLabel {
                     text: index<=1 && dataObj ? (qsTr(String(dataObj[roles[index]])) + CusConfig.transString) : ""
                     anchors.fill: parent
@@ -42,6 +45,7 @@ Rectangle {
                     font.pixelSize: 14
                     color: textColor
                     visible: index<=1
+
                 }
                 CusButton_Image{
                     width: 17

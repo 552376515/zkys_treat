@@ -54,10 +54,10 @@ Rectangle {
             x:17
             width: testmanageAreaHead.width-224-disprecognizeRect.x
             height: testmanageArea.height-testmanageAreaHead.height-14*2
-            Image {
-                id: testmanagedispimg
-                source: "file"
-            }
+//            Image {
+//                id: testmanagedispimg
+//                source: "file"
+//            }
             Connections{
                     target: CodeImage
 

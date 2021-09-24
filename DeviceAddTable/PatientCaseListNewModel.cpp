@@ -7,6 +7,7 @@
 #include <QHostAddress>
 #include <QFile>
 #include <QString>
+#include <QList>
 #include <chrono>
 #include <random>
 #include "PatientDb.h"
@@ -113,6 +114,14 @@ void PatientCaseListNewModel::changeDataByIndex(int index){
         }
 
     }
+    if (index==1){
+        sortByAddress(Qt::SortOrder::AscendingOrder);
+
+    }
+    if (index==2){
+
+        sortByAddress1(Qt::SortOrder::AscendingOrder);
+    }
 
 }
 
@@ -124,6 +133,10 @@ void PatientCaseListNewModel::addModel(const PatientCaseItem &paraModel)
 
 
 void PatientCaseListNewModel::addCaseData(QString dataStr,int index){
+
+    if (mDatas.count()>=12){
+        return;
+    }
     QStringList list;
     const int N = 5;
     QList<QuickListItemBase *> objs;
@@ -145,11 +158,37 @@ void PatientCaseListNewModel::addCaseData(QString dataStr,int index){
              item->set_checkCase("0");
              item->set_editCase("0");
          }
-        objs.append(item);
+         QList<QuickListItemBase *> copyObjs = mDatas;
+         bool hasFlag=false;
+         for (int i=0;i<copyObjs.count();i++){
+             PatientCaseItem *tmpmodel=dynamic_cast<PatientCaseItem *>(copyObjs.at(i));
+             if (tmpmodel->treatment() ==item->treatment()){
+                 hasFlag=true;
+             }
+
+         }
+         if (!hasFlag){
+             objs.append(item);
+         }
 
     }
-    append(objs);
 
+    if (objs.count()>0){
+        append(objs);
+    }
+
+
+}
+
+void PatientCaseListNewModel::swapRow(int from,int to){
+    if (from!=to && from>=0<mDatas.count() && to>=0 && to<mDatas.count()){
+        beginMoveRows(QModelIndex(),from,from,
+                      QModelIndex(),from>to?(to):(to+1));
+        auto item=mDatas.takeAt(from);
+        mDatas.insert(to,item);
+        endMoveRows();
+        updateCalcInfo();
+    }
 }
 
 void PatientCaseListNewModel::clearAll()
@@ -170,6 +209,8 @@ void PatientCaseListNewModel::insertBeforeRow(int row)
 //    insert(row, { item });
 }
 
+
+
 void PatientCaseListNewModel::sortByName(Qt::SortOrder order)
 {
     QList<QuickListItemBase *> copyObjs = mDatas;
@@ -189,18 +230,51 @@ void PatientCaseListNewModel::sortByName(Qt::SortOrder order)
 void PatientCaseListNewModel::sortByAddress(Qt::SortOrder order)
 {
     QList<QuickListItemBase *> copyObjs = mDatas;
+    const static QStringList zitaiList = { "足少阴肾经(体前)","手厥阴心包经","足少阳胆经","足厥阴肝经", "手太阴肺经","足阳明胃经", "足太阴脾经", "手少阴心经", "手少阳三焦经", "手阳明大肠经", "手太阳小肠经", "足太阳膀胱经", "足少阴肾经(体后)" };
+
     if (order == Qt::SortOrder::AscendingOrder) {
         std::sort(copyObjs.begin(), copyObjs.end(), [=](QuickListItemBase *obj1, QuickListItemBase *obj2) -> bool {
-            return static_cast<PatientCaseItem *>(obj1)->treatment() < static_cast<PatientCaseItem *>(obj2)->treatment();
+            const QString q1=static_cast<PatientCaseItem *>(obj1)->treatment();
+            const QString q2=static_cast<PatientCaseItem *>(obj2)->treatment();
+            return zitaiList.indexOf(q1) < zitaiList.indexOf(q2);
+
         });
     } else {
         std::sort(copyObjs.begin(), copyObjs.end(), [=](QuickListItemBase *obj1, QuickListItemBase *obj2) -> bool {
-            return static_cast<PatientCaseItem *>(obj1)->treatment() > static_cast<PatientCaseItem *>(obj2)->treatment();
+            const QString q1=static_cast<PatientCaseItem *>(obj1)->treatment();
+            const QString q2=static_cast<PatientCaseItem *>(obj2)->treatment();
+            return zitaiList.indexOf(q1) > zitaiList.indexOf(q2);
+           // return static_cast<PatientCaseItem *>(obj1)->treatment() > static_cast<PatientCaseItem *>(obj2)->treatment();
         });
     }
     mDatas = copyObjs;
     emit dataChanged(index(0, 0), index(mDatas.count() - 1, 0));
 }
+
+void PatientCaseListNewModel::sortByAddress1(Qt::SortOrder order)
+{
+    const static QStringList shengxiList = { "足少阴肾经(体前)","手厥阴心包经","手少阳三焦经","足少阳胆经","足厥阴肝经", "手太阴肺经", "手阳明大肠经","足阳明胃经", "足太阴脾经", "手少阴心经",  "手太阳小肠经", "足太阳膀胱经", "足少阴肾经(体后)" };
+
+    QList<QuickListItemBase *> copyObjs = mDatas;
+    if (order == Qt::SortOrder::AscendingOrder) {
+        std::sort(copyObjs.begin(), copyObjs.end(), [=](QuickListItemBase *obj1, QuickListItemBase *obj2) -> bool {
+            const QString q1=static_cast<PatientCaseItem *>(obj1)->treatment();
+            const QString q2=static_cast<PatientCaseItem *>(obj2)->treatment();
+            return shengxiList.indexOf(q1) < shengxiList.indexOf(q2);
+           // return static_cast<PatientCaseItem *>(obj1)->treatment() < static_cast<PatientCaseItem *>(obj2)->treatment();
+        });
+    } else {
+        std::sort(copyObjs.begin(), copyObjs.end(), [=](QuickListItemBase *obj1, QuickListItemBase *obj2) -> bool {
+            const QString q1=static_cast<PatientCaseItem *>(obj1)->treatment();
+            const QString q2=static_cast<PatientCaseItem *>(obj2)->treatment();
+            return shengxiList.indexOf(q1) > shengxiList.indexOf(q2);
+           // return static_cast<PatientCaseItem *>(obj1)->treatment() > static_cast<PatientCaseItem *>(obj2)->treatment();
+        });
+    }
+    mDatas = copyObjs;
+    emit dataChanged(index(0, 0), index(mDatas.count() - 1, 0));
+}
+
 
 void PatientCaseListNewModel::sortByModel(Qt::SortOrder order)
 {

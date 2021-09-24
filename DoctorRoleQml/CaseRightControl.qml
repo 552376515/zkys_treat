@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
+import QtQuick.Controls 2.5
 import QtQuick.Controls 1.4
 import TaoQuick 1.0
 import zmq.Components 1.0
@@ -39,18 +40,18 @@ Item {
             width: parent.width-1;
             height: parent.height;
             spacing :0
-            highlight: Rectangle {
-            width: listView.width
-            height: 40
-            color: "lightsteelblue"
-            radius: 5
-                Behavior on y {
-                    SpringAnimation {
-                       spring: 3
-                       damping: 0.2
-                    }
-                }
-            }
+//            highlight: Rectangle {
+//            width: listView.width
+//            height: 50
+//            color: "transparent"
+//            radius: 5
+//                Behavior on y {
+//                    SpringAnimation {
+//                       spring: 3
+//                       damping: 0.2
+//                    }
+//                }
+//            }
             highlightFollowsCurrentItem: true
             focus: true
             delegate: Rectangle {
@@ -58,28 +59,73 @@ Item {
                      color: tempcolor
                      width: listView.width
                      height: 60
+                     Row{
+                         id:row0
+                         anchors.fill: parent
+                         spacing: 10
+                         anchors.leftMargin: 10
+                         visible: soundname!==""
+
+                         Rectangle{
+                             id:leftIcon
+                             x:4
+                             width: 8
+                             height:30
+                             color: "#999999"
+
+                         }
+
+                         Rectangle{
+                             id:rightText
+                             width: zishi.contentWidth+iconimg.width+10
+                             height: 20
+                             color: "#5e5e5e"
+                             Text {
+                                 id: zishi
+                                 text: zishiname
+                                 color: "white"
+                                 font.pixelSize: 14
+
+                             }
+                             Image {
+                                 id: iconimg
+                                 anchors.left: zishi.right
+                                 anchors.leftMargin: 10
+                                 source: imgaeshprefix+"images/ys-laba.png"
+                             }
+
+                         }
+
+
+                     }
+
                      Row {
                             id: row1
                             anchors.fill: parent
                             spacing: 10
+                            anchors.top: row0.bottom
                             anchors.leftMargin: 10
+                            height: 30
 
                             Rectangle {
-                                width: 10
-                                height: 10
-                                color: colorCode
+                                x:listView.currentIndex === index ?0:4
+                                width: listView.currentIndex === index ?18:10
+                                height: listView.currentIndex === index ?18:10
+                                color: listView.currentIndex === index ?"#e48839":"#999999"
                                 radius: width/2;
                                 anchors.verticalCenter: parent.verticalCenter
 
                             }
+                            //228 136 57 e48839
                             Text {
                                 text: name
                                 anchors.verticalCenter: parent.verticalCenter
                                 font.bold: true
-                                font.pointSize: listView.currentIndex == index ? 14 : 11
-                                color: "#999999"
+                                font.pointSize: listView.currentIndex === index ? 18 : 14
+                                color: listView.currentIndex === index?"#e48839":"#999999"
                             }
                         }
+
 
                      MouseArea{
                          anchors.fill: parent
@@ -96,20 +142,28 @@ Item {
                          }
                      }
                  }
-                        model: ListModel{
+                        model:
+                            ListModel{
+                            id:jingluoplanStep
                             ListElement {
                                                 name: "综合方舱门"
                                                 colorCode: "green"
+                                                zishiname:""
+                                                soundname:""
                                             }
 
                                             ListElement {
                                                 name: "网络交换机"
                                                 colorCode: "red"
+                                                zishiname:""
+                                                soundname:""
                                             }
 
                                             ListElement {
                                                 name: "设备"
                                                  colorCode: "green"
+                                                 zishiname:""
+                                                 soundname:""
                                             }
                         }
                         Rectangle {
@@ -199,6 +253,36 @@ Item {
     }
     onVisibleChanged: {
         if (visible){
+               jingluoplanStep.clear();
+            var tiwei="";
+            for (var i=0;i<jingluoplannewModel.rowCount();i++){
+                var datatmp=jingluoplannewModel.data(i);
+                var jingluoname=datatmp[jingluoplannewModel.headerRoles[1]]
+                var tiweiname=datatmp[jingluoplannewModel.headerRoles[0]]
+                if (tiweiname!==tiwei){
+                    console.log("jingluonewmodel tiweiname="+tiweiname)
+                    var soundname="";
+                    if (tiweiname==="仰卧手向上"){
+                        soundname="pose1.mp3"
+                    }
+                    if (tiweiname==="仰卧手向下"){
+                        soundname="pose2.mp3"
+                    }
+                    if (tiweiname==="俯卧手向下"){
+                        soundname="pose3.mp3"
+                    }
+                    if (tiweiname==="俯卧脚内八"){
+                        soundname="pose4.mp3"
+                    }
+                    tiwei=tiweiname
+                    jingluoplanStep.append({"name":jingluoname,"colorCode":"green","soundname":soundname,"zishiname":tiweiname})
+                }else{
+                    jingluoplanStep.append({"name":jingluoname,"colorCode":"green","soundname":"","zishiname":""})
+                }
+
+
+            }
+
              senderright.connectSocket();
         }else{
             //senderright.close();

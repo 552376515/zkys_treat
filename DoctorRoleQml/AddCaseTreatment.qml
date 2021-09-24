@@ -287,14 +287,14 @@ Rectangle {
 
                                                 if (landscape_name.text=="足太阴脾经"||landscape_name.text=="手少阴心经" ||landscape_name.text=="足厥阴肝经"){
                                                     jingluoplannewModel.addCaseData("仰卧手向上 "+landscape_name.text,curentLiaofaIndex)
-                                                    console.log("enter to selected")
+                                                  //  console.log("enter to selected")
                                                 }
                                                 if (landscape_name.text=="足少阴肾经(体前)"||landscape_name.text=="手厥阴心包经" ||landscape_name.text=="手太阴肺经" || landscape_name.text=="足阳明胃经"|| landscape_name.text=="足少阳胆经"){
-                                                    jingluoplannewModel.addCaseData("仰卧手向上下 "+landscape_name.text,curentLiaofaIndex)
+                                                    jingluoplannewModel.addCaseData("仰卧手向下 "+landscape_name.text,curentLiaofaIndex)
                                                     console.log("enter to selected")
                                                 }
                                                 if (landscape_name.text=="手少阳三焦经"||landscape_name.text=="手阳明大肠经" ||landscape_name.text=="手太阳小肠经" || landscape_name.text=="足太阳膀胱经"){
-                                                    jingluoplannewModel.addCaseData("俯卧手向上下 "+landscape_name.text,curentLiaofaIndex)
+                                                    jingluoplannewModel.addCaseData("俯卧手向下 "+landscape_name.text,curentLiaofaIndex)
                                                     console.log("enter to selected")
                                                 }
                                                 if (landscape_name.text=="足少阴肾经(体后)"){
@@ -386,6 +386,7 @@ Rectangle {
                         width: caseHeader.avalidWidth
                         height: middlejingluoplan.height - caseHeader.height-80
                         model: jingluoplannewModel
+
                         onPressed: {
                             doPress(mouseX, mouseY)
                         }
@@ -403,10 +404,41 @@ Rectangle {
                         onPositionChanged: {
                             doPositionChanged(mouseX, mouseY)
                         }
+
+
                         onDoubleClicked: {
                             var index = indexAt(mouseX, mouseY + contentY)
                             if (index < 0 || index >= count) {
                                 return
+                            }
+
+                            var tw = 0;
+                            var tw0=0;
+                            var indexX=0;
+                            for (var i = 0; i < caseHeader.widthList.length; ++i) {
+
+                                tw += caseHeader.widthList[i]
+                                if (mouseX>=tw0 &&mouseX<tw && i>=3){
+                                    indexX=i
+                                    break;
+                                }
+                                tw0+=caseHeader.widthList[i]
+                            }
+
+
+                            if (indexX==3){
+
+                                jingluoplannewModel.swapRow(index,index-1);
+
+                            }
+                            if (indexX==4){
+
+                                jingluoplannewModel.swapRow(index,index+1);
+
+                            }
+                            if (indexX==5){
+
+                                jingluoplannewModel.removeRow(index);
                             }
 
                             if (caseHeader.xList[1] <= mouseX
@@ -512,6 +544,7 @@ Rectangle {
                 onActivated: {
                     curentLiaofaIndex=index;
                     console.log("addcase combox index=="+index)
+
                     jingluoplannewModel.changeDataByIndex(index);
 
                 }
@@ -527,7 +560,8 @@ Rectangle {
                 //font.pointSize:20
 
                 onClicked:{
-
+                    addCaseTreatMent.visible=false;
+                    realpatient.visible=true;
                 }
 
             }
