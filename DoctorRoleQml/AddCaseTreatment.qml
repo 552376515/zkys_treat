@@ -562,6 +562,14 @@ Rectangle {
                 onClicked:{
                     addCaseTreatMent.visible=false;
                     realpatient.visible=true;
+                    if (inputdoctorname.text.length>0){
+                        currgltreatmentname=inputdoctorname+Qt.formatDate(new Date(),"yyyy-MM-dd")
+                    }
+
+                    if (jingluoplannewModel.rowCount()>0){
+                        jingluoplannewModel.addToPatientCaseGl(currpatientnum,currgltreatmentname);
+                        patientCaseModel.addToPatientCase(currpatientname,currpatientnum,currpatientcasename,currgltreatmentname,doctorloginname);
+                    }
                 }
 
             }
@@ -574,8 +582,10 @@ Rectangle {
                 btnImgUrl:imgaeshprefix+"images/ys-tianjiazhihuanzhe.png"
                 btnImgHovered:imgaeshprefix+"images/ys-tianjiazhihuanzhe-fz.png"
                 onClicked:{
-                    if (jingluoplanModel.rowCount()>0){
-
+                    if (jingluoplannewModel.rowCount()>0){
+                        jingluoplannewModel.addToPatientCaseGl(currpatientnum,currgltreatmentname);
+                        patientCaseModel.addToPatientCase(currpatientname,currpatientnum,currpatientcasename,currgltreatmentname,doctorloginname);
+                        addCaseTreatMent.visible=false;
                     }
                 }
             }

@@ -158,5 +158,6 @@
         <file>Resource/images/cf-xiayi-fz.png</file>
         <file>Resource/images/cf-xiayi.png</file>
         <file>Resource/images/ys-laba.png</file>
+        <file>DoctorRoleQml/PatientTreatManager.qml</file>
     </qresource>
 </RCC>

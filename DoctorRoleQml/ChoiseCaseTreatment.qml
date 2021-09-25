@@ -180,20 +180,22 @@ Rectangle {
                             if (index < 0 || index >= count) {
                                 return
                             }
-                            realpatient.visible=true
-
+                            var dataObj1 = choisecaseModel.data(index)
+                            var treatment=dataObj1[choisecaseModel.headerRoles[1]];
+                            console.log("treatment="+treatment)
+                            jingluoplanModel.loadCaseDataByPatientNoTreatment(currpatientnum,treatment)
                             if (choiseHeader.xList[1] <= mouseX
-                                    && mouseX <= caseHeader.xList[2]) {
+                                    && mouseX <= choiseHeader.xList[2]) {
 
-                                editInput.x = choiseHeader.xList[1]
-                                editInput.y = choiseView.y + (parseInt(mouseY / CusConfig.fixedHeight)) * CusConfig.fixedHeight
-                                editInput.width = choiseHeader.widthList[1]
-                                editInput.height = CusConfig.fixedHeight
-                                editInput.index = index
-                                var dataObj = choisecaseModel.data(index)
-                                editInput.text = dataObj[choisecaseModel.headerRoles[0]]
-                                editInput.visible = true
-                                editInput.focus = true
+//                                editInput.x = choiseHeader.xList[1]
+//                                editInput.y = choiseView.y + (parseInt(mouseY / CusConfig.fixedHeight)) * CusConfig.fixedHeight
+//                                editInput.width = choiseHeader.widthList[1]
+//                                editInput.height = CusConfig.fixedHeight
+//                                editInput.index = index
+//                                var dataObj = choisecaseModel.data(index)
+//                                editInput.text = dataObj[choisecaseModel.headerRoles[0]]
+//                                editInput.visible = true
+//                                editInput.focus = true
                             }
                         }
                         Menu {
@@ -207,16 +209,16 @@ Rectangle {
                                     if (index < 0 || index >= choiseView.count) {
                                         return
                                     }
-                                    if (choiseHeader.xList[1] <= mouseX && mouseX <= caseHeader.xList[2]) {
-                                        editInput.x = choiseHeader.xList[1]
-                                        editInput.y = choiseView.y + (parseInt(mouseY / CusConfig.fixedHeight)) * CusConfig.fixedHeight
-                                        editInput.width = choiseHeader.widthList[1]
-                                        editInput.height = CusConfig.fixedHeight
-                                        editInput.index = index
-                                        var dataObj = choisecaseModel.data(index)
-                                        editInput.text = dataObj[choisecaseModel.headerRoles[0]]
-                                        editInput.visible = true
-                                        editInput.focus = true
+                                    if (choiseHeader.xList[1] <= mouseX && mouseX <= choiseHeader.xList[2]) {
+//                                        editInput.x = choiseHeader.xList[1]
+//                                        editInput.y = choiseView.y + (parseInt(mouseY / CusConfig.fixedHeight)) * CusConfig.fixedHeight
+//                                        editInput.width = choiseHeader.widthList[1]
+//                                        editInput.height = CusConfig.fixedHeight
+//                                        editInput.index = index
+//                                        var dataObj = choisecaseModel.data(index)
+//                                        editInput.text = dataObj[choisecaseModel.headerRoles[0]]
+//                                        editInput.visible = true
+//                                        editInput.focus = true
                                     }
                                 }
                             }
@@ -399,7 +401,6 @@ Rectangle {
                                     anchors.fill: parent
                                     onClicked: {
 
-                                        addCaseTreatMent.visible=false;
                                     }
 
                                 }

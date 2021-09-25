@@ -5,14 +5,14 @@ import TaoQuick 1.0
 import zmq.Components 1.0
 Item {
     id:patienttreat
-    width: parent
-    height: parent
+    width: parent.width
+    height: parent.height
     anchors.fill: parent
     property bool qmlVisible: false
     property int censorCellHeight: 350
     property int rightCellWidth: 300
     property int leftcellOffset: 30
-    property int topcellOffset: 20
+    property int topcellOffset: 27
     property int cellSpace: 15
 //    ZMQSocket {
 //        id: receive1
@@ -125,76 +125,76 @@ Item {
            corrtimer1.running=true;
         }
     }
-    Rectangle{
-        id:background
-        x:leftcellOffset
-        y:topcellOffset
-        width: (realpatient.width-background.x*2-rightCellWidth)
-        height: (realpatient.height-topcellOffset*2)
-        color: "black"
-    }
+//    Rectangle{
+//        id:background
+//        x:leftcellOffset
+//        y:topcellOffset
+//        width: (realpatient.width-background.x*2-rightCellWidth)
+//        height: (realpatient.height-topcellOffset*2)
+//        color: "black"
+//    }
 
-    Rectangle{
-        id:treathead
-        y:topcellOffset
-        x:leftcellOffset
-        width: background.width
-        height: 35
-        color: "#c4f1f8"
-        Row{
-            CusButton {
-                id: treathead1
-                x:10
-                width: 110
-                height: treathead.height
-                text: qsTr("实时画面")
-                backgroundColorNormal:"#70c0cc"
-                backgroundColorPressed:"black"
-                textColor:"white"
-                //selected:"true"
-                onClicked: {
+//    Rectangle{
+//        id:treathead
+//        y:topcellOffset
+//        x:leftcellOffset
+//        width: background.width
+//        height: 35
+//        color: "#c4f1f8"
+//        Row{
+//            CusButton {
+//                id: treathead1
+//                x:10
+//                width: 110
+//                height: treathead.height
+//                text: qsTr("实时画面")
+//                backgroundColorNormal:"#70c0cc"
+//                backgroundColorPressed:"black"
+//                textColor:"white"
+//                //selected:"true"
+//                onClicked: {
 
-                }
-            }
-            CusButton{
-                id:treathead2
-                x:10+110+2
-                width: 110
-                height: treathead.height
-                text: qsTr("识别画面")
-                backgroundColorNormal:"#70c0cc"
-                backgroundColorPressed:"black"
-                textColor:"white"
-                onClicked: {
-                    realpatient2.visible=true
-                    realpatient.visible=false
-                  //  showIndex=4
-                    corrtimer1.stop();
-                    corrtimer2.stop();
-                    corrtimer3.stop();
-                    corrtimer4.stop();
-                 //  CodeImage.initData(0)
-                }
-            }
-            CusButton{
-                id:treatheadcorrtimer13
-                x:10+220+4
-                width: 110
-                height: treathead.height
-                text: qsTr("调理画面")
-                backgroundColorNormal:"#70c0cc"
-                backgroundColorPressed:"black"
-                textColor:"white"
-                onClicked: {
-                    realpatient1.visible=true
-                    realpatient.visible=false
+//                }
+//            }
+//            CusButton{
+//                id:treathead2
+//                x:10+110+2
+//                width: 110
+//                height: treathead.height
+//                text: qsTr("识别画面")
+//                backgroundColorNormal:"#70c0cc"
+//                backgroundColorPressed:"black"
+//                textColor:"white"
+//                onClicked: {
+//                    realpatient2.visible=true
+//                    realpatient.visible=false
+//                  //  showIndex=4
+//                    corrtimer1.stop();
+//                    corrtimer2.stop();
+//                    corrtimer3.stop();
+//                    corrtimer4.stop();
+//                 //  CodeImage.initData(0)
+//                }
+//            }
+//            CusButton{
+//                id:treatheadcorrtimer13
+//                x:10+220+4
+//                width: 110
+//                height: treathead.height
+//                text: qsTr("调理画面")
+//                backgroundColorNormal:"#70c0cc"
+//                backgroundColorPressed:"black"
+//                textColor:"white"
+//                onClicked: {
+//                    realpatient1.visible=true
+//                    realpatient.visible=false
 
-                    xueweidatadeal.initData(0);
+//                    xueweidatadeal.initData(0);
 
-                }
-            }
-        }
-    }
+//                }
+//            }
+//        }
+//    }
 //    Rectangle{
 //        id:spacewhite1
 //        anchors.top: treathead.bottom
@@ -208,16 +208,10 @@ Item {
     //        z:1
     //        anchors.horizontalCenter: parent.horizontalCenter
             id:patientscroll
-            anchors.top: treathead.bottom
-            anchors.topMargin: cellSpace
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: topcellOffset
-         //   anchors.rightMargin: 10
-//            anchors.left: parent
-//            anchors.leftMargin: 10
+            y:cellSpace
             color: "transparent"
-            width:background.width-cellSpace
-            height: background.height-treathead.height-cellSpace
+            width:patienttreat.width-cellSpace
+            height: patienttreat.height-cellSpace-topcellOffset
             x:leftcellOffset+cellSpace
 
             GridView {
@@ -342,20 +336,20 @@ Item {
            // theModel.append({"eachname":"天眼相机","eachimage":"qrc:/new/prefix1/Image/obama2.jpg", "price":"¥60"})
         }//添加元素
 
-        Rectangle{
-            id:rightdisp
-            width: 300
-            height: background.height+20
-            anchors.left: patientscroll.right
-            anchors.leftMargin: 30
-            y:0
-            color: "#90cfd8"
-            CaseRightControl{
-                width: 300
-                height: background.height+20
-            }
+//        Rectangle{
+//            id:rightdisp
+//            width: 300
+//            height: background.height+20
+//            anchors.left: patientscroll.right
+//            anchors.leftMargin: 30
+//            y:0
+//            color: "#90cfd8"
+//            CaseRightControl{
+//                width: 300
+//                height: background.height+20
+//            }
 
-        }
+//        }
         onVisibleChanged: {// This is available in all editors.
             qmlVisible=visible;
             if (!visible){ //不可见时，把timer 关掉

@@ -17,6 +17,9 @@ public slots:
 //    void doUpdateName(int row, const QString &name);
 
     void initCaseData();
+    void loadCaseByPatientId(QString patientid);
+    void addToPatientCase(QString pname,QString pno,QString pcase,QString ptreatment, QString doctor);
+;
 
 //    void addOne();
 //    void addMulti(int count);
@@ -35,6 +38,7 @@ public slots:
 private:
     void sortByName(Qt::SortOrder order);
     void sortByAddress(Qt::SortOrder order);
+    void sortByDate(Qt::SortOrder order);
     void sortByModel(Qt::SortOrder order);
 private:
     PatientCaseModelPrivate *d;

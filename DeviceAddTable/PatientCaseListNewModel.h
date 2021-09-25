@@ -18,9 +18,11 @@ public slots:
 //    void doUpdateName(int row, const QString &name);
 
     void initCaseData();
+    void loadCaseDataByPatientNo(QString patientid);
     void changeDataByIndex(int index);
     void addCaseData(QString dataStr,int index);
     void addModel(const PatientCaseItem &paraModel);
+    void addToPatientCaseGl(QString pno,QString ptreatment);
 
     void swapRow(int from,int to);
 

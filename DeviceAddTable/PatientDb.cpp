@@ -1,89 +1,5 @@
 ﻿#include "PatientDb.h"
 QSqlDatabase mysql;
-QVariant addPatientManager(QSqlQuery &q, const QString &patientname, int patientnum,const QString &gender, int age,const QString &phone, QDate regtime, const QString &doctor,const QDate &lasttreattime)
-{
-    q.addBindValue(patientname);
-    q.addBindValue(patientnum);
-    q.addBindValue(gender);
-    q.addBindValue(age);
-    q.addBindValue(phone);
-    q.addBindValue(regtime);
-    q.addBindValue(doctor);
-    q.addBindValue(lasttreattime);
-    q.exec();
-    return q.lastInsertId();
-}
-
-QVariant addPatientCase(QSqlQuery &q, const QString &patientname, int patientid, const QString &pcase,  const QString &treatment,const QString &doctor, QDate checkdate, int state ,QDate treatdate)
-{
-    q.addBindValue(patientname);
-    q.addBindValue(patientid);
-    q.addBindValue(pcase);
-    q.addBindValue(treatment);
-    q.addBindValue(doctor);
-    q.addBindValue(checkdate);
-    q.addBindValue(state);
-    q.addBindValue(treatdate);
-    q.exec();
-     return q.lastInsertId();
-}
-
-QVariant addPatientCaseGL(QSqlQuery &q, int patientid, const QString &treatment,  const QString &directlay,const QString &jingluo, QDate treatdate)
-{
-
-    q.addBindValue(patientid);
-    q.addBindValue(directlay);
-    q.addBindValue(treatment);
-    q.addBindValue(jingluo);
-    q.addBindValue(treatdate);
-    q.exec();
-     return q.lastInsertId();
-}
-
-QVariant addDoctorManager(QSqlQuery &q, const QString &name, const QString doctorid, QDate regtime, const QString doctorstate, const QString managertype)
-{
-    //   create table doctormanager(id integer primary key, name varchar, doctorid varchar, regtime date,doctorstate int,  managertype integer)
-
-    q.addBindValue(name);
-    q.addBindValue(doctorid);
-    q.addBindValue(regtime);
-    q.addBindValue(doctorstate);
-    q.addBindValue(managertype);
-    q.exec();
-    return q.lastInsertId();
-}
-
-
-QVariant addPatientScript(QSqlQuery &q,  int patientid,  const QString &pprescript,const QString &doctor, QDate prescriptdate)
-{
-
-    q.addBindValue(patientid);
-    q.addBindValue(pprescript);
-
-    q.addBindValue(doctor);
-    q.addBindValue(prescriptdate);
-
-    q.exec();
-     return q.lastInsertId();
-}
-
-QVariant addGlTreatment(QSqlQuery &q, const QString &casename,const QString &treatmentname,QDate treatmenttime,const QString &treatstate){
-    q.addBindValue(casename);
-    q.addBindValue(treatmentname);
-    q.addBindValue(treatmenttime);
-    q.addBindValue(treatstate);
-    q.exec();
-    return q.lastInsertId();
-
-}
-
-QVariant addGlTreatmentPlan(QSqlQuery &q,const QString &treatmentname,const QString &treatmentbody,const QString &treatmentjingluo){
-    q.addBindValue(treatmentname);
-    q.addBindValue(treatmentbody);
-    q.addBindValue(treatmentjingluo);
-    q.exec();
-    return q.lastInsertId();
-}
 
 const auto PATIENTSMANAGER_SQL = QLatin1String(R"(
                                                create table patientsmanager(id integer primary key, patientname varchar, patientnum integer,gender varchar,
@@ -149,6 +65,111 @@ const auto INSERT_PATIENTSCASEGL_SQL =  QLatin1String(R"(
                         values(?,?,?,?,?)
     )");
 
+QVariant addPatientManager(QSqlQuery &q, const QString &patientname, int patientnum,const QString &gender, int age,const QString &phone, QDate regtime, const QString &doctor,const QDate &lasttreattime)
+{
+    q.addBindValue(patientname);
+    q.addBindValue(patientnum);
+    q.addBindValue(gender);
+    q.addBindValue(age);
+    q.addBindValue(phone);
+    q.addBindValue(regtime);
+    q.addBindValue(doctor);
+    q.addBindValue(lasttreattime);
+    q.exec();
+    return q.lastInsertId();
+}
+
+QVariant addPatientCase(QSqlQuery &q, const QString &patientname, int patientid, const QString &pcase,  const QString &treatment,const QString &doctor, QDate checkdate, int state ,QDate treatdate)
+{
+    q.addBindValue(patientname);
+    q.addBindValue(patientid);
+    q.addBindValue(pcase);
+    q.addBindValue(treatment);
+    q.addBindValue(doctor);
+    q.addBindValue(checkdate);
+    q.addBindValue(state);
+    q.addBindValue(treatdate);
+    q.exec();
+     return q.lastInsertId();
+}
+void addPatientCaseNew(const QString &patientname, int patientid, const QString &pcase,  const QString &treatment,const QString &doctor, QDate checkdate, int state ,QDate treatdate)
+{
+    QSqlQuery q;
+    if (q.prepare(INSERT_PATIENTSCASE_SQL))
+    {
+
+      QVariant qq= addPatientCase(q,patientname,patientid,pcase,treatment,doctor,checkdate,state,treatdate);
+    }
+}
+QVariant addPatientCaseGL(QSqlQuery &q, int patientid, const QString &treatment,  const QString &directlay,const QString &jingluo, QDate treatdate)
+{
+
+    q.addBindValue(patientid);
+    q.addBindValue(treatment);
+    q.addBindValue(directlay);
+
+    q.addBindValue(jingluo);
+    q.addBindValue(treatdate);
+    q.exec();
+     return q.lastInsertId();
+}
+void addPatientCaseGLNew( int patientid, const QString &treatment,  const QString &directlay,const QString &jingluo, QDate treatdate){
+    QSqlQuery q;
+    if (q.prepare(INSERT_GLTREATMENTCASE_SQL)){
+      //  qDebug()<<"patientid="<<patientid<<"treatment="<<treatment;
+        addPatientCaseGL(q,patientid,treatment.toUtf8(),directlay.toUtf8(),jingluo.toUtf8(),treatdate);
+      //  qDebug()<<"patientid1111="<<patientid<<"treatment="<<treatment;
+    }
+}
+
+
+
+QVariant addDoctorManager(QSqlQuery &q, const QString &name, const QString doctorid, QDate regtime, const QString doctorstate, const QString managertype)
+{
+    //   create table doctormanager(id integer primary key, name varchar, doctorid varchar, regtime date,doctorstate int,  managertype integer)
+
+    q.addBindValue(name);
+    q.addBindValue(doctorid);
+    q.addBindValue(regtime);
+    q.addBindValue(doctorstate);
+    q.addBindValue(managertype);
+    q.exec();
+    return q.lastInsertId();
+}
+
+
+QVariant addPatientScript(QSqlQuery &q,  int patientid,  const QString &pprescript,const QString &doctor, QDate prescriptdate)
+{
+
+    q.addBindValue(patientid);
+    q.addBindValue(pprescript);
+
+    q.addBindValue(doctor);
+    q.addBindValue(prescriptdate);
+
+    q.exec();
+     return q.lastInsertId();
+}
+
+QVariant addGlTreatment(QSqlQuery &q, const QString &casename,const QString &treatmentname,QDate treatmenttime,const QString &treatstate){
+    q.addBindValue(casename);
+    q.addBindValue(treatmentname);
+    q.addBindValue(treatmenttime);
+    q.addBindValue(treatstate);
+    q.exec();
+    return q.lastInsertId();
+
+}
+
+QVariant addGlTreatmentPlan(QSqlQuery &q,const QString &treatmentname,const QString &treatmentbody,const QString &treatmentjingluo){
+    q.addBindValue(treatmentname);
+    q.addBindValue(treatmentbody);
+    q.addBindValue(treatmentjingluo);
+    q.exec();
+    return q.lastInsertId();
+}
+
+
 QSqlError initDb()
 {
     mysql = QSqlDatabase::addDatabase("QSQLITE");
@@ -199,7 +220,7 @@ QSqlError initDb()
                                        );
     QVariant fiction = addPatientCase(q, QStringLiteral("王小小"),1111,QStringLiteral("病症1"),QStringLiteral("经络疗法1"),QStringLiteral("张医生"),now,1,now);
     QVariant fantasy = addPatientCase(q, QStringLiteral("王小小"),1111,QStringLiteral("病症1"),QStringLiteral("经络疗法2"),QStringLiteral("李医生"),now,1,now);
-
+ //QVariant fantasy1 = addPatientCase(q, QStringLiteral("wangxiaoxiao"),1111,QStringLiteral("病症1"),QStringLiteral("经络疗法2"),QStringLiteral("李医生"),now,1,now);
 
     if (!q.prepare(INSERT_DOCTORMANAGER_SQL))
         return q.lastError();
@@ -229,8 +250,8 @@ QSqlError initDb()
     if (!q.prepare(INSERT_PATIENTSCASEGL_SQL))
             return q.lastError();
 
-    addPatientCaseGL(q,1111,QStringLiteral("经络疗法1"),QStringLiteral("仰卧手向下"),QStringLiteral("足少阴肾经"),QDate(2021,7,15));
-     addPatientCaseGL(q,1111,QStringLiteral("经络疗法1"),QStringLiteral("仰卧手向下"),QStringLiteral("足少阴肾经"),QDate(2021,7,15));
+    addPatientCaseGL(q,1111,QStringLiteral("经络疗法1"),QStringLiteral("仰卧手向下"),QStringLiteral("足少阴肾经(体前)"),QDate(2021,7,15));
+     addPatientCaseGL(q,1111,QStringLiteral("经络疗法1"),QStringLiteral("俯卧手向上"),QStringLiteral("心包经络"),QDate(2021,7,15));
  //qWarning() << "general" << "dbcost1" << "ms";
      return QSqlError();
 

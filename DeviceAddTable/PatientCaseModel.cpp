@@ -8,6 +8,7 @@
 #include <chrono>
 #include <random>
 #include "PatientDb.h"
+
 const static QStringList sHeaderRoles = { "casename","treatment","tcount", "doctor","prescriptime","online" };
 const static QStringList sHeaders={"病/病名","处方","已调理","处方医生","处方时间",""};
 class PatientCaseModelPrivate
@@ -67,32 +68,90 @@ void PatientCaseModel::initCaseData(){
 //    }
 
     /**************************使用QSqlQuery操作数据库**************************/
-        QSqlQuery query;	//执行操作类对象
-
+            //执行操作类对象
+QSqlQuery patientscasequery;
         //查询数据
-        query.prepare("SELECT * FROM patientscase");
-        query.exec();	//执行
+        patientscasequery.prepare("SELECT * FROM patientscase");
+        patientscasequery.exec();	//执行
 
-        QSqlRecord recode = query.record();		//recode保存查询到一些内容信息，如表头、列数等等
+        QSqlRecord recode = patientscasequery.record();		//recode保存查询到一些内容信息，如表头、列数等等
        // int column = recode.count();			//获取读取结果的列数
         QString s1 = recode.fieldName(0);
-        while (query.next())
+        while (patientscasequery.next())
         {
             auto item = new PatientCaseItem;
-            item->set_casename(query.value("pcase").toString());
-            item->set_treatment(query.value("treatment").toString());
-            item->set_doctor(query.value("doctor").toString());
-            item->set_prescriptime(query.value("checkdate").toString());
-            item->set_tcount(query.value("state").toString());
+            item->set_casename(patientscasequery.value("pcase").toString());
+            item->set_treatment(patientscasequery.value("treatment").toString());
+            item->set_doctor(patientscasequery.value("doctor").toString());
+            item->set_prescriptime(patientscasequery.value("checkdate").toString());
+            item->set_tcount(patientscasequery.value("state").toString());
            // item->set_regtime(query.value("regtime").toString());
             item->set_online(false);
             objs.append(item);
-            qDebug()<<query.value("patientname").toString();
+           // qDebug()<<patientcasequery.value("patientname").toString();
         }
         auto c2 = std::chrono::high_resolution_clock::now();
         auto micro = std::chrono::duration_cast<std::chrono::milliseconds>(c2 - c1).count();
         //qWarning() << "general" << N << "cost" << micro << "ms";
         resetData(objs);
+}
+
+void PatientCaseModel::loadCaseByPatientId(QString patientId){
+    const int N = 50000;
+    QList<QuickListItemBase *> objs;
+    objs.reserve(N);
+    auto c1 = std::chrono::high_resolution_clock::now();
+    QSqlQuery patientscasequery;
+
+  //  QString str=QString("SELECT * FROM patientscase where patientid like '%%1%'").arg(patientId);
+    QString str=QString("SELECT * FROM patientscase where patientid='%1'").arg(patientId);
+    patientscasequery.prepare(str);
+    patientscasequery.exec();	//执行
+
+    QSqlRecord recode = patientscasequery.record();		//recode保存查询到一些内容信息，如表头、列数等等
+   qDebug()<<"获取读取结果的列数"<<recode.count();
+    // int column = recode.count();			//获取读取结果的列数
+    QString s1 = recode.fieldName(0);
+    while (patientscasequery.next())
+    {
+        auto item = new PatientCaseItem;
+        item->set_casename(patientscasequery.value("pcase").toString());
+        item->set_treatment(patientscasequery.value("treatment").toString());
+        item->set_doctor(patientscasequery.value("doctor").toString());
+        item->set_prescriptime(patientscasequery.value("checkdate").toString());
+        item->set_tcount(patientscasequery.value("state").toString());
+       // item->set_regtime(query.value("regtime").toString());
+        item->set_online(false);
+        objs.append(item);
+       // qDebug()<<patientcasequery.value("patientname").toString();
+    }
+    auto c2 = std::chrono::high_resolution_clock::now();
+    auto micro = std::chrono::duration_cast<std::chrono::milliseconds>(c2 - c1).count();
+    if(mDatas.count()==0){
+        resetData(objs);
+    }else {
+        mDatas=objs;
+    }
+    sortByAddress(Qt::SortOrder::AscendingOrder);
+}
+
+void PatientCaseModel::addToPatientCase(QString pname,QString pno,QString pcase,QString ptreatment, QString doctor)
+{
+    const int N = 50000;
+    QList<QuickListItemBase *> objs;
+    objs.reserve(N);
+    QDate now=QDate::currentDate();
+    addPatientCaseNew(pname,pno.toInt(),pcase,ptreatment,doctor,now,0,now);
+    auto item = new PatientCaseItem;
+    item->set_casename(pcase);
+    item->set_treatment(ptreatment);
+    item->set_doctor(doctor);
+    item->set_prescriptime(now.toString());
+    item->set_tcount(0);
+   // item->set_regtime(query.value("regtime").toString());
+    item->set_online(false);
+    objs.append(item);
+    append(objs);
 }
 
 void PatientCaseModel::clearAll()
@@ -123,6 +182,21 @@ void PatientCaseModel::sortByName(Qt::SortOrder order)
     } else {
         std::sort(copyObjs.begin(), copyObjs.end(), [](QuickListItemBase *obj1, QuickListItemBase *obj2) -> bool {
             return (static_cast<PatientCaseItem *>(obj1))->casename() > (static_cast<PatientCaseItem *>(obj2))->casename();
+        });
+    }
+    mDatas = copyObjs;
+    emit dataChanged(index(0, 0), index(mDatas.count() - 1, 0));
+}
+
+void PatientCaseModel::sortByDate(Qt::SortOrder order){
+    QList<QuickListItemBase *> copyObjs = mDatas;
+    if (order == Qt::SortOrder::AscendingOrder) {
+        std::sort(copyObjs.begin(), copyObjs.end(), [](QuickListItemBase *obj1, QuickListItemBase *obj2) -> bool {
+            return (static_cast<PatientCaseItem *>(obj1))->prescriptime() < (static_cast<PatientCaseItem *>(obj2))->prescriptime();
+        });
+    } else {
+        std::sort(copyObjs.begin(), copyObjs.end(), [](QuickListItemBase *obj1, QuickListItemBase *obj2) -> bool {
+            return (static_cast<PatientCaseItem *>(obj1))->prescriptime() > (static_cast<PatientCaseItem *>(obj2))->prescriptime();
         });
     }
     mDatas = copyObjs;

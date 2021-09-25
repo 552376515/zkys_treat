@@ -55,57 +55,50 @@ Item {
             highlightFollowsCurrentItem: true
             focus: true
             delegate: Rectangle {
+                      id:listviewcell
                      property color tempcolor: "transparent"
                      color: tempcolor
                      width: listView.width
                      height: 60
-                     Row{
-                         id:row0
-                         anchors.fill: parent
-                         spacing: 10
+                     Rectangle{
+                         id:listLeftLine
+                         x:14
+                         width: 8
+                         height: listviewcell.height
+                         color: "#ededed"
+                     }
+
+                     Rectangle{
+                         id:rightText
+                         width: zishi.contentWidth+iconimg.width+10
+                         height: 20
+                         color: "#5e5e5e"
+                         anchors.left: listLeftLine.right
                          anchors.leftMargin: 10
-                         visible: soundname!==""
-
-                         Rectangle{
-                             id:leftIcon
-                             x:4
-                             width: 8
-                             height:30
-                             color: "#999999"
+                         Text {
+                             id: zishi
+                             text: zishiname
+                             color: "white"
+                             font.pixelSize: 14
 
                          }
-
-                         Rectangle{
-                             id:rightText
-                             width: zishi.contentWidth+iconimg.width+10
-                             height: 20
-                             color: "#5e5e5e"
-                             Text {
-                                 id: zishi
-                                 text: zishiname
-                                 color: "white"
-                                 font.pixelSize: 14
-
-                             }
-                             Image {
-                                 id: iconimg
-                                 anchors.left: zishi.right
-                                 anchors.leftMargin: 10
-                                 source: imgaeshprefix+"images/ys-laba.png"
-                             }
-
+                         Image {
+                             id: iconimg
+                             anchors.left: zishi.right
+                             anchors.leftMargin: 10
+                             source: imgaeshprefix+"images/ys-laba.png"
                          }
-
 
                      }
+
 
                      Row {
                             id: row1
                             anchors.fill: parent
                             spacing: 10
-                            anchors.top: row0.bottom
+                            anchors.top: rightText.bottom
                             anchors.leftMargin: 10
-                            height: 30
+                            height: 40
 
                             Rectangle {
                                 x:listView.currentIndex === index ?0:4
@@ -113,13 +106,15 @@ Item {
                                 height: listView.currentIndex === index ?18:10
                                 color: listView.currentIndex === index ?"#e48839":"#999999"
                                 radius: width/2;
-                                anchors.verticalCenter: parent.verticalCenter
+                               anchors.verticalCenter: row1.verticalCenter
 
                             }
                             //228 136 57 e48839
                             Text {
                                 text: name
-                                anchors.verticalCenter: parent.verticalCenter
+                                height: row1.height
+                                verticalAlignment: Text.AlignVCenter
+
                                 font.bold: true
                                 font.pointSize: listView.currentIndex === index ? 18 : 14
                                 color: listView.currentIndex === index?"#e48839":"#999999"
@@ -152,26 +147,8 @@ Item {
                                                 soundname:""
                                             }
 
-                                            ListElement {
-                                                name: "网络交换机"
-                                                colorCode: "red"
-                                                zishiname:""
-                                                soundname:""
-                                            }
-
-                                            ListElement {
-                                                name: "设备"
-                                                 colorCode: "green"
-                                                 zishiname:""
-                                                 soundname:""
-                                            }
                         }
-                        Rectangle {
-                                   width: 1;
-                                   height: parent.height;
-                                   color: "gray";
-                                   anchors.right: parent.right;
-                               }
+
 
         }
     }

@@ -54,7 +54,16 @@ Window {
             glpatientModel.initData();
         }else{
             deviceAddModel.initData()
-            patientCaseModel.initCaseData()
+            if (deviceAddModel.rowCount()>0){
+                var thefirstpatient=deviceAddModel.data(0);
+                currpatientname=thefirstpatient[deviceAddModel.headerRoles[0]];
+                currpatientnum=thefirstpatient[deviceAddModel.headerRoles[1]];
+
+                //patientCaseModel.initCaseData()
+                patientCaseModel.loadCaseByPatientId(currpatientnum)
+            }
+
+
         }
 
 
@@ -357,10 +366,15 @@ Window {
         width: window.width
         height: window.height-zhongkeheader.height
         visible: false
-        PatientTreatCorrect{
+        PatientTreatManager{
             width: realpatient.width
             height: realpatient.height
         }
+
+//        PatientTreatCorrect{
+//            width: realpatient.width
+//            height: realpatient.height
+//        }
     }
 
     Rectangle{//医生角色 动画

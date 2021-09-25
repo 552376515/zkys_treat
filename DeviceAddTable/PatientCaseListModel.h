@@ -30,6 +30,7 @@ class PatientCaseListModel: public QAbstractListModel
      void clear();//清空
  public slots:
      void addCaseData(QString dataStr);
+     void loadCaseDataByPatientNoTreatment(QString patientid,QString treatment);
 
  protected:
      int  rowCount(const QModelIndex &parent = QModelIndex()) const;//qml内部调用,不用多管直接重写即可

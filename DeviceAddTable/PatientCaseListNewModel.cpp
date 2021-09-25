@@ -11,6 +11,8 @@
 #include <chrono>
 #include <random>
 #include "PatientDb.h"
+
+
 const static QStringList jHeaderRoles = { "casename","treatment","doctor","checkCase", "editCase","caseState" };
 const static QStringList jHeaders={"","","","","",""};
 class PatientCaseListNewModelPrivate
@@ -61,7 +63,7 @@ void PatientCaseListNewModel::initCaseData(){
     auto c1 = std::chrono::high_resolution_clock::now();
 //    if (!QSqlDatabase::drivers().contains("QSQLITE"))
 //       printf("Unable to load database");
-
+    QSqlQuery patientcasequery;
 
 //    // Initialize the database:
 //    QSqlError err = initDb();
@@ -70,20 +72,20 @@ void PatientCaseListNewModel::initCaseData(){
 //    }
 
     /**************************使用QSqlQuery操作数据库**************************/
-        QSqlQuery query;	//执行操作类对象
+            //执行操作类对象
 // qWarning() << "general" << N << "cost1" << "ms";
         //查询数据
-        query.prepare("SELECT * FROM patientscasegl");
-        query.exec();	//执行
+        patientcasequery.prepare("SELECT * FROM patientscasegl");
+        patientcasequery.exec();	//执行
 // qWarning() << "general" << N << "cost" << "ms";
-        QSqlRecord recode = query.record();		//recode保存查询到一些内容信息，如表头、列数等等
+        QSqlRecord recode = patientcasequery.record();		//recode保存查询到一些内容信息，如表头、列数等等
        // int column = recode.count();			//获取读取结果的列数
         QString s1 = recode.fieldName(0);
-        while (query.next())
+        while (patientcasequery.next())
         {
             auto item = new PatientCaseItem;
-            item->set_casename(query.value("directlay").toString());
-            item->set_treatment(query.value("jingluo").toString());
+            item->set_casename(patientcasequery.value("directlay").toString());
+            item->set_treatment(patientcasequery.value("jingluo").toString());
             item->set_doctor("");
             item->set_checkCase("1");
             item->set_editCase("1");
@@ -98,6 +100,41 @@ void PatientCaseListNewModel::initCaseData(){
         auto micro = std::chrono::duration_cast<std::chrono::milliseconds>(c2 - c1).count();
         //qWarning() << "general" << N << "cost" << micro << "ms";
         resetData(objs);
+}
+
+void PatientCaseListNewModel::loadCaseDataByPatientNo(QString patientid){
+    const int N = 50000;
+    QList<QuickListItemBase *> objs;
+    objs.reserve(N);
+    QSqlQuery patientcasequery;
+    auto c1 = std::chrono::high_resolution_clock::now();
+    QString qsql="SELECT * FROM patientscasegl where patientid=";
+    qsql.append(patientid);
+    patientcasequery.prepare(qsql);
+    patientcasequery.exec();	//执行
+    qDebug()<<qsql;
+// qWarning() << "general" << N << "cost" << "ms";
+    QSqlRecord recode = patientcasequery.record();		//recode保存查询到一些内容信息，如表头、列数等等
+   // int column = recode.count();			//获取读取结果的列数
+    QString s1 = recode.fieldName(0);
+    while (patientcasequery.next())
+    {
+        auto item = new PatientCaseItem;
+        item->set_casename(patientcasequery.value("directlay").toString());
+        item->set_treatment(patientcasequery.value("jingluo").toString());
+        item->set_doctor("");
+        item->set_checkCase("1");
+        item->set_editCase("1");
+        item->set_caseState("1");
+       // item->set_regtime(query.value("regtime").toString());
+        item->set_online(false);
+        objs.append(item);
+//           qWarning() << "general" << N << "cost" << item->casename() << "ms";
+
+    }
+    auto c2 = std::chrono::high_resolution_clock::now();
+    auto micro = std::chrono::duration_cast<std::chrono::milliseconds>(c2 - c1).count();
+
 }
 
 void PatientCaseListNewModel::changeDataByIndex(int index){
@@ -188,6 +225,19 @@ void PatientCaseListNewModel::swapRow(int from,int to){
         mDatas.insert(to,item);
         endMoveRows();
         updateCalcInfo();
+    }
+}
+
+void PatientCaseListNewModel::addToPatientCaseGl(QString pno,QString ptreatment)
+{
+    QList<QuickListItemBase *> copyObjs = mDatas;
+
+    QDate now=QDate::currentDate();
+    for (int i=0;i<copyObjs.count();i++){
+        //QDebug()<<"addToPatientCaseGl"<<i;
+        PatientCaseItem *tmpmodel=dynamic_cast<PatientCaseItem *>(copyObjs.at(i));
+        addPatientCaseGLNew(pno.toInt(),ptreatment,tmpmodel->casename(),tmpmodel->treatment(),now);
+
     }
 }
 

@@ -14,73 +14,73 @@ Item {
     property int censorCellHeight: 350
     property int rightCellWidth: 300
     property int leftcellOffset: 30
-    property int topcellOffset: 20
+    property int topcellOffset: 27
     property int cellSpace: 15
-    Rectangle{
-        id:background
+//    Rectangle{
+//        id:background
 
-        x:leftcellOffset
-        y:topcellOffset
-        width: (realpatient2.width-background.x*2-rightCellWidth)
-        height: (realpatient2.height-topcellOffset*2)
-        color: "black"
-    }
+//        x:leftcellOffset
+//        y:topcellOffset
+//        width: (realpatient2.width-background.x*2-rightCellWidth)
+//        height: (realpatient2.height-topcellOffset*2)
+//        color: "black"
+//    }
 
-    Rectangle{
-        id:treathead
-        y:topcellOffset
-        x:leftcellOffset
-        width: background.width
-        height: 35
-        color: "#c4f1f8"
-        Row{
-            CusButton {
-                id: treathead1
-                x:10
-                width: 110
-                height: treathead.height
-                text: qsTr("实时画面")
-                backgroundColorNormal:"#70c0cc"
-                backgroundColorPressed:"black"
-                textColor:"white"
-                onClicked: {
+//    Rectangle{
+//        id:treathead
+//        y:topcellOffset
+//        x:leftcellOffset
+//        width: background.width
+//        height: 35
+//        color: "#c4f1f8"
+//        Row{
+//            CusButton {
+//                id: treathead1
+//                x:10
+//                width: 110
+//                height: treathead.height
+//                text: qsTr("实时画面")
+//                backgroundColorNormal:"#70c0cc"
+//                backgroundColorPressed:"black"
+//                textColor:"white"
+//                onClicked: {
 
-                }
-            }
-            CusButton{
-                id:treathead2
-                x:10+110+2
-                width: 110
-                height: treathead.height
-                text: qsTr("识别画面")
-                backgroundColorNormal:"#70c0cc"
-                backgroundColorPressed:"black"
-                textColor:"white"
-                //selected:"true"
-                onClicked: {
-//                    CodeImage.initData(4);
-//                                    CodeImage.initData(5);
-//                                    CodeImage.initData(6);
-                    //                CodeImage.initData(7);
-                   /// sender.sendMessage(BAT.byteArrayfy("{\"msg\":\"img\",\"camera\":\""+indexMess+"\"}"));
+//                }
+//            }
+//            CusButton{
+//                id:treathead2
+//                x:10+110+2
+//                width: 110
+//                height: treathead.height
+//                text: qsTr("识别画面")
+//                backgroundColorNormal:"#70c0cc"
+//                backgroundColorPressed:"black"
+//                textColor:"white"
+//                //selected:"true"
+//                onClicked: {
+////                    CodeImage.initData(4);
+////                                    CodeImage.initData(5);
+////                                    CodeImage.initData(6);
+//                    //                CodeImage.initData(7);
+//                   /// sender.sendMessage(BAT.byteArrayfy("{\"msg\":\"img\",\"camera\":\""+indexMess+"\"}"));
 
-                }
-            }
-            CusButton{
-                id:treathead3
-                x:10+220+4
-                width: 110
-                height: treathead.height
-                text: qsTr("调理画面")
-                backgroundColorNormal:"#70c0cc"
-                backgroundColorPressed:"black"
-                textColor:"white"
-                onClicked: {
+//                }
+//            }
+//            CusButton{
+//                id:treathead3
+//                x:10+220+4
+//                width: 110
+//                height: treathead.height
+//                text: qsTr("调理画面")
+//                backgroundColorNormal:"#70c0cc"
+//                backgroundColorPressed:"black"
+//                textColor:"white"
+//                onClicked: {
 
-                }
-            }
-        }
-    }
+//                }
+//            }
+//        }
+//    }
 //    Rectangle{
 //        id:spacewhite1
 //        anchors.top: treathead.bottom
@@ -93,26 +93,32 @@ Item {
     Rectangle{
     //        z:1
     //        anchors.horizontalCenter: parent.horizontalCenter
-            id:patientscroll
-            anchors.top: treathead.bottom
-            anchors.topMargin: cellSpace
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: topcellOffset
-         //   anchors.rightMargin: 10
-//            anchors.left: parent.left
-//            anchors.leftMargin: 10
-            color: "transparent"
-            width:background.width-cellSpace
-            height: background.height-treathead.height-cellSpace
-            x:leftcellOffset+cellSpace
+//            id:patientscroll
+//            anchors.top: treathead.bottom
+//            anchors.topMargin: cellSpace
+//            anchors.bottom: parent.bottom
+//            anchors.bottomMargin: topcellOffset
+//         //   anchors.rightMargin: 10
+////            anchors.left: parent.left
+////            anchors.leftMargin: 10
+//            color: "transparent"
+//            width:background.width-cellSpace
+//            height: background.height-treathead.height-cellSpace
+//            x:leftcellOffset+cellSpace
 
+            id:patientscroll
+            y:cellSpace
+            color: "transparent"
+            width:patienttreat.width-cellSpace
+            height: patienttreat.height-cellSpace-topcellOffset
+            x:leftcellOffset+cellSpace
             GridView {
                 anchors.fill: patientscroll
                 clip: true
                 model:  ListModel {
                             id: theModel
                             ListElement {
-                                eachname: "天\n眼\n相\n机"
+                                eachname: "天\n眼\n相\n机\n11"
                                 eachimage:"qrc:/new/prefix1/Image/xxx.jpg"//加载图片资源
                                 eachid:4
                             }
@@ -154,7 +160,7 @@ Item {
                         id:leftname
                         width: 25
                         height:wrapper.height
-                        color: "red"
+                        color: "#363636"
                         Text {
                             id:landscape_name
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -162,6 +168,7 @@ Item {
                             anchors.bottomMargin: 20
                             font.pixelSize: 15
                             text: eachname
+                            color: "#E3E3E3"
                             font.bold: true  		//字体是否加粗，缺省为false
                             verticalAlignment: Text.AlignTop 	//垂直居中，控件必须有height才可以使用
                             horizontalAlignment: Text.AlignVCenter 	//水平居中，控件必须有width才可以使用
@@ -226,20 +233,20 @@ Item {
             }
         }
 
-        Rectangle{
-            id:rightdisp
-            width: 300
-            height: background.height+20
-            anchors.left: patientscroll.right
-            anchors.leftMargin: 30
-            y:0
-            color: "#90cfd8"
-            CaseRightControl{
-                id:caserightContrl
-                width: 300
-                height: background.height+20
-            }
+//        Rectangle{
+//            id:rightdisp
+//            width: 300
+//            height: background.height+20
+//            anchors.left: patientscroll.right
+//            anchors.leftMargin: 30
+//            y:0
+//            color: "#90cfd8"
+//            CaseRightControl{
+//                id:caserightContrl
+//                width: 300
+//                height: background.height+20
+//            }
 
-        }
+//        }
 
 }
