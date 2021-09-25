@@ -14,72 +14,7 @@ Item {
     property int leftcellOffset: 30
     property int topcellOffset: 27
     property int cellSpace: 15
-//    ZMQSocket {
-//        id: receive1
-//        type: ZMQSocket.Sub
-//        addresses: ["tcp://192.168.1.59:9560"]
-//        subscriptions: [""]
-//        onMessageReceived: {
-//          // BAT.stringify(message);
-//            console.log("receive1 ")
-//            CodeImage.setIndexImage(0)
-//            CodeImage.setListArray(message);
-//            if (qmlVisible){
-//                corrtimer1.running=true;
-//            }
 
-
-//        }
-//    }
-//    ZMQSocket {
-//        id: receive2
-//        type: ZMQSocket.Sub
-//        addresses: ["tcp://192.168.1.59:9561"]
-//        subscriptions: [""]
-//        onMessageReceived: {
-//          // BAT.stringify(message);
-//            CodeImage.setIndexImage(1)
-//            CodeImage.setListArray(message);
-//            if (qmlVisible){
-//                 corrtimer2.running=true;
-//            }
-
-
-//        }
-//    }
-
-//    ZMQSocket {
-//        id: receive3
-//        type: ZMQSocket.Sub
-//        addresses: ["tcp://192.168.1.59:9562"]
-//        subscriptions: [""]
-//        onMessageReceived: {
-//          // BAT.stringify(message);
-//            CodeImage.setIndexImage(2)
-//            CodeImage.setListArray(message);
-//            if (qmlVisible){
-//                corrtimer3.running=true;
-//            }
-
-
-//        }
-//    }
-//    ZMQSocket {
-//        id: receive4
-//        type: ZMQSocket.Sub
-//        addresses: ["tcp://192.168.1.59:9563"]
-//        subscriptions: [""]
-//        onMessageReceived: {
-//          // BAT.stringify(message);
-//            CodeImage.setIndexImage(3)
-//            CodeImage.setListArray(message);
-//            if (qmlVisible){
-//                corrtimer4.running=true;
-//            }
-
-
-//        }
-//    }
     Timer {
         id: corrtimer1
         interval: 15
@@ -125,84 +60,6 @@ Item {
            corrtimer1.running=true;
         }
     }
-//    Rectangle{
-//        id:background
-//        x:leftcellOffset
-//        y:topcellOffset
-//        width: (realpatient.width-background.x*2-rightCellWidth)
-//        height: (realpatient.height-topcellOffset*2)
-//        color: "black"
-//    }
-
-//    Rectangle{
-//        id:treathead
-//        y:topcellOffset
-//        x:leftcellOffset
-//        width: background.width
-//        height: 35
-//        color: "#c4f1f8"
-//        Row{
-//            CusButton {
-//                id: treathead1
-//                x:10
-//                width: 110
-//                height: treathead.height
-//                text: qsTr("实时画面")
-//                backgroundColorNormal:"#70c0cc"
-//                backgroundColorPressed:"black"
-//                textColor:"white"
-//                //selected:"true"
-//                onClicked: {
-
-//                }
-//            }
-//            CusButton{
-//                id:treathead2
-//                x:10+110+2
-//                width: 110
-//                height: treathead.height
-//                text: qsTr("识别画面")
-//                backgroundColorNormal:"#70c0cc"
-//                backgroundColorPressed:"black"
-//                textColor:"white"
-//                onClicked: {
-//                    realpatient2.visible=true
-//                    realpatient.visible=false
-//                  //  showIndex=4
-//                    corrtimer1.stop();
-//                    corrtimer2.stop();
-//                    corrtimer3.stop();
-//                    corrtimer4.stop();
-//                 //  CodeImage.initData(0)
-//                }
-//            }
-//            CusButton{
-//                id:treatheadcorrtimer13
-//                x:10+220+4
-//                width: 110
-//                height: treathead.height
-//                text: qsTr("调理画面")
-//                backgroundColorNormal:"#70c0cc"
-//                backgroundColorPressed:"black"
-//                textColor:"white"
-//                onClicked: {
-//                    realpatient1.visible=true
-//                    realpatient.visible=false
-
-//                    xueweidatadeal.initData(0);
-
-//                }
-//            }
-//        }
-//    }
-//    Rectangle{
-//        id:spacewhite1
-//        anchors.top: treathead.bottom
-//        x:10
-//        width: 1250
-//        height: 10
-//        color: "white"
-//    }
 
     Rectangle{
     //        z:1
@@ -336,20 +193,7 @@ Item {
            // theModel.append({"eachname":"天眼相机","eachimage":"qrc:/new/prefix1/Image/obama2.jpg", "price":"¥60"})
         }//添加元素
 
-//        Rectangle{
-//            id:rightdisp
-//            width: 300
-//            height: background.height+20
-//            anchors.left: patientscroll.right
-//            anchors.leftMargin: 30
-//            y:0
-//            color: "#90cfd8"
-//            CaseRightControl{
-//                width: 300
-//                height: background.height+20
-//            }
 
-//        }
         onVisibleChanged: {// This is available in all editors.
             qmlVisible=visible;
             if (!visible){ //不可见时，把timer 关掉

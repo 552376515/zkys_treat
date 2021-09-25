@@ -16,96 +16,8 @@ Item {
     property int leftcellOffset: 30
     property int topcellOffset: 27
     property int cellSpace: 15
-//    Rectangle{
-//        id:background
-
-//        x:leftcellOffset
-//        y:topcellOffset
-//        width: (realpatient2.width-background.x*2-rightCellWidth)
-//        height: (realpatient2.height-topcellOffset*2)
-//        color: "black"
-//    }
-
-//    Rectangle{
-//        id:treathead
-//        y:topcellOffset
-//        x:leftcellOffset
-//        width: background.width
-//        height: 35
-//        color: "#c4f1f8"
-//        Row{
-//            CusButton {
-//                id: treathead1
-//                x:10
-//                width: 110
-//                height: treathead.height
-//                text: qsTr("实时画面")
-//                backgroundColorNormal:"#70c0cc"
-//                backgroundColorPressed:"black"
-//                textColor:"white"
-//                onClicked: {
-
-//                }
-//            }
-//            CusButton{
-//                id:treathead2
-//                x:10+110+2
-//                width: 110
-//                height: treathead.height
-//                text: qsTr("识别画面")
-//                backgroundColorNormal:"#70c0cc"
-//                backgroundColorPressed:"black"
-//                textColor:"white"
-//                //selected:"true"
-//                onClicked: {
-////                    CodeImage.initData(4);
-////                                    CodeImage.initData(5);
-////                                    CodeImage.initData(6);
-//                    //                CodeImage.initData(7);
-//                   /// sender.sendMessage(BAT.byteArrayfy("{\"msg\":\"img\",\"camera\":\""+indexMess+"\"}"));
-
-//                }
-//            }
-//            CusButton{
-//                id:treathead3
-//                x:10+220+4
-//                width: 110
-//                height: treathead.height
-//                text: qsTr("调理画面")
-//                backgroundColorNormal:"#70c0cc"
-//                backgroundColorPressed:"black"
-//                textColor:"white"
-//                onClicked: {
-
-//                }
-//            }
-//        }
-//    }
-//    Rectangle{
-//        id:spacewhite1
-//        anchors.top: treathead.bottom
-//        x:10
-//        width: 1250
-//        height: 10
-//        color: "white"
-//    }
 
     Rectangle{
-    //        z:1
-    //        anchors.horizontalCenter: parent.horizontalCenter
-//            id:patientscroll
-//            anchors.top: treathead.bottom
-//            anchors.topMargin: cellSpace
-//            anchors.bottom: parent.bottom
-//            anchors.bottomMargin: topcellOffset
-//         //   anchors.rightMargin: 10
-////            anchors.left: parent.left
-////            anchors.leftMargin: 10
-//            color: "transparent"
-//            width:background.width-cellSpace
-//            height: background.height-treathead.height-cellSpace
-//            x:leftcellOffset+cellSpace
-
             id:patientscroll
             y:cellSpace
             color: "transparent"
@@ -232,21 +144,5 @@ Item {
                 CodeImage.initData(7);
             }
         }
-
-//        Rectangle{
-//            id:rightdisp
-//            width: 300
-//            height: background.height+20
-//            anchors.left: patientscroll.right
-//            anchors.leftMargin: 30
-//            y:0
-//            color: "#90cfd8"
-//            CaseRightControl{
-//                id:caserightContrl
-//                width: 300
-//                height: background.height+20
-//            }
-
-//        }
 
 }

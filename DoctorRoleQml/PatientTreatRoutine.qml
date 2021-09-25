@@ -22,97 +22,14 @@ Item {
     property variant serpointsX: [1110,1098,1027,809,766,710,597,512,490,470,446,427,399,367,327,279,229,218]
     property variant serpointsY: [384,395,439,439,430,430,430,421,402,414,413,389,355,388,422,416,422,414]
     property variant jingluo0: ["L-shen-1:1110,384"]
-//    Rectangle{
-//        id:background
-//        x:leftcellOffset
-//        y:topcellOffset
-//        width: (realpatient1.width-background.x*2-rightCellWidth)
-//        height: (realpatient1.height-topcellOffset*2)
-//        color: "black"
-//    }
-
-
-
-//    Rectangle{
-//        id:treathead
-//        y:topcellOffset
-//        x:leftcellOffset
-//        width: background.width
-//        height: 35
-//        color: "#c4f1f8"
-//        Row{
-//            CusButton {
-//                id: treathead1
-//                x:10
-//                width: 110
-//                height: treathead.height
-//                text: qsTr("实时画面")
-//                backgroundColorNormal:"#70c0cc"
-//                backgroundColorPressed:"black"
-//                textColor:"white"
-
-//                onClicked: {
-
-//                }
-//            }
-//            CusButton{
-//                id:treathead2
-//                x:10+110+2
-//                width: 110
-//                height: treathead.height
-//                text: qsTr("识别画面")
-//                backgroundColorNormal:"#70c0cc"
-//                backgroundColorPressed:"black"
-//                textColor:"white"
-//                onClicked: {
-
-//                }
-//            }
-//            CusButton{
-//                id:treathead3
-//                x:10+220+4
-//                width: 110
-//                height: treathead.height
-//                text: qsTr("调理画面")
-//                backgroundColorNormal:"#70c0cc"
-//                backgroundColorPressed:"black"
-//                textColor:"white"
-//                //selected:"true"
-
-//                onClicked: {
-
-//                }
-//            }
-//        }
-//    }
-//    Rectangle{
-//        id:spacewhite1
-//        anchors.top: treathead.bottom
-//        x:10
-//        width: 1250
-//        height: 10
-//        color: "white"
-//    }
 
     Rectangle{
-//            id:patientscroll
-//            anchors.top: treathead.bottom
-//            anchors.topMargin: cellSpace-5
-//            anchors.bottom: parent.bottom
-//            anchors.bottomMargin: topcellOffset
-//            y:treathead.height+topcellOffset+cellSpace
-//         //   anchors.rightMargin: 10
-////            anchors.left: parent
-////            anchors.leftMargin: 10
-////            color: "green"
-//            width:1216+75
-//            height: 701+126
-//            x:45
+
             id:patientscroll
             y:cellSpace
-            color: "transparent"
-            width:patienttreat.width-cellSpace
-            height: patienttreat.height-cellSpace-topcellOffset
+            color: "white"
+            width:patienttreatani.width-cellSpace
+            height: patienttreatani.height-cellSpace-topcellOffset
             x:leftcellOffset+cellSpace
             Image {
                 id: backimage
@@ -162,21 +79,6 @@ Item {
 
 
         }
-
-//        Rectangle{
-//            id:rightdisp
-//            width: 300
-//            height: background.height+20
-//            anchors.left: patientscroll.right
-//            anchors.leftMargin: 30
-//            y:0
-//            color: "#90cfd8"
-//            CaseRightControl{
-//                width: 300
-//                height: background.height+20
-//            }
-
-//        }
 
 
         onVisibleChanged: {
