@@ -11,4 +11,7 @@ extern QVariant addPatientCaseGL(QSqlQuery &q, int patientid, const QString &tre
 //extern const auto INSERT_PATIENTSMANAGER_SQL;
 extern void addPatientCaseNew(const QString &patientname, int patientid, const QString &pcase,  const QString &treatment,const QString &doctor, QDate checkdate, int state ,QDate treatdate);
 extern void addPatientCaseGLNew( int patientid, const QString &treatment,  const QString &directlay,const QString &jingluo, QDate treatdate);
+
+extern void addGlTreatmentNew(const QString &casename,const QString &treatmentname,QDate treatmenttime,const QString &treatstate);
+extern void addGlTreatmentPlanNew(const QString &treatmentname,const QString &treatmentbody,const QString &treatmentjingluo);
 #endif // PATIENTDB_H

@@ -5,6 +5,7 @@ import TaoQuick 1.0
 import zmq.Components 1.0
 import QtQuick.VirtualKeyboard 2.1
 import QtQuick.VirtualKeyboard.Settings 2.1
+import "../DoctorRoleQml"
 
 Rectangle {
     id:patientdata
@@ -12,6 +13,7 @@ Rectangle {
     height: parent.height
     anchors.fill: parent
     color: Qt.rgba(0/255,0/255,0/255,1)
+    property int curentLiaofaIndex: 0
     opacity: 0.8
     Rectangle{
         id:addcasedata1
@@ -193,60 +195,59 @@ Rectangle {
                         anchors.fill: addcasedataleft
                         clip: true
                         model:  ListModel {
-                                    id: theModel
-                                    ListElement {
-                                        eachname: "足少阴肾经(体前)"
-                                        eachimage:"qrc:/new/prefix1/Image/xxx.jpg"//加载图片资源
-                                    }
-                                    ListElement {
-                                        eachname: "足少阴肾经(体后)"
-                                        eachimage:"qrc:/new/prefix1/Image/xxx.jpg"//加载图片资源
-                                    }
-                                    ListElement {
-                                        eachname: "手厥阴心包经"
-                                        eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
-                                    }
-                                    ListElement {
-                                        eachname: "手少阳三焦经"
-                                        eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
-                                    }
-                                    ListElement {
-                                        eachname: "足少阳胆经"
-                                        eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
-                                    }
-                                    ListElement {
-                                        eachname: "足厥阴肝经"
-                                        eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
-                                    }
-                                    ListElement {
-                                        eachname: "手太阴肺经"
-                                        eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
-                                    }
-                                    ListElement {
-                                        eachname: "手阳明大肠经"
-                                        eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
-                                    }
-                                    ListElement {
-                                        eachname: "足阳明胃经"
-                                        eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
-                                    }
-                                    ListElement {
-                                        eachname: "足太阴脾经"
-                                        eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
-                                    }
-                                    ListElement {
-                                        eachname: "手少阴心经"
-                                        eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
-                                    }
-                                    ListElement {
-                                        eachname: "手太阳小肠经"
-                                        eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
-                                    }
-                                    ListElement {
-                                        eachname: "足太阳膀胱经"
-                                        eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
-                                    }
-                                }
+                            ListElement {
+                                eachname: "足少阴肾经"
+                                eachimage:"qrc:/new/prefix1/Image/xxx.jpg"//加载图片资源
+                            }
+//                                    ListElement {
+//                                        eachname: "足少阴肾经(体后)"
+//                                        eachimage:"qrc:/new/prefix1/Image/xxx.jpg"//加载图片资源
+//                                    }
+                            ListElement {
+                                eachname: "手厥阴心包经"
+                                eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
+                            }
+                            ListElement {
+                                eachname: "手少阳三焦经"
+                                eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
+                            }
+                            ListElement {
+                                eachname: "足少阳胆经"
+                                eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
+                            }
+                            ListElement {
+                                eachname: "足厥阴肝经"
+                                eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
+                            }
+                            ListElement {
+                                eachname: "手太阴肺经"
+                                eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
+                            }
+                            ListElement {
+                                eachname: "手阳明大肠经"
+                                eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
+                            }
+                            ListElement {
+                                eachname: "足阳明胃经"
+                                eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
+                            }
+                            ListElement {
+                                eachname: "足太阴脾经"
+                                eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
+                            }
+                            ListElement {
+                                eachname: "手少阴心经"
+                                eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
+                            }
+                            ListElement {
+                                eachname: "手太阳小肠经"
+                                eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
+                            }
+                            ListElement {
+                                eachname: "足太阳膀胱经"
+                                eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
+                            }
+                        }
                         cellWidth: addcasedataleft.width/2
                         cellHeight: 50
                         delegate: adddataDelegate
@@ -295,22 +296,33 @@ Rectangle {
                                            onClicked: {
 
 
-                                                if (landscape_name.text=="足太阴脾经"||landscape_name.text=="手少阴心经" ||landscape_name.text=="足厥阴肝经"){
-                                                    jingluoplanModel.addCaseData("仰卧手向上 "+landscape_name.text)
-                                                    console.log("enter to selected")
-                                                }
-                                                if (landscape_name.text=="足少阴肾经(体前)"||landscape_name.text=="手厥阴心包经" ||landscape_name.text=="手太阴肺经" || landscape_name.text=="足阳明胃经"|| landscape_name.text=="足少阳胆经"){
-                                                    jingluoplanModel.addCaseData("仰卧手向上下 "+landscape_name.text)
-                                                    console.log("enter to selected")
-                                                }
-                                                if (landscape_name.text=="手少阳三焦经"||landscape_name.text=="手阳明大肠经" ||landscape_name.text=="手太阳小肠经" || landscape_name.text=="足太阳膀胱经"){
-                                                    jingluoplanModel.addCaseData("俯卧手向上下 "+landscape_name.text)
-                                                    console.log("enter to selected")
-                                                }
-                                                if (landscape_name.text=="足少阴肾经(体后)"){
-                                                    jingluoplanModel.addCaseData("俯卧脚内八 "+landscape_name.text)
-                                                    console.log("enter to selected")
-                                                }
+                                               if (landscape_name.text=="手少阴心经" ||landscape_name.text=="足厥阴肝经"){
+                                                   treatcasemanageModel.addCaseData("仰卧手向上 "+landscape_name.text,curentLiaofaIndex)
+                                                 //  console.log("enter to selected")
+                                               }
+                                               if (landscape_name.text=="手厥阴心包经" ||landscape_name.text=="手太阴肺经" || landscape_name.text=="足阳明胃经"|| landscape_name.text=="足少阳胆经"){
+                                                   treatcasemanageModel.addCaseData("仰卧手向下 "+landscape_name.text,curentLiaofaIndex)
+                                                  // console.log("enter to selected")
+                                               }
+                                               if (landscape_name.text=="手少阳三焦经"||landscape_name.text=="手阳明大肠经" ||landscape_name.text=="手太阳小肠经" ){
+                                                   treatcasemanageModel.addCaseData("俯卧手向下 "+landscape_name.text,curentLiaofaIndex)
+                                                  // console.log("enter to selected")
+                                               }
+                                               if (landscape_name.text=="足太阴脾经"){
+                                                   treatcasemanageModel.addCaseData("仰卧手向上 "+landscape_name.text+"1",curentLiaofaIndex)
+                                                   treatcasemanageModel.addCaseData("仰卧手向上 "+landscape_name.text+"2",curentLiaofaIndex)
+                                               }
+
+                                               if (landscape_name.text=="足太阳膀胱经"){
+                                                    treatcasemanageModel.addCaseData("俯卧手向下 "+landscape_name.text+"1",curentLiaofaIndex)
+                                                   treatcasemanageModel.addCaseData("俯卧手向下 "+landscape_name.text+"2",curentLiaofaIndex)
+                                               }
+
+                                               if (landscape_name.text=="足少阴肾经"){
+                                                   treatcasemanageModel.addCaseData("仰卧手向下 "+landscape_name.text+"(体前)",curentLiaofaIndex)
+                                                   treatcasemanageModel.addCaseData("俯卧脚内八 "+landscape_name.text+"(体后)",curentLiaofaIndex)
+                                                  // console.log("enter to selected")
+                                               }
 
                                            }
 
@@ -355,6 +367,7 @@ Rectangle {
                         verticalAlignment: Text.AlignVCenter 	//垂直居中，控件必须有height才可以使用
                         horizontalAlignment: Text.AlignHCenter 	//水平居中，控件必须有width才可以使用
                     }
+
                     Rectangle{
                         id:jingluoSpace1
                         x:10
@@ -370,52 +383,161 @@ Rectangle {
                     width: middlecaselist.width
                     height: middlecaselist.height-40
                     color: "white"
-                    ListView {
-                            anchors.fill: middlejingluoplan;
-                            model: jingluoplanModel;
-                            delegate: delegatejingluo_list
-                            spacing: 0;
+
+                    PatientTableHeader{
+                        id: caseHeader
+                        x:25
+                        width: middlejingluoplan.width-caseHeader.x*2
+                        height: 10
+                        dataObj: treatcasemanageModel
+                        headerNames: treatcasemanageModel.tableHeaders;
+                        headerRoles: treatcasemanageModel.headerRoles
+                        widthList: caseView.widthList
+                        xList: caseView.xList
+                        property real avalidWidth
+                        updateWidthList: function() {
+                            avalidWidth = width
+                           // widthList = [CusTableConstant.column0Width, avalidWidth * 0.33,avalidWidth * 0.33,avalidWidth * 0.33]
+                             widthList = [avalidWidth*3/15,avalidWidth*3/15,avalidWidth*6/15,avalidWidth/15,avalidWidth/15,avalidWidth/15]
                         }
-                        //委托
-                        Component {
-                            id: delegatejingluo_list;
-                            Rectangle {
-                                id: jingluorect;
-                                x:20
-                                width: middlejingluoplan.width-40;
-                                height: 40;
-                                color: Qt.rgba(0,0,0,0)
+                    }
+                    CusTableView {
+                        id: caseView
+                        x:caseHeader.x
+                        y:caseHeader.y+caseHeader.height
+                        width: caseHeader.avalidWidth
+                        height: middlejingluoplan.height - caseHeader.height-80
+                        model: treatcasemanageModel
+
+                        onPressed: {
+                            doPress(mouseX, mouseY)
+                        }
+                        onRightPressed: {
+                            var index = indexAt(mouseX, mouseY + contentY)
+                            if (index < 0 || index >= count) {
+                                return
+                            }
+                            casetableMenu.popup(mouseX, mouseY)
+                        }
+                        onReleased: {
+
+                            doRelease()
+                        }
+                        onPositionChanged: {
+                            doPositionChanged(mouseX, mouseY)
+                        }
 
 
-                                Text {
-                                    id: para_name;
-                                    text: paraName + "      "+paraCase;
-                                    font.pixelSize: 15;
-                                    anchors.centerIn: parent;
-                                    width: jingluorect.width
-                                    height:jingluorect.height
-                                    color: "#333333";
-                                    horizontalAlignment: Text.AlignLeft;
-                                    verticalAlignment: Text.AlignVCenter
-                                }
-                                Rectangle {
-                                    width: jingluorect.width
-                                    height: 1;
-                                    x:0
-                                    color: "#ececec";
-                                    anchors.bottom: parent.bottom;
-                                }
-                                MouseArea {
-                                    anchors.fill: parent
-                                    onClicked: {
-
-                                        addCaseTreatMent.visible=false;
-                                    }
-
-                                }
+                        onDoubleClicked: {
+                            var index = indexAt(mouseX, mouseY + contentY)
+                            if (index < 0 || index >= count) {
+                                return
                             }
 
+                            var tw = 0;
+                            var tw0=0;
+                            var indexX=0;
+                            for (var i = 0; i < caseHeader.widthList.length; ++i) {
+
+                                tw += caseHeader.widthList[i]
+                                if (mouseX>=tw0 &&mouseX<tw && i>=3){
+                                    indexX=i
+                                    break;
+                                }
+                                tw0+=caseHeader.widthList[i]
+                            }
+
+
+                            if (indexX==3){
+
+                                treatcasemanageModel.swapRow(index,index-1);
+
+                            }
+                            if (indexX==4){
+
+                                treatcasemanageModel.swapRow(index,index+1);
+
+                            }
+                            if (indexX==5){
+
+                                treatcasemanageModel.removeRow(index);
+                            }
+
+                            if (caseHeader.xList[1] <= mouseX
+                                    && mouseX <= caseHeader.xList[2]) {
+
+                                editInput.x = caseHeader.xList[1]
+                                editInput.y = caseView.y + (parseInt(mouseY / CusConfig.fixedHeight)) * CusConfig.fixedHeight
+                                editInput.width = caseHeader.widthList[1]
+                                editInput.height = CusConfig.fixedHeight
+                                editInput.index = index
+                                var dataObj = treatcasemanageModel.data(index)
+                                editInput.text = dataObj[treatcasemanageModel.headerRoles[0]]
+                                editInput.visible = true
+                                editInput.focus = true
+                            }
                         }
+                        Menu {
+                            id: casetableMenu
+                            MenuItem {
+                                text: qsTr("Edit row")
+                                onTriggered: {
+                                    var mouseX = tableMenu.x
+                                    var mouseY = tableMenu.y
+                                    var index = caseView.indexAt(mouseX, mouseY + caseView.contentY)
+                                    if (index < 0 || index >= caseView.count) {
+                                        return
+                                    }
+                                    if (caseHeader.xList[1] <= mouseX && mouseX <= caseHeader.xList[2]) {
+                                        editInput.x = caseHeader.xList[1]
+                                        editInput.y = caseView.y + (parseInt(mouseY / CusConfig.fixedHeight)) * CusConfig.fixedHeight
+                                        editInput.width = caseHeader.widthList[1]
+                                        editInput.height = CusConfig.fixedHeight
+                                        editInput.index = index
+                                        var dataObj = treatcasemanageModel.data(index)
+                                        editInput.text = dataObj[treatcasemanageModel.headerRoles[0]]
+                                        editInput.visible = true
+                                        editInput.focus = true
+                                    }
+                                }
+                            }
+                            MenuItem {
+                                text: qsTr("Insert before row")
+                                onTriggered: {
+                                    var mouseX = casetableMenu.x
+                                    var mouseY = casetableMenu.y
+                                    var index = caseView.indexAt(mouseX, mouseY + caseView.contentY)
+                                    if (index < 0 || index >= caseView.count) {
+                                        return
+                                    }
+                                    treatcasemanageModel.insertBeforeRow(index)
+                                }
+                            }
+                            MenuItem {
+                                text: qsTr("Remov row")
+                                onTriggered: {
+                                    var mouseX = casetableMenu.x
+                                    var mouseY = casetableMenu.y
+                                    var index = caseView.indexAt(mouseX, mouseY + caseView.contentY)
+                                    if (index < 0 || index >= caseView.count) {
+                                        return
+                                    }
+                                    treatcasemanageModel.removeRow(index)
+                                }
+                            }
+                        }
+                        delegate: AddCaseManageRow {
+                            width: caseView.width
+                            roles: caseView.model.headerRoles
+                            dataObj: model.display
+                            widthList: caseHeader.widthList
+                            xList: caseHeader.xList
+                            onCheckedChanged: {
+                            }
+                        }
+                    }
+                        //委托
+
 
 
                 }
@@ -430,33 +552,55 @@ Rectangle {
             anchors.top: addcasedatahead.bottom
             anchors.topMargin: 0
             color: "#dddddd"
-            CusButton_Image{
-                id:starttreatbutton
-                width: 155
-                height: 155
-                x:(rightcontrolbuttons.width-starttreatbutton.width)/2.0
-                y:320
-                btnImgUrl:imgaeshprefix+"images/ys-kaishibiaoli.png"
-                btnImgHovered:imgaeshprefix+"images/ys-kaishibiaoli-fz.png"
-                //font.pointSize:20
+            CusComboBox {
+                id:casecombox
+                width: 120
+                model: ["手选模式", "姿势模式", "生息模式"]
+                y:27
+                x:(rightcontrolbuttons.width-casecombox.width)/2.0
 
-                onClicked:{
+                displayText: qsTr(currentText)
+                onAccepted: {
 
                 }
+                onActivated: {
+                    curentLiaofaIndex=index;
+                    console.log("addcase combox index=="+index)
 
+                    treatcasemanageModel.changeDataByIndex(index);
+
+                }
             }
+//            CusButton_Image{
+//                id:starttreatbutton
+//                width: 155
+//                height: 155
+//                x:(rightcontrolbuttons.width-starttreatbutton.width)/2.0
+//                y:320
+//                btnImgUrl:imgaeshprefix+"images/ys-kaishibiaoli.png"
+//                btnImgHovered:imgaeshprefix+"images/ys-kaishibiaoli-fz.png"
+//                //font.pointSize:20
+
+//                onClicked:{
+
+//                }
+
+//            }
             CusButton_Image{
                 id:savecasebutton
                 width: 161
                 height: 45
                 x:28
-                y:starttreatbutton.y+starttreatbutton.height+34
+                y:320+155+34
                 btnImgUrl:imgaeshprefix+"images/ys-tianjiazhihuanzhe.png"
                 btnImgHovered:imgaeshprefix+"images/ys-tianjiazhihuanzhe-fz.png"
                 onClicked:{
-                    if (jingluoplanModel.rowCount()>0){
-
+                    if (treatcasemanageModel.rowCount()>0&&inputtreatname.text.length>0 && inputcasename.text.length>0){
+                        treatcasemanageModel.addToCaseGl(inputtreatname.text);
+                        treatcaseModel.addToCase(inputcasename.text,inputtreatname.text,doctorloginname)
+                        addTreatManager.visible=false
                     }
+
                 }
             }
             CusButton_Image{

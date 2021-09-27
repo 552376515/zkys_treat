@@ -4,6 +4,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Controls 1.4
 import TaoQuick 1.0
 import zmq.Components 1.0
+import QtMultimedia 5.12
 
 Item {
     id:patienttreatmanager
@@ -164,10 +165,7 @@ Item {
 
     }
 
-    //设置音频
-       MediaPlayer {
-           id: playtiaolimusic
-           source: musicname
-       }
+
+
 
 }

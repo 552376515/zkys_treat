@@ -17,7 +17,7 @@ public:
 public slots:
     void initTreatData();
     void insertBeforeRow(int row);
-
+    void addToCase(QString pcase,QString ptreatment, QString doctor);
     void clearAll();
     void removeRow(int row);
 private:

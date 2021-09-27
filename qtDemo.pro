@@ -54,6 +54,7 @@ SOURCES += \
         DeviceAddTable/PatientCaseModel.cpp \
         DeviceAddTable/PatientDb.cpp \
     DeviceAddTable/PatientPresAddModel.cpp \
+    DeviceAddTable/TreatCaseManageListModel.cpp \
     DeviceAddTable/TreatCaseModel.cpp \
         DeviceAddTable/patientcaseitem.cpp \
     Patient/ImageProvider.cpp \
@@ -91,6 +92,7 @@ HEADERS += \
     DeviceAddTable/PatientCaseListNewModel.h \
     DeviceAddTable/PatientCaseModel.h \
     DeviceAddTable/PatientPresAddModel.h \
+    DeviceAddTable/TreatCaseManageListModel.h \
     DeviceAddTable/TreatCaseModel.h \
     DeviceAddTable/patientcaseitem.h \
     Patient/ImageProvider.h \

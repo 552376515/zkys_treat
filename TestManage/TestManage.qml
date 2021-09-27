@@ -139,8 +139,7 @@ Item {
             x:patienttreatmanager.width-rightCellWidth
             width: rightCellWidth
             height: background.height+20
-            anchors.left: patientscroll.right
-            anchors.leftMargin: 30
+
             y:0
             color: "#90cfd8"
             TestRightControl{

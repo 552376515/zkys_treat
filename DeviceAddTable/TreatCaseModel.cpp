@@ -89,6 +89,29 @@ void TreatCaseModel::initTreatData(){
         resetData(objs);
 }
 
+void TreatCaseModel::addToCase(QString pcase,QString ptreatment, QString doctor)
+{
+    const int N = 50000;
+    QList<QuickListItemBase *> objs;
+    objs.reserve(N);
+    QDate now=QDate::currentDate();
+    addGlTreatmentNew(pcase,ptreatment,now,"启用");
+
+    auto item = new PatientCaseItem;
+    item->set_casename(pcase);
+    item->set_treatment(ptreatment);
+    item->set_doctor(doctor);
+    item->set_prescriptime(now.toString());
+    item->set_tcount(0);
+    item->set_checkCase("查看");
+    item->set_editCase("修改");
+    item->set_caseState("启用");
+   // item->set_regtime(query.value("regtime").toString());
+    item->set_online(false);
+    objs.append(item);
+    append(objs);
+}
+
 void TreatCaseModel::clearAll()
 {
     clear();

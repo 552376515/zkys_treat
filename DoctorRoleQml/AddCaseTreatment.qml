@@ -185,13 +185,13 @@ Rectangle {
                         model:  ListModel {
                                     id: theModel
                                     ListElement {
-                                        eachname: "足少阴肾经(体前)"
+                                        eachname: "足少阴肾经"
                                         eachimage:"qrc:/new/prefix1/Image/xxx.jpg"//加载图片资源
                                     }
-                                    ListElement {
-                                        eachname: "足少阴肾经(体后)"
-                                        eachimage:"qrc:/new/prefix1/Image/xxx.jpg"//加载图片资源
-                                    }
+//                                    ListElement {
+//                                        eachname: "足少阴肾经(体后)"
+//                                        eachimage:"qrc:/new/prefix1/Image/xxx.jpg"//加载图片资源
+//                                    }
                                     ListElement {
                                         eachname: "手厥阴心包经"
                                         eachimage:"qrc:/new/prefix1/Image/xxx.jpg"
@@ -285,20 +285,31 @@ Rectangle {
                                            onClicked: {
 
 
-                                                if (landscape_name.text=="足太阴脾经"||landscape_name.text=="手少阴心经" ||landscape_name.text=="足厥阴肝经"){
+                                                if (landscape_name.text=="手少阴心经" ||landscape_name.text=="足厥阴肝经"){
                                                     jingluoplannewModel.addCaseData("仰卧手向上 "+landscape_name.text,curentLiaofaIndex)
                                                   //  console.log("enter to selected")
                                                 }
-                                                if (landscape_name.text=="足少阴肾经(体前)"||landscape_name.text=="手厥阴心包经" ||landscape_name.text=="手太阴肺经" || landscape_name.text=="足阳明胃经"|| landscape_name.text=="足少阳胆经"){
+                                                if (landscape_name.text=="手厥阴心包经" ||landscape_name.text=="手太阴肺经" || landscape_name.text=="足阳明胃经"|| landscape_name.text=="足少阳胆经"){
                                                     jingluoplannewModel.addCaseData("仰卧手向下 "+landscape_name.text,curentLiaofaIndex)
                                                    // console.log("enter to selected")
                                                 }
-                                                if (landscape_name.text=="手少阳三焦经"||landscape_name.text=="手阳明大肠经" ||landscape_name.text=="手太阳小肠经" || landscape_name.text=="足太阳膀胱经"){
+                                                if (landscape_name.text=="手少阳三焦经"||landscape_name.text=="手阳明大肠经" ||landscape_name.text=="手太阳小肠经" ){
                                                     jingluoplannewModel.addCaseData("俯卧手向下 "+landscape_name.text,curentLiaofaIndex)
                                                    // console.log("enter to selected")
                                                 }
-                                                if (landscape_name.text=="足少阴肾经(体后)"){
-                                                    jingluoplannewModel.addCaseData("俯卧脚内八 "+landscape_name.text,curentLiaofaIndex)
+                                                if (landscape_name.text=="足太阴脾经"){
+                                                    jingluoplannewModel.addCaseData("仰卧手向上 "+landscape_name.text+"1",curentLiaofaIndex)
+                                                    jingluoplannewModel.addCaseData("仰卧手向上 "+landscape_name.text+"2",curentLiaofaIndex)
+                                                }
+
+                                                if (landscape_name.text=="足太阳膀胱经"){
+                                                     jingluoplannewModel.addCaseData("俯卧手向下 "+landscape_name.text+"1",curentLiaofaIndex)
+                                                    jingluoplannewModel.addCaseData("俯卧手向下 "+landscape_name.text+"2",curentLiaofaIndex)
+                                                }
+
+                                                if (landscape_name.text=="足少阴肾经"){
+                                                    jingluoplannewModel.addCaseData("仰卧手向下 "+landscape_name.text+"(体前)",curentLiaofaIndex)
+                                                    jingluoplannewModel.addCaseData("俯卧脚内八 "+landscape_name.text+"(体后)",curentLiaofaIndex)
                                                    // console.log("enter to selected")
                                                 }
 

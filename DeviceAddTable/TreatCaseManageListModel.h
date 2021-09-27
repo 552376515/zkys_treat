@@ -1,28 +1,28 @@
-#ifndef PATIENTCASELISTNEWMODEL_H
-#define PATIENTCASELISTNEWMODEL_H
+#ifndef TREATCASEMANAGELISTMODEL_H
+#define TREATCASEMANAGELISTMODEL_H
 
 #include <QObject>
 #include "QuickModel/QuickListModel.h"
 class PatientCaseItem;
-class PatientCaseListNewModelPrivate;
+class TreatCaseManageListModelPrivate;
 
-class PatientCaseListNewModel: public QuickListModel
+
+class TreatCaseManageListModel: public QuickListModel
 {
     Q_OBJECT
 
 public:
-    explicit PatientCaseListNewModel(QObject *parent = nullptr);
-    virtual ~PatientCaseListNewModel() override;
+    explicit TreatCaseManageListModel(QObject *parent = nullptr);
+    virtual ~TreatCaseManageListModel() override;
     Q_INVOKABLE virtual void sortByRole() override;
 public slots:
 //    void doUpdateName(int row, const QString &name);
 
-    void initCaseData();
-    void loadCaseDataByPatientNo(QString patientid,QString treatment);
+
+    void loadCaseDataByTreatment(QString treatment);
     void changeDataByIndex(int index);
     void addCaseData(QString dataStr,int index);
-    void addModel(const PatientCaseItem &paraModel);
-    void addToPatientCaseGl(QString pno,QString ptreatment);
+    void addToCaseGl(QString ptreatment);
 
     void swapRow(int from,int to);
 
@@ -47,8 +47,8 @@ private:
     void sortByModel(Qt::SortOrder order);
     void updateCase();
 private:
-    PatientCaseListNewModelPrivate *d;
+    TreatCaseManageListModelPrivate *d;
 };
 
 
-#endif // PATIENTCASELISTNEWMODEL_H
+#endif // TREATCASEMANAGELISTMODEL_H

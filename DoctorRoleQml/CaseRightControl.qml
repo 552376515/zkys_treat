@@ -4,11 +4,17 @@ import QtQuick.Controls 2.5
 import QtQuick.Controls 1.4
 import TaoQuick 1.0
 import zmq.Components 1.0
+import QtMultimedia 5.12
 Item {
     id:rightcontrol
     width: parent
     height: parent
     anchors.fill: parent
+    property bool startrecognize: false
+    property bool isrecognizesuccess: false
+    property bool starttiaoli: false
+    property variant tianliformR: { "足少阴肾经(体前)":"shen_tiqian_r","手厥阴心包经":"","手少阳三焦经":"","足少阳胆经":"","足厥阴肝经":"", "手太阴肺经":"", "手阳明大肠经":"","足阳明胃经":"", "足太阴脾经1":"","足太阴脾经2":"", "手少阴心经":"",  "手太阳小肠经":"", "足太阳膀胱经1":"","足太阳膀胱经2":"", "足少阴肾经(体后)":"" }
+   property variant tianliformL: { "足少阴肾经(体前)":"shen_tiqian_l","手厥阴心包经":"","手少阳三焦经":"","足少阳胆经":"","足厥阴肝经":"", "手太阴肺经":"", "手阳明大肠经":"","足阳明胃经":"", "足太阴脾经1":"","足太阴脾经2":"", "手少阴心经":"",  "手太阳小肠经":"", "足太阳膀胱经1":"","足太阳膀胱经2":"", "足少阴肾经(体后)":"" }
     Rectangle{
         id:patientmess
         width: 300
@@ -154,6 +160,66 @@ Item {
         }
     }
 
+    function closeAllTiaoli(){
+        realtimeCorrect.visible=flase;
+        realtimeRecognize.visible=false;
+        realtimeRoutine.visible=false;
+    }
+
+    function recognizeAction(){//开始识别 跳到实时画面
+
+        var currmodel=jingluoplanStep.get(listView.currentIndex)
+        var posture=currmodel.posturebox
+        var soundname=currmodel.soundname
+        console.log("regstart posture="+posture)
+        if (posture!==""){ //有体位信息 发送socket 信息 先放音-》发送socket
+            musicname=imgaeshprefix+"audios/"+soundname
+            playtiaolimusic.play();
+            var sendstr="{\"msg\":\"identify\",\"args\":{\"therapybox\":\"疗法一\",\"posturebox\":\""+posture+"\"}}"
+            console.log("socket sendstr="+sendstr)
+            senderright.sendMessage(BAT.byteArrayfy(sendstr))
+            if (!realtimeCorrect.visible){
+                closeAllTiaoli()
+                realtimeCorrect.visible=true
+            }
+        }
+
+//       senderright.sendMessage(BAT.byteArrayfy("{\"msg\":\"identify\",\"args\":{\"therapybox\":\"疗法一\",\"posturebox\":\"2号姿势\"}}"));
+    }
+
+    function tiaoliAction(){
+        var currmodel=jingluoplanStep.get(listView.currentIndex)
+        var posture=currmodel.posturebox
+        var meridianbox=tianliformR[ currmodel.name]
+        var meridianbox_2=tianliformL[currmodel.name]
+
+            var rightbox="{\"msg\":\"start_cure\",\"args\":{\"meridianbox\":\""+meridianbox+"\",\"meridianbox_2\":\""+meridianbox_2+"\"}}"
+            senderright.sendMessage(BAT.byteArrayfy(rightbox))
+        listView.currentIndex++
+
+       //  senderright.sendMessage(BAT.byteArrayfy("{\"msg\":\"start_cure\",\"args\":{\"meridianbox\":\"shen_tiqian_r\",\"meridianbox_2\":\"shen_tiqian_l\"}}"));
+
+    }
+
+    function tiaoliActionNext(){
+        var currmodel=jingluoplanStep.get(listView.currentIndex)
+        var posture=currmodel.posturebox
+        var meridianbox=tianliformR[ currmodel.name]
+        var meridianbox_2=tianliformL[currmodel.name]
+        if (listView.currentIndex<listView.count){
+            if (posture===""){
+                var rightbox="{\"msg\":\"start_cure\",\"args\":{\"meridianbox\":\""+meridianbox+"\",\"meridianbox_2\":\""+meridianbox_2+"\"}}"
+                senderright.sendMessage(BAT.byteArrayfy(rightbox))
+                listView.currentIndex++
+            }else{//识别放音
+                recognizeAction()
+            }
+        }
+
+
+    }
+
+
     CusButton{
         id: regButton
         width:250
@@ -165,13 +231,11 @@ Item {
         backgroundColorNormal:"#f5f6f7"
         backgroundColorPressed:"#f5b750"
         selected:true
-        onClicked:{
-                musicname=imgaeshprefix+"audios/start_iden.mp3"
-                playtiaolimusic.play();
-                var currmodel=jingluoplanStep.get(listView.currentIndex)
-                var posture=currmodel.posturebox
-                console.log("regstart posture="+posture)
-               senderright.sendMessage(BAT.byteArrayfy("{\"msg\":\"identify\",\"args\":{\"therapybox\":\"疗法一\",\"posturebox\":\"2号姿势\"}}"));
+        onClicked:{//开始识别 先要播放声音 ，声音播放完成，再去识别体位
+            musicname=imgaeshprefix+"audios/start_iden.mp3"
+            playtiaolimusic.play();
+            startrecognize=false
+            starttiaoli=false
         }
 
     }
@@ -182,12 +246,15 @@ Item {
         height:60
         anchors.top: regButton.bottom
         anchors.topMargin: 20
-        text:"开始调理"
-        backgroundColorNormal:"#f5f6f7"
+        text:starttiaoli?"停止调理":"开始调理"
+        backgroundColorNormal:(isrecognizesuccess)?"#ededed":"#f5f6f7"
         backgroundColorPressed:"#f5b750"
         selected:false
         onClicked:{
-            senderright.sendMessage(BAT.byteArrayfy("{\"msg\":\"start_cure\",\"args\":{\"meridianbox\":\"shen_tiqian_r\",\"meridianbox_2\":\"shen_tiqian_l\"}}"));
+          //  if (isrecognizesuccess){
+                tiaoliAction()
+          //  }
+
 
         }
 
@@ -201,17 +268,29 @@ Item {
         onMessageReceived: {
            var ss=BAT.stringify(message)[0];
 
-          //  rightcontrolTimer.running=true;
 
-            if (ss==="identify_success"){
+
+            if (ss==="identify_success"){ //识别成功 到识别成功画面
+                //rightcontrolTimer.running=true;
                  toReconize();
                 console.log("in equal")
-              //  realpatient.visible=false
-               // realpatient2.visible=true;
-             //  rightcontrolTimer.stop()
+                if(starttiaoli){ //识别成功，如果在调理，发送调理信息
+                    var currmodel=jingluoplanStep.get(listView.currentIndex)
+                    var posture=currmodel.posturebox
+                    var meridianbox=tianliformR[ currmodel.name]
+                    var meridianbox_2=tianliformL[currmodel.name]
+                    var rightbox="{\"msg\":\"start_cure\",\"args\":{\"meridianbox\":\""+meridianbox+"\",\"meridianbox_2\":\""+meridianbox_2+"\"}}"
+                    senderright.sendMessage(BAT.byteArrayfy(rightbox))
+                    listView.currentIndex++
+                }
             }
-            if (ss==="start_cure_success"){
+            if (ss==="start_cure_success"){//调理信息获得成功，进入调理页面
+                closeAllTiaoli()
+                    realtimeRoutine.visible=true
+            }
 
+            if (ss==="end_cure_success"){
+                    tiaoliActionNext()
             }
 
             console.log("right control onMessageReceived +"+message +" "+ss)
@@ -275,4 +354,25 @@ Item {
             //senderright.close();
         }
     }
+
+    //设置音频
+       MediaPlayer {
+           id: playtiaolimusic
+           source: musicname
+           onStatusChanged: {
+               console.log("playstatus "+playbackState)
+
+           }
+
+           onStopped: {
+               console.log("shibie jieshu")
+               if (!startrecognize){
+                   console.log("shibie jieshu1")
+                   recognizeAction()
+                   startrecognize=true
+               }
+
+           }
+       }
+
 }

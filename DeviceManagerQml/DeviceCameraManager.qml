@@ -147,7 +147,7 @@ Item {
                                 target: CodeImage
 
                                 onCallQmlRefeshImg:{
-                                     console.log("callonrefrshcorrect");
+                                    // console.log("callonrefrshcorrect");
                                     //theimage.source = ""
                                     if (eachid==index){
                                         theimage.source = "image://CodeImg/"+index+ Math.random()

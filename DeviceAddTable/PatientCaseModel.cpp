@@ -147,7 +147,7 @@ void PatientCaseModel::addToPatientCase(QString pname,QString pno,QString pcase,
     item->set_treatment(ptreatment);
     item->set_doctor(doctor);
     item->set_prescriptime(now.toString());
-    item->set_tcount(0);
+    item->set_tcount("0");
    // item->set_regtime(query.value("regtime").toString());
     item->set_online(false);
     objs.append(item);

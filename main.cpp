@@ -17,7 +17,7 @@
 #include "DeviceAddTable/GLPatientManagerModel.h" //管理界面 患者管理
 #include "DeviceAddTable/DoctorManagerModel.h" //管理界面 用户管理
 #include "DeviceAddTable/PatientCaseListNewModel.h" //添加处方界面
-
+#include "DeviceAddTable/TreatCaseManageListModel.h"
 
 
 static QObject *byteArrayTools_factory(QQmlEngine *, QJSEngine *)
@@ -65,6 +65,9 @@ int main(int argc, char *argv[])
 
     PatientCaseListNewModel newmodel;
     engine.rootContext()->setContextProperty("jingluoplannewModel",&newmodel);
+
+    TreatCaseManageListModel treatcasemodel;
+    engine.rootContext()->setContextProperty("treatcasemanageModel",&treatcasemodel);
 
     PatientPresAddModel addmodel;
     PatientCasePresParaModel aparam1;

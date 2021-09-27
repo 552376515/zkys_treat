@@ -1,5 +1,4 @@
-#include "PatientCaseListNewModel.h"
-
+#include "TreatCaseManageListModel.h"
 
 #include "patientcaseitem.h"
 #include <QCoreApplication>
@@ -15,24 +14,24 @@
 
 const static QStringList jHeaderRoles = { "casename","treatment","doctor","checkCase", "editCase","caseState" };
 const static QStringList jHeaders={"","","","","",""};
-class PatientCaseListNewModelPrivate
+class TreatCaseManageListModelPrivate
 {
 public:
     std::default_random_engine randomEngine;
     std::uniform_int_distribution<uint32_t> u65535 { 0, 0xffffffff };
 };
 
-PatientCaseListNewModel::PatientCaseListNewModel(QObject *parent) : QuickListModel(parent), d(new PatientCaseListNewModelPrivate)
+TreatCaseManageListModel::TreatCaseManageListModel(QObject *parent) : QuickListModel(parent), d(new TreatCaseManageListModelPrivate)
 {
     setHeaderRoles(jHeaderRoles);
     setTableHeaders(jHeaders);
 }
 
-PatientCaseListNewModel::~PatientCaseListNewModel(){
+TreatCaseManageListModel::~TreatCaseManageListModel(){
     delete d;
 }
 
-void PatientCaseListNewModel::sortByRole()
+void TreatCaseManageListModel::sortByRole()
 {
     if (mDatas.count() <= 1) {
         return;
@@ -56,63 +55,19 @@ void PatientCaseListNewModel::sortByRole()
     }
     updateAlternate();
 }
-void PatientCaseListNewModel::initCaseData(){
-    const int N = 50000;
-    QList<QuickListItemBase *> objs;
-    objs.reserve(N);
-    auto c1 = std::chrono::high_resolution_clock::now();
-//    if (!QSqlDatabase::drivers().contains("QSQLITE"))
-//       printf("Unable to load database");
-    QSqlQuery patientcasequery;
 
-//    // Initialize the database:
-//    QSqlError err = initDb();
-//    if (err.type() != QSqlError::NoError) {
-//        return;
-//    }
 
-    /**************************使用QSqlQuery操作数据库**************************/
-            //执行操作类对象
-// qWarning() << "general" << N << "cost1" << "ms";
-        //查询数据
-        patientcasequery.prepare("SELECT * FROM patientscasegl");
-        patientcasequery.exec();	//执行
-// qWarning() << "general" << N << "cost" << "ms";
-        QSqlRecord recode = patientcasequery.record();		//recode保存查询到一些内容信息，如表头、列数等等
-       // int column = recode.count();			//获取读取结果的列数
-        QString s1 = recode.fieldName(0);
-        while (patientcasequery.next())
-        {
-            auto item = new PatientCaseItem;
-            item->set_casename(patientcasequery.value("directlay").toString());
-            item->set_treatment(patientcasequery.value("jingluo").toString());
-            item->set_doctor("");
-            item->set_checkCase("1");
-            item->set_editCase("1");
-            item->set_caseState("1");
-           // item->set_regtime(query.value("regtime").toString());
-            item->set_online(false);
-            objs.append(item);
-//           qWarning() << "general" << N << "cost" << item->casename() << "ms";
-
-        }
-        auto c2 = std::chrono::high_resolution_clock::now();
-        auto micro = std::chrono::duration_cast<std::chrono::milliseconds>(c2 - c1).count();
-        //qWarning() << "general" << N << "cost" << micro << "ms";
-        resetData(objs);
-}
-
-void PatientCaseListNewModel::updateCase(){
+void TreatCaseManageListModel::updateCase(){
      emit dataChanged(index(0, 0), index(mDatas.count() - 1, 0));
 }
-void PatientCaseListNewModel::loadCaseDataByPatientNo(QString patientid,QString treatment){
+void TreatCaseManageListModel::loadCaseDataByTreatment(QString treatment){
     const int N = 50000;
     QList<QuickListItemBase *> objs;
     objs.reserve(N);
     QSqlQuery patientcasequery;
     auto c1 = std::chrono::high_resolution_clock::now();
    // QString qsql="SELECT * FROM patientscasegl where patientid=";
-     QString qsql=QString("SELECT * FROM patientscasegl where patientid='%1' and treatment='%2'").arg(patientid).arg(treatment);
+     QString qsql=QString("SELECT * FROM patientscasegl where treatmentname='%1'").arg(treatment);
 
     patientcasequery.prepare(qsql);
     patientcasequery.exec();	//执行
@@ -124,8 +79,8 @@ void PatientCaseListNewModel::loadCaseDataByPatientNo(QString patientid,QString 
     while (patientcasequery.next())
     {
         auto item = new PatientCaseItem;
-        item->set_casename(patientcasequery.value("directlay").toString());
-        item->set_treatment(patientcasequery.value("jingluo").toString());
+        item->set_casename(patientcasequery.value("treatmentbody").toString());
+        item->set_treatment(patientcasequery.value("treatmentjingluo").toString());
         item->set_doctor("");
         item->set_checkCase("1");
         item->set_editCase("1");
@@ -143,7 +98,7 @@ void PatientCaseListNewModel::loadCaseDataByPatientNo(QString patientid,QString 
 
 }
 
-void PatientCaseListNewModel::changeDataByIndex(int index){
+void TreatCaseManageListModel::changeDataByIndex(int index){
     QList<QuickListItemBase *> copyObjs = mDatas;
     for (int i=0;i<copyObjs.count();i++){
         PatientCaseItem *tmpmodel=dynamic_cast<PatientCaseItem *>(copyObjs.at(i));
@@ -168,14 +123,8 @@ void PatientCaseListNewModel::changeDataByIndex(int index){
 
 }
 
-void PatientCaseListNewModel::addModel(const PatientCaseItem &paraModel)
-{
 
-
-}
-
-
-void PatientCaseListNewModel::addCaseData(QString dataStr,int index){
+void TreatCaseManageListModel::addCaseData(QString dataStr,int index){
 
 
     QStringList list;
@@ -221,7 +170,7 @@ void PatientCaseListNewModel::addCaseData(QString dataStr,int index){
 
 }
 
-void PatientCaseListNewModel::swapRow(int from,int to){
+void TreatCaseManageListModel::swapRow(int from,int to){
     if (from!=to && from>=0<mDatas.count() && to>=0 && to<mDatas.count()){
         beginMoveRows(QModelIndex(),from,from,
                       QModelIndex(),from>to?(to):(to+1));
@@ -232,7 +181,7 @@ void PatientCaseListNewModel::swapRow(int from,int to){
     }
 }
 
-void PatientCaseListNewModel::addToPatientCaseGl(QString pno,QString ptreatment)
+void TreatCaseManageListModel::addToCaseGl(QString ptreatment)
 {
     QList<QuickListItemBase *> copyObjs = mDatas;
 
@@ -240,24 +189,24 @@ void PatientCaseListNewModel::addToPatientCaseGl(QString pno,QString ptreatment)
     for (int i=0;i<copyObjs.count();i++){
         //QDebug()<<"addToPatientCaseGl"<<i;
         PatientCaseItem *tmpmodel=dynamic_cast<PatientCaseItem *>(copyObjs.at(i));
-        addPatientCaseGLNew(pno.toInt(),ptreatment,tmpmodel->casename(),tmpmodel->treatment(),now);
+        addGlTreatmentPlanNew(ptreatment,tmpmodel->casename(),tmpmodel->treatment());
 
     }
 }
 
-void PatientCaseListNewModel::clearAll()
+void TreatCaseManageListModel::clearAll()
 {
     clear();
 }
 
 
-void PatientCaseListNewModel::removeRow(int row)
+void TreatCaseManageListModel::removeRow(int row)
 {
     removeAt(row);
 }
 
 
-void PatientCaseListNewModel::insertBeforeRow(int row)
+void TreatCaseManageListModel::insertBeforeRow(int row)
 {
 //    auto item = genOne(d->u65535(d->randomEngine));
 //    insert(row, { item });
@@ -265,7 +214,7 @@ void PatientCaseListNewModel::insertBeforeRow(int row)
 
 
 
-void PatientCaseListNewModel::sortByName(Qt::SortOrder order)
+void TreatCaseManageListModel::sortByName(Qt::SortOrder order)
 {
     QList<QuickListItemBase *> copyObjs = mDatas;
     if (order == Qt::SortOrder::AscendingOrder) {
@@ -281,7 +230,7 @@ void PatientCaseListNewModel::sortByName(Qt::SortOrder order)
     emit dataChanged(index(0, 0), index(mDatas.count() - 1, 0));
 }
 
-void PatientCaseListNewModel::sortByAddress(Qt::SortOrder order)
+void TreatCaseManageListModel::sortByAddress(Qt::SortOrder order)
 {
     QList<QuickListItemBase *> copyObjs = mDatas;
     const static QStringList zitaiList = { "足少阴肾经(体前)","手厥阴心包经","足少阳胆经","足厥阴肝经", "手太阴肺经","足阳明胃经", "足太阴脾经1","足太阴脾经2", "手少阴心经", "手少阳三焦经", "手阳明大肠经", "手太阳小肠经", "足太阳膀胱经1","足太阳膀胱经2", "足少阴肾经(体后)" };
@@ -305,7 +254,7 @@ void PatientCaseListNewModel::sortByAddress(Qt::SortOrder order)
     emit dataChanged(index(0, 0), index(mDatas.count() - 1, 0));
 }
 
-void PatientCaseListNewModel::sortByAddress1(Qt::SortOrder order)
+void TreatCaseManageListModel::sortByAddress1(Qt::SortOrder order)
 {
     const static QStringList shengxiList = { "足少阴肾经(体前)","手厥阴心包经","手少阳三焦经","足少阳胆经","足厥阴肝经", "手太阴肺经", "手阳明大肠经","足阳明胃经", "足太阴脾经1","足太阴脾经2", "手少阴心经",  "手太阳小肠经", "足太阳膀胱经1","足太阳膀胱经2", "足少阴肾经(体后)" };
 
@@ -330,7 +279,7 @@ void PatientCaseListNewModel::sortByAddress1(Qt::SortOrder order)
 }
 
 
-void PatientCaseListNewModel::sortByModel(Qt::SortOrder order)
+void TreatCaseManageListModel::sortByModel(Qt::SortOrder order)
 {
     QList<QuickListItemBase *> copyObjs = mDatas;
     if (order == Qt::SortOrder::AscendingOrder) {

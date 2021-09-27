@@ -211,8 +211,8 @@ Item {
             color: "#ededed"
             CusPageIndicator{
                 anchors.centerIn: parent
-                count: 5
-                currentIndex: 4
+                count: treatcaseModel.rowCount()/10+treatcaseModel.rowCount()%10!==0?1:0
+                currentIndex: 0
             }
         }
 

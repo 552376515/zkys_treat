@@ -146,6 +146,11 @@ Item {
                 if (index < 0 || index >= count) {
                     return
                 }
+                var curdataObj=patientCaseModel.data(index)
+
+                currgltreatmentname=curdataObj[patientCaseModel.headerRoles[1]]
+                console.log("treatmentname="+currgltreatmentname)
+                jingluoplannewModel.loadCaseDataByPatientNo(currpatientnum,currgltreatmentname)
                 realpatient.visible=true
 
 

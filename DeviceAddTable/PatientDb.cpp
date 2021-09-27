@@ -115,7 +115,7 @@ QVariant addPatientCaseGL(QSqlQuery &q, int patientid, const QString &treatment,
 }
 void addPatientCaseGLNew( int patientid, const QString &treatment,  const QString &directlay,const QString &jingluo, QDate treatdate){
     QSqlQuery q;
-    if (q.prepare(INSERT_GLTREATMENTCASE_SQL)){
+    if (q.prepare(INSERT_PATIENTSCASEGL_SQL)){
       //  qDebug()<<"patientid="<<patientid<<"treatment="<<treatment;
         addPatientCaseGL(q,patientid,treatment.toUtf8(),directlay.toUtf8(),jingluo.toUtf8(),treatdate);
       //  qDebug()<<"patientid1111="<<patientid<<"treatment="<<treatment;
@@ -151,6 +151,8 @@ QVariant addPatientScript(QSqlQuery &q,  int patientid,  const QString &pprescri
      return q.lastInsertId();
 }
 
+
+
 QVariant addGlTreatment(QSqlQuery &q, const QString &casename,const QString &treatmentname,QDate treatmenttime,const QString &treatstate){
     q.addBindValue(casename);
     q.addBindValue(treatmentname);
@@ -159,6 +161,12 @@ QVariant addGlTreatment(QSqlQuery &q, const QString &casename,const QString &tre
     q.exec();
     return q.lastInsertId();
 
+}
+void addGlTreatmentNew(const QString &casename,const QString &treatmentname,QDate treatmenttime,const QString &treatstate){
+     QSqlQuery q;
+     if (q.prepare(INSERT_GLTREATMENTCASE_SQL)){
+         addGlTreatment(q,casename,treatmentname,treatmenttime,treatstate);
+     }
 }
 
 QVariant addGlTreatmentPlan(QSqlQuery &q,const QString &treatmentname,const QString &treatmentbody,const QString &treatmentjingluo){
@@ -169,6 +177,12 @@ QVariant addGlTreatmentPlan(QSqlQuery &q,const QString &treatmentname,const QStr
     return q.lastInsertId();
 }
 
+void addGlTreatmentPlanNew(const QString &treatmentname,const QString &treatmentbody,const QString &treatmentjingluo){
+    QSqlQuery q;
+    if (q.prepare(INSERT_GLTREATMENTCASEPLAN_SQL)){
+        addGlTreatmentPlan(q,treatmentname,treatmentbody,treatmentjingluo);
+    }
+}
 
 QSqlError initDb()
 {
@@ -244,7 +258,7 @@ QSqlError initDb()
 
     if (!q.prepare(INSERT_GLTREATMENTCASEPLAN_SQL))
         return q.lastError();
-    addGlTreatmentPlan(q,QStringLiteral("经络疗法1"),QStringLiteral("俯卧手向上"),QStringLiteral("心包经络"));
+    addGlTreatmentPlan(q,QStringLiteral("经络疗法1"),QStringLiteral("仰卧手向下"),QStringLiteral("足少阴肾经(体前)"));
     addGlTreatmentPlan(q,QStringLiteral("经络疗法1"),QStringLiteral("俯卧手向上"),QStringLiteral("心包经络"));
 
     if (!q.prepare(INSERT_PATIENTSCASEGL_SQL))
