@@ -291,15 +291,15 @@ Rectangle {
                                                 }
                                                 if (landscape_name.text=="足少阴肾经(体前)"||landscape_name.text=="手厥阴心包经" ||landscape_name.text=="手太阴肺经" || landscape_name.text=="足阳明胃经"|| landscape_name.text=="足少阳胆经"){
                                                     jingluoplannewModel.addCaseData("仰卧手向下 "+landscape_name.text,curentLiaofaIndex)
-                                                    console.log("enter to selected")
+                                                   // console.log("enter to selected")
                                                 }
                                                 if (landscape_name.text=="手少阳三焦经"||landscape_name.text=="手阳明大肠经" ||landscape_name.text=="手太阳小肠经" || landscape_name.text=="足太阳膀胱经"){
                                                     jingluoplannewModel.addCaseData("俯卧手向下 "+landscape_name.text,curentLiaofaIndex)
-                                                    console.log("enter to selected")
+                                                   // console.log("enter to selected")
                                                 }
                                                 if (landscape_name.text=="足少阴肾经(体后)"){
                                                     jingluoplannewModel.addCaseData("俯卧脚内八 "+landscape_name.text,curentLiaofaIndex)
-                                                    console.log("enter to selected")
+                                                   // console.log("enter to selected")
                                                 }
 
                                            }

@@ -66,9 +66,6 @@ Window {
 
         }
 
-
-        //showIndex=4;
-        //realpatient2.visible=true;
        // playMusic.play()
         console.log("screen width="+Screen.desktopAvailableWidth +" height="+Screen.desktopAvailableHeight)
 
@@ -77,8 +74,6 @@ Window {
     function closeAllView(){
         if (loginrole==0){
             realpatient.visible=false
-            realpatient1.visible=false
-            realpatient2.visible=false
             patientManagerRect.visible=false
             paramDeviceset.visible=false
 
@@ -377,29 +372,6 @@ Window {
 //        }
     }
 
-    Rectangle{//医生角色 动画
-        id:realpatient1
-        y:zhongkeheader.height
-        width: window.width
-        height: window.height-zhongkeheader.height
-        visible: false
-        PatientTreatRoutine{
-            width: realpatient1.width
-            height: realpatient1.height
-        }
-    }
-
-    Rectangle{//医生角色 识别
-        id:realpatient2
-        y:zhongkeheader.height
-        width: window.width
-        height: window.height-zhongkeheader.height
-        visible: false
-        PatientTreatRecognize{
-            width: realpatient2.width
-            height: realpatient2.height
-        }
-    }
 
     Rectangle{//管理角色患者管理
         id:glpatientmanager
@@ -630,12 +602,5 @@ Window {
            source: imgaeshprefix+"audios/bgm_gaoshanliushui.mp3"
        }
 
-       function toReconize(){
-           console.log("to recognize")
-           realpatient.visible=false
-           realpatient2.visible=true
-           console.log("to recognize1")
-
-       }
 
 }

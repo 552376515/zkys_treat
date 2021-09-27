@@ -145,6 +145,7 @@ Item {
                                                 colorCode: "green"
                                                 zishiname:""
                                                 soundname:""
+                                                posturebox:""
                                             }
 
                         }
@@ -165,6 +166,11 @@ Item {
         backgroundColorPressed:"#f5b750"
         selected:true
         onClicked:{
+                musicname=imgaeshprefix+"audios/start_iden.mp3"
+                playtiaolimusic.play();
+                var currmodel=jingluoplanStep.get(listView.currentIndex)
+                var posture=currmodel.posturebox
+                console.log("regstart posture="+posture)
                senderright.sendMessage(BAT.byteArrayfy("{\"msg\":\"identify\",\"args\":{\"therapybox\":\"疗法一\",\"posturebox\":\"2号姿势\"}}"));
         }
 
@@ -182,8 +188,7 @@ Item {
         selected:false
         onClicked:{
             senderright.sendMessage(BAT.byteArrayfy("{\"msg\":\"start_cure\",\"args\":{\"meridianbox\":\"shen_tiqian_r\",\"meridianbox_2\":\"shen_tiqian_l\"}}"));
-            realpatient1.visible=true;
-            realpatient2.visible=false;
+
         }
 
 
@@ -239,22 +244,27 @@ Item {
                 if (tiweiname!==tiwei){
                     console.log("jingluonewmodel tiweiname="+tiweiname)
                     var soundname="";
+                    var posturebox=""
                     if (tiweiname==="仰卧手向上"){
                         soundname="pose1.mp3"
+                        posturebox="1号姿势"
                     }
                     if (tiweiname==="仰卧手向下"){
                         soundname="pose2.mp3"
+                        posturebox="2号姿势"
                     }
                     if (tiweiname==="俯卧手向下"){
                         soundname="pose3.mp3"
+                        posturebox="3号姿势"
                     }
                     if (tiweiname==="俯卧脚内八"){
                         soundname="pose4.mp3"
+                        posturebox="4号姿势"
                     }
                     tiwei=tiweiname
-                    jingluoplanStep.append({"name":jingluoname,"colorCode":"green","soundname":soundname,"zishiname":tiweiname})
+                    jingluoplanStep.append({"name":jingluoname,"colorCode":"green","soundname":soundname,"zishiname":tiweiname,"posturebox":posturebox})
                 }else{
-                    jingluoplanStep.append({"name":jingluoname,"colorCode":"green","soundname":"","zishiname":""})
+                    jingluoplanStep.append({"name":jingluoname,"colorCode":"green","soundname":"","zishiname":"","posturebox":""})
                 }
 
 

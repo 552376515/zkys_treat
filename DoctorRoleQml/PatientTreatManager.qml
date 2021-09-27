@@ -15,6 +15,7 @@ Item {
     property int topcellOffset: 27
     property int cellSpace: 15
     property int currTreatState: 1
+    property string musicname: ""
     Rectangle{
         id:background
         x:leftcellOffset
@@ -155,4 +156,18 @@ Item {
         }
 
     }
+    function toReconize(){
+        console.log("to recognize")
+        realpatient.visible=false
+        realpatient2.visible=true
+        console.log("to recognize1")
+
+    }
+
+    //设置音频
+       MediaPlayer {
+           id: playtiaolimusic
+           source: musicname
+       }
+
 }
