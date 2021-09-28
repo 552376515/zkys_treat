@@ -234,6 +234,7 @@ Item {
                 dataObj: model.display
                 widthList: cusHeader.widthList
                 xList: cusHeader.xList
+
                 onCheckedChanged: {
                     deviceAddModel.check(index, checked)
                 }

@@ -592,8 +592,8 @@ Rectangle {
                 height: 45
                 x:28
                 y:320+155+34
-                btnImgUrl:imgaeshprefix+"images/ys-tianjiazhihuanzhe.png"
-                btnImgHovered:imgaeshprefix+"images/ys-tianjiazhihuanzhe-fz.png"
+                btnImgUrl:imgaeshprefix+"images/ys-xingzeng-baocun.png"
+                btnImgHovered:imgaeshprefix+"images/ys-xingzeng-baocun-fz.png"
                 onClicked:{
                     if (treatcasemanageModel.rowCount()>0&&inputtreatname.text.length>0 && inputcasename.text.length>0){
                         treatcasemanageModel.addToCaseGl(inputtreatname.text);

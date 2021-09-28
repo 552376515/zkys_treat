@@ -68,11 +68,6 @@ Item {
                     closeAllStatus();
                     realtimeRecognize.visible=true
                     currTreatState=2
-//                    realpatient2.visible=true
-//                    realpatient.visible=false
-                  //  showIndex=4
-
-                 //  CodeImage.initData(0)
                 }
             }
             CusButton{
@@ -85,14 +80,9 @@ Item {
                 backgroundColorPressed:"black"
                 textColor:"white"
                 onClicked: {
-                        closeAllStatus()
-                        realtimeRoutine.visible=true
+                    closeAllStatus()
+                    realtimeRoutine.visible=true
                     currTreatState=3
-//                    realpatient1.visible=true
-//                    realpatient.visible=false
-
-//                    xueweidatadeal.initData(0);
-
                 }
             }
         }
@@ -159,8 +149,9 @@ Item {
     }
     function toReconize(){
         console.log("to recognize")
-        realpatient.visible=false
-        realpatient2.visible=true
+        closeAllStatus()
+        realtimeRecognize.visible=true
+
         console.log("to recognize1")
 
     }
