@@ -13,8 +13,16 @@ Item {
     property bool startrecognize: false
     property bool isrecognizesuccess: false
     property bool starttiaoli: false
-    property variant tianliformR: { "足少阴肾经(体前)":"shen_tiqian_r","手厥阴心包经":"","手少阳三焦经":"","足少阳胆经":"","足厥阴肝经":"", "手太阴肺经":"", "手阳明大肠经":"","足阳明胃经":"", "足太阴脾经1":"","足太阴脾经2":"", "手少阴心经":"",  "手太阳小肠经":"", "足太阳膀胱经1":"","足太阳膀胱经2":"", "足少阴肾经(体后)":"" }
-   property variant tianliformL: { "足少阴肾经(体前)":"shen_tiqian_l","手厥阴心包经":"","手少阳三焦经":"","足少阳胆经":"","足厥阴肝经":"", "手太阴肺经":"", "手阳明大肠经":"","足阳明胃经":"", "足太阴脾经1":"","足太阴脾经2":"", "手少阴心经":"",  "手太阳小肠经":"", "足太阳膀胱经1":"","足太阳膀胱经2":"", "足少阴肾经(体后)":"" }
+    property variant tianliformR: { "足少阴肾经(体前)":"shen_tiqian_r","手厥阴心包经":"xinbao_r","手少阳三焦经":"sanjiao_r","足少阳胆经":"dan_r","足厥阴肝经":"gan_r", "手太阴肺经":"fei_r", "手阳明大肠经":"dachang_r","足阳明胃经":"wei_r", "足太阴脾经1":"pi_r","足太阴脾经2":"pis2_r", "手少阴心经":"xin_r",  "手太阳小肠经":"xiaochang_r", "足太阳膀胱经1":"pangguangs1_r","足太阳膀胱经2":"pangguangs2_r", "足少阴肾经(体后)":"shen_tihou_r" }
+    property variant tianliformL: { "足少阴肾经(体前)":"shen_tiqian_l","手厥阴心包经":"xinbao_l","手少阳三焦经":"sanjiao_l","足少阳胆经":"dan_l","足厥阴肝经":"gan_l", "手太阴肺经":"fei_l", "手阳明大肠经":"dachang_l","足阳明胃经":"wei_l", "足太阴脾经1":"pi_l","足太阴脾经2":"pis2_l", "手少阴心经":"xin_l",  "手太阳小肠经":"xiaochang_l", "足太阳膀胱经1":"pangguangs1_l","足太阳膀胱经2":"pangguangs2_l", "足少阴肾经(体后)":"shen_tihou_l" }
+
+    property variant picnames:{ "足少阴肾经(体前)":"middle_026_shentiqian.png","手厥阴心包经":"middle_026_xinbao.png",
+                                "手少阳三焦经":"middle_027_sanjiao.png","足少阳胆经":"right_26_dan.png,left_26_dan.png",
+                                "足厥阴肝经":"gan_l", "手太阴肺经":"middle_026_fei.png",
+                                "手阳明大肠经":"middle_027_dachang","足阳明胃经":"middle_026_wei.png",
+                                "足太阴脾经1":"pi_l","足太阴脾经2":"pis2_l", "手少阴心经":"xin_l",
+                                "手太阳小肠经":"middle_027_xiaochang.png", "足太阳膀胱经1":"pangguangs1_l","足太阳膀胱经2":"pangguangs2_l",
+                                "足少阴肾经(体后)":"middle_028_shentihou.png" }
     Rectangle{
         id:patientmess
         width: 300
@@ -93,6 +101,7 @@ Item {
                              anchors.left: zishi.right
                              anchors.leftMargin: 10
                              source: imgaeshprefix+"images/ys-laba.png"
+                             visible: zishiname===""?false:true
                          }
 
                      }
@@ -161,12 +170,32 @@ Item {
     }
 
     function closeAllTiaoli(){
-        realtimeCorrect.visible=flase;
+        realtimeCorrect.visible=false;
         realtimeRecognize.visible=false;
         realtimeRoutine.visible=false;
     }
 
-    function recognizeAction(){//开始识别 跳到实时画面
+
+    function recognizeAction(){
+        musicname=imgaeshprefix+"audios/start_iden.mp3"
+        playtiaolimusic.play();
+        var currmodel=jingluoplanStep.get(listView.currentIndex)
+        var posture=currmodel.posturebox
+        var soundname=currmodel.soundname
+        console.log("regstart posture="+posture)
+        if (posture!==""){ //有体位信息 发送socket 信息 先放音-》发送socket
+            var sendstr="{\"msg\":\"identify\",\"args\":{\"therapybox\":\"疗法一\",\"posturebox\":\""+posture+"\"}}"
+            console.log("socket sendstr="+sendstr)
+            senderright.sendMessage(BAT.byteArrayfy(sendstr))
+
+        }
+        if (!realtimeCorrect.visible){
+            closeAllTiaoli()
+            realtimeCorrect.visible=true
+        }
+    }
+
+    function recognizeActionPlay(){//开始识别 跳到实时画面
 
         var currmodel=jingluoplanStep.get(listView.currentIndex)
         var posture=currmodel.posturebox
@@ -175,13 +204,6 @@ Item {
         if (posture!==""){ //有体位信息 发送socket 信息 先放音-》发送socket
             musicname=imgaeshprefix+"audios/"+soundname
             playtiaolimusic.play();
-            var sendstr="{\"msg\":\"identify\",\"args\":{\"therapybox\":\"疗法一\",\"posturebox\":\""+posture+"\"}}"
-            console.log("socket sendstr="+sendstr)
-            senderright.sendMessage(BAT.byteArrayfy(sendstr))
-            if (!realtimeCorrect.visible){
-                closeAllTiaoli()
-                realtimeCorrect.visible=true
-            }
         }
 
 //       senderright.sendMessage(BAT.byteArrayfy("{\"msg\":\"identify\",\"args\":{\"therapybox\":\"疗法一\",\"posturebox\":\"2号姿势\"}}"));
@@ -192,6 +214,17 @@ Item {
         var posture=currmodel.posturebox
         var meridianbox=tianliformR[ currmodel.name]
         var meridianbox_2=tianliformL[currmodel.name]
+        var pics=picnames[currmodel.name];
+        var picsArr=pics.split(",")
+        anibackimg1=picsArr[0];
+        if (picsArr.length===2){
+            anibackimg2=picsArr[1]
+        }
+        if (picsArr.length===3){
+            anibackimg2=picsArr[1];
+            anibackimg3=picsArr[2];
+        }
+        anicount=picsArr.length
 
             var rightbox="{\"msg\":\"start_cure\",\"args\":{\"meridianbox\":\""+meridianbox+"\",\"meridianbox_2\":\""+meridianbox_2+"\"}}"
             senderright.sendMessage(BAT.byteArrayfy(rightbox))
@@ -232,10 +265,11 @@ Item {
         backgroundColorPressed:"#f5b750"
         selected:true
         onClicked:{//开始识别 先要播放声音 ，声音播放完成，再去识别体位
-            musicname=imgaeshprefix+"audios/start_iden.mp3"
-            playtiaolimusic.play();
+            recognizeActionPlay()
             startrecognize=false
             starttiaoli=false
+            closeAllStatus()
+            currTreatState==1
         }
 
     }
@@ -287,10 +321,11 @@ Item {
             if (ss==="start_cure_success"){//调理信息获得成功，进入调理页面
                 closeAllTiaoli()
                     realtimeRoutine.visible=true
+                currTreatState=3;
             }
 
             if (ss==="end_cure_success"){
-                    tiaoliActionNext()
+                  //  tiaoliActionNext()
             }
 
             console.log("right control onMessageReceived +"+message +" "+ss)

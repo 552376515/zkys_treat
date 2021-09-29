@@ -259,7 +259,10 @@ Item {
             btnImgNormal:imgaeshprefix+"images/ys-xuanzechufang.png"
             btnImgHovered:imgaeshprefix+"images/ys-xuanzechufang-fz.png"
             onClicked:{
+                closeAllView()
+
                 choiseCaseTreatMent.visible=true
+                showIndex=1
                 choisecaseModel.initCaseData();
             }
 

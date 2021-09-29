@@ -17,6 +17,10 @@ Item {
     property int cellSpace: 15
     property int currTreatState: 1
     property string musicname: ""
+    property int anicount: 1
+    property string anibackimg1: "right_26_dan.png"
+    property string anibackimg2: "left_26_dan.png"
+    property string anibackimg3: "left_26_dan.png"
     Rectangle{
         id:background
         x:leftcellOffset
@@ -45,8 +49,8 @@ Item {
                 width: 110
                 height: treathead.height
                 text: qsTr("实时画面")
-                backgroundColorNormal:"#70c0cc"
-                backgroundColorPressed:"black"
+                backgroundColorNormal:currTreatState===1?"black":"#70c0cc"
+                backgroundColorPressed:currTreatState===1?"#70c0cc":"black"
                 textColor:"white"
                 //selected:"true"
                 onClicked: {
@@ -61,8 +65,8 @@ Item {
                 width: 110
                 height: treathead.height
                 text: qsTr("识别画面")
-                backgroundColorNormal:"#70c0cc"
-                backgroundColorPressed:"black"
+                backgroundColorNormal:currTreatState===2?"black":"#70c0cc"
+                backgroundColorPressed:currTreatState===2?"#70c0cc":"black"
                 textColor:"white"
                 onClicked: {
                     closeAllStatus();
@@ -76,8 +80,8 @@ Item {
                 width: 110
                 height: treathead.height
                 text: qsTr("调理画面")
-                backgroundColorNormal:"#70c0cc"
-                backgroundColorPressed:"black"
+                backgroundColorNormal:currTreatState===3?"black":"#70c0cc"
+                backgroundColorPressed:currTreatState===3?"#70c0cc":"black"
                 textColor:"white"
                 onClicked: {
                     closeAllStatus()
@@ -151,7 +155,7 @@ Item {
         console.log("to recognize")
         closeAllStatus()
         realtimeRecognize.visible=true
-
+        currTreatState=2
         console.log("to recognize1")
 
     }

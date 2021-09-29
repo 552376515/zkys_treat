@@ -17,7 +17,6 @@
         <file>DoctorRoleQml/PatientTreatRecognize.qml</file>
         <file>DoctorRoleQml/PatientTreatRoutine.qml</file>
         <file>Resource/middle_026_shenshang.jpg</file>
-        <file>Resource/right_26_dan.jpg</file>
         <file>Resource/audios/bgm_gaoshanliushui.mp3</file>
         <file>Resource/audios/keep_pose.mp3</file>
         <file>Resource/audios/pose1.mp3</file>
@@ -159,5 +158,15 @@
         <file>Resource/images/cf-xiayi.png</file>
         <file>Resource/images/ys-laba.png</file>
         <file>DoctorRoleQml/PatientTreatManager.qml</file>
+        <file>Resource/bgimage/middle_026_fei.png</file>
+        <file>Resource/bgimage/middle_026_shentiqian.png</file>
+        <file>Resource/bgimage/middle_026_wei.png</file>
+        <file>Resource/bgimage/middle_026_xinbao.png</file>
+        <file>Resource/bgimage/middle_027_dachang.png</file>
+        <file>Resource/bgimage/middle_027_sanjiao.png</file>
+        <file>Resource/bgimage/middle_027_xiaochang.png</file>
+        <file>Resource/bgimage/middle_028_shentihou.png</file>
+        <file>Resource/bgimage/right_26_dan.png</file>
+        <file>Resource/bgimage/left_26_dan.png</file>
     </qresource>
 </RCC>
