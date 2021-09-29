@@ -45,7 +45,11 @@ Item {
 
     property int inputX: 0 // 键盘x坐标(动态)
     property int inputY: 200 // 键盘y坐标(动态)
-
+    Component.onCompleted:{
+        if (visible){
+            showIndex=1
+        }
+    }
         // 嵌入式虚拟键盘
     InputPanel {
             id: inputPanel

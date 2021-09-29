@@ -171,6 +171,7 @@ Item {
                          font.pointSize:20
 
                          onClicked:{
+                             closeAllView()
                             showIndex=1
                             login.visible=false;
                             loadPatient()

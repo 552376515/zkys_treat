@@ -159,7 +159,11 @@ Item {
         console.log("to recognize1")
 
     }
-
+    onVisibleChanged:{
+        if (visible){
+            showIndex=2
+        }
+    }
 
 
 

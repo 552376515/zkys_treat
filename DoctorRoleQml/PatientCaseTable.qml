@@ -262,7 +262,6 @@ Item {
                 closeAllView()
 
                 choiseCaseTreatMent.visible=true
-                showIndex=1
                 choisecaseModel.initCaseData();
             }
 
@@ -286,6 +285,10 @@ Item {
 
     }
 
-
+    onVisibleChanged:{
+        if (visible){
+            showIndex=1
+        }
+    }
 
 }

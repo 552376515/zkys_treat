@@ -49,10 +49,13 @@ Window {
 
     function loadPatient(){
         loginrole=0
+
+
         if (loginrole==2){
             glpatientmanager.visible=true
             glpatientModel.initData();
         }else{
+            patientManagerRect.visible=true
             deviceAddModel.initData()
             if (deviceAddModel.rowCount()>0){
                 var thefirstpatient=deviceAddModel.data(0);
