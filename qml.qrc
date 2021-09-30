@@ -168,5 +168,17 @@
         <file>Resource/bgimage/middle_028_shentihou.png</file>
         <file>Resource/bgimage/right_26_dan.png</file>
         <file>Resource/bgimage/left_26_dan.png</file>
+        <file>UserManageQml/ToastMessage.qml</file>
+        <file>Resource/images/failicon.png</file>
+        <file>Resource/images/remind.png</file>
+        <file>Resource/images/success.png</file>
+        <file>Resource/bgimage/left_25_gan.png</file>
+        <file>Resource/bgimage/left_25_pi.png</file>
+        <file>Resource/bgimage/left_25_xin.png</file>
+        <file>Resource/bgimage/right_25_gan.png</file>
+        <file>Resource/bgimage/right_25_pi.png</file>
+        <file>Resource/bgimage/right_25_xin.png</file>
+        <file>Resource/bgimage/middle_025_pi.png</file>
+        <file>Resource/bgimage/middle_027_pangguang.png</file>
     </qresource>
 </RCC>

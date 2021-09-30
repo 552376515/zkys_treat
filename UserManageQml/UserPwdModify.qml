@@ -1,5 +1,10 @@
 import QtQuick 2.0
 import TaoQuick 1.0
+import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.5
+import QtQuick.Controls.Styles 1.4
+import QtQuick.VirtualKeyboard 2.1
+import QtQuick.VirtualKeyboard.Settings 2.1
 Rectangle {
     id:userpwdReset1
     width: parent.width
@@ -32,110 +37,134 @@ Rectangle {
             }
 
         }
-        Row{
-            id:originpwd
-            width: 208+70+7
-            height: 32
+        Rectangle{
+            id:pwdrect1
+            height:32
             anchors.top: userpwdResetHead.bottom
             anchors.topMargin: 35
-            Text {
-                id: leftLbl
-                text: qsTr("原始密码：")
-                color: "black"
-                font.pixelSize: 16
-                height: originpwd.height
-                width: 70
-                 verticalAlignment: Text.AlignVCenter
-            }
-            TextField{
-                id:inputoriginname
-                width: 208
-                height: originpwd.height
-                anchors.left: leftLbl.right
-                placeholderText: "点击输入"
-                focus: true
-                echoMode: TextInput.Normal
-                onAccepted: {
-                    color:"#999999"
+            x:116
+            color: "transparent"
+            Row{
+                id:originpwd
+                width: 208+70+7
+                height: 32
+
+                Text {
+                    id: leftLbl
+                    text: qsTr("原始密码：")
+                    color: "black"
+                    font.pixelSize: 16
+                    height: originpwd.height
+                    width: 70
+                     verticalAlignment: Text.AlignVCenter
                 }
-                // 当选择输入框的时候才显示键盘
-                onPressed: {
-//                           inputX = x
-//                           inputY = y + height
-//                           inputPanel1.visible = true
+                TextField{
+                    id:inputoriginname
+                    width: 208
+                    height: originpwd.height
+
+                    placeholderText: "点击输入"
+                    focus: true
+                    echoMode: TextInput.Normal
+                    onAccepted: {
+                        color:"#999999"
+                    }
+                    // 当选择输入框的时候才显示键盘
+                    onPressed: {
+    //                           inputX = x
+    //                           inputY = y + height
+    //                           inputPanel1.visible = true
+                    }
                 }
             }
         }
 
-        Row{
-            id:newpwd
-            width: 208+70+7
+        Rectangle{
+            id:pwdrect2
             height: 32
-            anchors.top: originpwd.bottom
+            color: "transparent"
+            anchors.top: pwdrect1.bottom
             anchors.topMargin: 10
-            Text {
-                id: leftLbl1
-                text: qsTr("新 密 码：")
-                color: "black"
-                font.pixelSize: 16
-                height: newpwd.height
-                width: 70
-                 verticalAlignment: Text.AlignVCenter
-            }
-            TextField{
-                id:inputnewname
-                width: 208
-                height: newpwd.height
-                anchors.left: leftLbl1.right
-                placeholderText: "点击输入"
-                focus: true
-                echoMode: TextInput.Normal
-                onAccepted: {
-                    color:"#999999"
+            x:116
+            Row{
+                id:newpwd
+                width: 208+70+7
+                height: 32
+                Text {
+                    id: leftLbl1
+                    text: qsTr("新 密 码：")
+                    color: "black"
+                    font.pixelSize: 16
+                    height: newpwd.height
+                    width: 70
+                     verticalAlignment: Text.AlignVCenter
                 }
-                // 当选择输入框的时候才显示键盘
-                onPressed: {
-//                           inputX = x
-//                           inputY = y + height
-//                           inputPanel1.visible = true
+                TextField{
+                    id:inputnewname
+                    width: 208
+                    height: newpwd.height
+
+                    placeholderText: "点击输入"
+                    focus: true
+                    echoMode: TextInput.Normal
+                    onAccepted: {
+                        color:"#999999"
+                    }
+                    // 当选择输入框的时候才显示键盘
+                    onPressed: {
+    //                           inputX = x
+    //                           inputY = y + height
+    //                           inputPanel1.visible = true
+                    }
                 }
             }
+
         }
 
-        Row{
-            id:renewpwd
-            width: 208+70+7
+        Rectangle{
+            id:pwdrect3
             height: 32
-            anchors.top: newpwd.bottom
+            color: "transparent"
+            anchors.top: pwdrect2.bottom
             anchors.topMargin: 10
-            Text {
-                id: leftLbl2
-                text: qsTr("重新输入：")
-                color: "black"
-                font.pixelSize: 16
-                height: renewpwd.height
-                width: 70
-                 verticalAlignment: Text.AlignVCenter
-            }
-            TextField{
-                id:inputrenewname
-                width: 208
-                height: renewpwd.height
-                anchors.left: leftLbl1.right
-                placeholderText: "点击输入"
-                focus: true
-                echoMode: TextInput.Normal
-                onAccepted: {
-                    color:"#999999"
+            x:116
+            Row{
+                id:renewpwd
+                width: 208+70+7
+                height: 32
+
+
+                Text {
+                    id: leftLbl2
+                    text: qsTr("重新输入：")
+                    color: "black"
+                    font.pixelSize: 16
+                    height: renewpwd.height
+                    width: 70
+                     verticalAlignment: Text.AlignVCenter
                 }
-                // 当选择输入框的时候才显示键盘
-                onPressed: {
-//                           inputX = x
-//                           inputY = y + height
-//                           inputPanel1.visible = true
+                TextField{
+                    id:inputrenewname
+                    width: 208
+                    height: renewpwd.height
+
+                    placeholderText: "点击输入"
+                    focus: true
+                    echoMode: TextInput.Normal
+                    onAccepted: {
+                        color:"#999999"
+                    }
+                    // 当选择输入框的时候才显示键盘
+                    onPressed: {
+    //                           inputX = x
+    //                           inputY = y + height
+    //                           inputPanel1.visible = true
+                    }
                 }
             }
+
         }
+
 
 
 
@@ -145,26 +174,37 @@ Rectangle {
             id:suserpwdResetStop
             width: 155
             height: 39
-            anchors.top:  renewpwd.bottom
-            anchors.topMargin: 90
+            anchors.top:  pwdrect3.bottom
+            anchors.topMargin: 45
             x:72
             btnImgUrl:imgaeshprefix+"images/gl-piliang-qvxiao.png"
             btnImgHovered:imgaeshprefix+"images/ys-piliang-qvxiao-fz.png"
             onClicked:{
-
+                userPasswdModify.visible=false
             }
         }
         CusButton_Image{
             id:userpwdResetContinue
             width: 155
             height: 39
-            anchors.top:  renewpwd.bottom
-            anchors.topMargin: 90
+            anchors.top:  pwdrect3.bottom
+            anchors.topMargin: 45
             anchors.left:suserpwdResetStop.right
             anchors.leftMargin: 72
-            btnImgUrl:imgaeshprefix+"images/gl-xingzeng-baocun.png"
-            btnImgHovered:imgaeshprefix+"images/gl-xingzeng-baocun-fz.png"
+            btnImgUrl:imgaeshprefix+"images/ys-xingzeng-baocun.png"
+            btnImgHovered:imgaeshprefix+"images/ys-xingzeng-baocun-fz.png"
             onClicked:{
+                if (inputrenewname.text!==inputnewname.text){
+                    console.log("两次密码不一致")
+                    $toastmessage({
+                                  "message":"两次密码不一致！",
+                                   "type":'info',
+                                   "show":true
+                                  }
+                                 )
+                }
+
+                gldoctorModel.modifyDoctorPwd(glselecteddoctor,inputrenewname.text)
 //                if (canstartTiaoli){
 //                    senderright.sendMessage(BAT.byteArrayfy("{\"msg\":\"start_cure\",\"args\":{\"meridianbox\":\"shen_tiqian_r\",\"meridianbox_2\":\"shen_tiqian_l\"}}"));
 //                }

@@ -11,7 +11,7 @@ const auto PATIENTSCASE_SQL =  QLatin1String(R"(
     )");
 
 const auto DOCTORMANAGER_SQL =  QLatin1String(R"(
-    create table doctormanager(id integer primary key, name varchar, doctorid varchar, regtime date,doctorstate int,  managertype integer)
+    create table doctormanager(id integer primary key, name varchar, doctorid varchar, regtime date,doctorstate varchar,  managertype varchar,docpassword varchar)
     )");
 
 
@@ -41,7 +41,7 @@ const auto INSERT_PATIENTSCASE_SQL = QLatin1String(R"(
     )");
 
 const auto INSERT_DOCTORMANAGER_SQL = QLatin1String(R"(
-    insert into doctormanager(name,doctorid,regtime,doctorstate,managertype ) values(?,?,?,?,?)
+    insert into doctormanager(name,doctorid,regtime,doctorstate,managertype,docpassword ) values(?,?,?,?,?,?)
     )");
 
 
@@ -124,7 +124,7 @@ void addPatientCaseGLNew( int patientid, const QString &treatment,  const QStrin
 
 
 
-QVariant addDoctorManager(QSqlQuery &q, const QString &name, const QString doctorid, QDate regtime, const QString doctorstate, const QString managertype)
+QVariant addDoctorManager(QSqlQuery &q, const QString &name, const QString doctorid, QDate regtime, const QString doctorstate, const QString managertype,const QString docpassword )
 {
     //   create table doctormanager(id integer primary key, name varchar, doctorid varchar, regtime date,doctorstate int,  managertype integer)
 
@@ -133,6 +133,7 @@ QVariant addDoctorManager(QSqlQuery &q, const QString &name, const QString docto
     q.addBindValue(regtime);
     q.addBindValue(doctorstate);
     q.addBindValue(managertype);
+    q.addBindValue(docpassword);
     q.exec();
     return q.lastInsertId();
 }
@@ -239,10 +240,10 @@ QSqlError initDb()
     if (!q.prepare(INSERT_DOCTORMANAGER_SQL))
         return q.lastError();
 
-        addDoctorManager(q, QStringLiteral("李医生"),"001", QDate(1971,7,18), QStringLiteral("启用"),QStringLiteral("医生"));
-        addDoctorManager(q, QStringLiteral("李医生"),"002", QDate(1971,7,18), QStringLiteral("启用"),QStringLiteral("管理者"));
-        addDoctorManager(q, QStringLiteral("李医生"),"003", QDate(1971,7,18), QStringLiteral("禁用"),QStringLiteral("医生"));
-        addDoctorManager(q, QStringLiteral("李医生"),"004", QDate(1971,7,18), QStringLiteral("禁用"),QStringLiteral("管理者"));
+        addDoctorManager(q, QStringLiteral("李医生"),"001", QDate(1971,7,18), QStringLiteral("启用"),QStringLiteral("医生"),QStringLiteral("111111"));
+        addDoctorManager(q, QStringLiteral("李医生"),"002", QDate(1971,7,18), QStringLiteral("启用"),QStringLiteral("管理者"),QStringLiteral("111111"));
+        addDoctorManager(q, QStringLiteral("李医生"),"003", QDate(1971,7,18), QStringLiteral("禁用"),QStringLiteral("医生"),QStringLiteral("111111"));
+        addDoctorManager(q, QStringLiteral("李医生"),"004", QDate(1971,7,18), QStringLiteral("禁用"),QStringLiteral("管理者"),QStringLiteral("111111"));
 
 
     if (!q.prepare(INSERT_PATIENTSPRESCRIPT_SQL))

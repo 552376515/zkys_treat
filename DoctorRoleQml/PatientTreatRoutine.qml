@@ -19,7 +19,7 @@ Item {
     property int rightCellWidth: 300
 
      property int currentIndex: -1
-
+    //胆
     property variant rdan: [Qt.point(302,345),Qt.point(314,354),Qt.point(364,351),Qt.point(411,355),
                                 Qt.point(453,323),Qt.point(483,288),Qt.point(511,323),Qt.point(530,347),
                                 Qt.point(554,348),Qt.point(573,335),Qt.point(596,353),Qt.point(681,363),
@@ -59,21 +59,52 @@ Item {
                             Qt.point(705,372),Qt.point(679,393),Qt.point(652,405),Qt.point(574,416),Qt.point(434,420),
                             Qt.point(406,415),Qt.point(372,423),Qt.point(220,410),Qt.point(122,394),Qt.point(122,401),Qt.point(214,415)]
 
+   //肺
     property variant rfei: [Qt.point(944,270),Qt.point(984,266),Qt.point(978,213),Qt.point(887,183),
                             Qt.point(805,151),Qt.point(683,104),Qt.point(669,78),Qt.point(652,56)]
     property variant lfei: [Qt.point(943,402),Qt.point(982,401),Qt.point(974,454),Qt.point(876,487),
                             Qt.point(792,514),Qt.point(669,551),Qt.point(649,574),Qt.point(624,591)]
 
+    //心包
     property variant rxinbao: [Qt.point(892,260),Qt.point(930,216),Qt.point(882,198),Qt.point(804,168),
                                 Qt.point(676,113),Qt.point(643,91),Qt.point(589,73),Qt.point(625.94),Qt.point(589,91)]
     property variant lxinbao: [Qt.point(894,414),Qt.point(930,447),Qt.point(868,472),Qt.point(797,498),
                                 Qt.point(669,542),Qt.point(631,561),Qt.point(572,567),Qt.point(612,554),Qt.point(573,554)]
+    // 膀胱1
+    property variant lpangguang1:[Qt.point(520,161.5),Qt.point(501.5,170),Qt.point(488,162.5),Qt.point(315.5,160.5),Qt.point(322.5,166),Qt.point(308,166),Qt.point(282,152.5),Qt.point(188.5,124.5),Qt.point(187.5,133)]
+    property variant rpangguang1: [Qt.point(520,178.5),Qt.point(501.5,170),Qt.point(488.5,177.5),Qt.point(315.5,181),Qt.point(322.5,175),Qt.point(308,174.5),Qt.point(282,187.5),Qt.point(189,217),Qt.point(188,208)]
 
+    // 膀胱2
+    property variant lpangguang2:[Qt.point(520,161.5),Qt.point(503,156),Qt.point(486.5,143.5),Qt.point(376,144),Qt.point(348,125.5),Qt.point(281,125),Qt.point(127,138),Qt.point(75,145.5),Qt.point(52.5,109.5)]
+    property variant rpangguang2:[Qt.point(520,178.5),Qt.point(503.5,184),Qt.point(487,195),Qt.point(377,195),Qt.point(348,210),Qt.point(281,215.5),Qt.point(124,201.5),Qt.point(74.5,196),Qt.point(51.5,232)]
+
+
+    // 脾2
+    property variant lpi2: [Qt.point(640, 339),Qt.point(728, 339),Qt.point(748, 350),Qt.point(802, 338),Qt.point(802, 353)]
+    property variant rpi2:[Qt.point(640, 331),Qt.point(728, 331),Qt.point(748, 320),Qt.point(802, 331),Qt.point(802, 316)]
+
+    // 脾1
+    property variant lpi1:[Qt.point(159, 228),Qt.point(169, 243),Qt.point(219, 270),Qt.point(266, 286),Qt.point(333, 269),Qt.point(405, 258),Qt.point(162, 232),Qt.point(503, 256),Qt.point(626, 250),Qt.point(832, 347),Qt.point(862, 355),Qt.point(928, 344),Qt.point(867, 372)]
+    property variant rpi1:[Qt.point(1130, 227),Qt.point(1120, 242),Qt.point(1070, 269),Qt.point(1023, 285),Qt.point(956, 268),Qt.point(884, 257),Qt.point(832, 252),Qt.point(786, 255),Qt.point(663, 249),Qt.point(249, 346),Qt.point(427, 354),Qt.point(354, 343),Qt.point(422, 371)]
+
+    //手少阴心
+    property variant lxin:[Qt.point(889,398),Qt.point(918,442),Qt.point(983,537),Qt.point(1103,453),Qt.point(1130,446),Qt.point(1192,443)]
+    property variant rxin: [Qt.point(399,400),Qt.point(370,444),Qt.point(305,539),Qt.point(185,455),Qt.point(158,448),Qt.point(96,445)]
+
+    property variant lgan: [Qt.point(128,392),Qt.point(201,376),Qt.point(270,287),Qt.point(378,278),Qt.point(382,262),Qt.point(405,257),
+                            Qt.point(417,272),Qt.point(467,264),Qt.point(511,267),Qt.point(561,269),Qt.point(549,283),Qt.point(617,285),
+                            Qt.point(618,300),Qt.point(619,315),Qt.point(687,312),Qt.point(708,334),Qt.point(731,369),Qt.point(769,344),Qt.point(808,342)]
+    property variant rgan: [Qt.point(1162,392),Qt.point(1089,376),Qt.point(1020,287),Qt.point(912,278),Qt.point(908,262),Qt.point(885,257),
+                            Qt.point(873,272),Qt.point(823,264),Qt.point(779,267),Qt.point(741,283),Qt.point(488,260),Qt.point(673,285),
+                            Qt.point(672,300),Qt.point(671,315),Qt.point(603,312),Qt.point(582,334),Qt.point(559,369),Qt.point(521,344),Qt.point(482,342)]
 
     property variant allpoints: {"rdan":rdan,"ldan":ldan,"rsanjiao":rsanjiao,"lsanjiao":lsanjiao,
                                 "rdachang":rdachang,"ldachang":ldachang,"rxiaochang":rxiaochang,"lxiaochang":lxiaochang,
                                 "rshentiqian":rshentiqian,"lshentiqian":lshentiqian,"rshentihou":rshentihou,"lshentihou":lshentihou,
-                                "rwei":rwei,"lwei":lwei,"rfei":rfei,"lfei":lfei,"rxinbao":rxinbao,"lxinbao":lxinbao}
+                                "rwei":rwei,"lwei":lwei,"rfei":rfei,"lfei":lfei,"rxinbao":rxinbao,"lxinbao":lxinbao,
+                                "lpangguang1":lpangguang1,"rpangguang1":rpangguang1,"lpangguang2":lpangguang2,"rpangguang2":rpangguang2,
+                                "lpi2":lpi2,"rpi2":rpi2,"lpi1":lpi1,"rpi1":rpi1,
+                                "lxin":lxin,"rxin":rxin,"lgan":lgan,"rgan":rgan}
     property variant jingluo0: ["L-shen-1:1110,384"]
     property int startX: 0
     property int startY: 0

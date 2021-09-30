@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import TaoQuick 1.0
+
 Rectangle {
     id:userpwdReset1
     width: parent.width
@@ -7,8 +8,8 @@ Rectangle {
     anchors.fill: parent
     color: Qt.rgba(0/255,0/255,0/255,1)
     opacity: 0.8
-    property int dispWidth: 552
-    property int dispHeight: 372+94
+    property int dispWidth: 528
+    property int dispHeight: 372
     Rectangle{
         id:userpwdResetRect
         width: dispWidth
@@ -48,7 +49,7 @@ Rectangle {
             x:52
             text: qsTr("111111")
             anchors.top: userpwdResetHead.bottom
-            anchors.topMargin: 20
+            anchors.topMargin: 30
             anchors.left: userpwdResetmes.right
             color: "#BF0000"
             font.pixelSize: 16
@@ -75,7 +76,7 @@ Rectangle {
             btnImgUrl:imgaeshprefix+"images/gl-piliang-qvxiao.png"
             btnImgHovered:imgaeshprefix+"images/ys-piliang-qvxiao-fz.png"
             onClicked:{
-
+                userPasswdReset.visible=false
             }
         }
         CusButton_Image{
@@ -86,9 +87,10 @@ Rectangle {
             anchors.topMargin: 90
             anchors.left:suserpwdResetStop.right
             anchors.leftMargin: 72
-            btnImgUrl:imgaeshprefix+"images/gl-chongzhimima.png"
-            btnImgHovered:imgaeshprefix+"images/gl-chongzhimima-fz.png"
+            btnImgUrl:imgaeshprefix+"images/gl-chongzhimima1.png"
+            btnImgHovered:imgaeshprefix+"images/gl-chongzhimima1-fz.png"
             onClicked:{
+                gldoctorModel.modifyDoctorPwd(glselecteddoctor,"111111")
 //                if (canstartTiaoli){
 //                    senderright.sendMessage(BAT.byteArrayfy("{\"msg\":\"start_cure\",\"args\":{\"meridianbox\":\"shen_tiqian_r\",\"meridianbox_2\":\"shen_tiqian_l\"}}"));
 //                }

@@ -17,6 +17,7 @@ Item {
     property int leftoffset: 36
     property string starttime: ""
     property int bottomHeight: 60
+    property int allpatientscount: 0
     Rectangle{
         id:gpspaceControl
         height: 68
@@ -423,12 +424,17 @@ Item {
             color: "#ededed"
             CusPageIndicator{
                 anchors.centerIn: parent
-                count: 5
+                count: allpatientscount
                 currentIndex: 4
             }
         }
 
 
+    }
+    onVisibleChanged: {
+        if (visible){
+            allpatientscount=glpatientModel.rowCount()/10+glpatientModel.rowCount()%10!==0?1:0
+        }
     }
 
 }

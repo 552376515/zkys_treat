@@ -9,6 +9,7 @@ Item {
     height: parent
     anchors.fill: parent
     property int bottomHeight: 60
+    property int alltreatmentcount: 0
     Rectangle{
         id:treatmanager1
         x:36
@@ -211,10 +212,17 @@ Item {
             color: "#ededed"
             CusPageIndicator{
                 anchors.centerIn: parent
-                count: treatcaseModel.rowCount()/10+treatcaseModel.rowCount()%10!==0?1:0
+                count: alltreatmentcount
                 currentIndex: 0
             }
         }
 
+    }
+    onVisibleChanged: {
+        if (visible){
+           alltreatmentcount= treatcaseModel.rowCount()/10+treatcaseModel.rowCount()%10!==0?1:0
+            console.log("alltreatmentcount="+alltreatmentcount+" rowcount="+treatcaseModel.rowCount())
+
+        }
     }
 }

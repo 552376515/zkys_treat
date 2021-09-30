@@ -595,6 +595,14 @@ Rectangle {
                 btnImgUrl:imgaeshprefix+"images/ys-xingzeng-baocun.png"
                 btnImgHovered:imgaeshprefix+"images/ys-xingzeng-baocun-fz.png"
                 onClicked:{
+                    if (inputcasename.text.length==0){
+                        $toastmessage({
+                            "message":"还未输入病名",
+                            "type":'success',
+                            "show":true
+                        })
+                    }
+
                     if (treatcasemanageModel.rowCount()>0&&inputtreatname.text.length>0 && inputcasename.text.length>0){
                         treatcasemanageModel.addToCaseGl(inputtreatname.text);
                         treatcaseModel.addToCase(inputcasename.text,inputtreatname.text,doctorloginname)

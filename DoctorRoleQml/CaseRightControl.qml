@@ -18,10 +18,10 @@ Item {
 
     property variant picnames:{ "足少阴肾经(体前)":"middle_026_shentiqian.png","手厥阴心包经":"middle_026_xinbao.png",
                                 "手少阳三焦经":"middle_027_sanjiao.png","足少阳胆经":"right_26_dan.png,left_26_dan.png",
-                                "足厥阴肝经":"gan_l", "手太阴肺经":"middle_026_fei.png",
+                                "足厥阴肝经":"right_25_gan.png,left_25_gan.png", "手太阴肺经":"middle_026_fei.png",
                                 "手阳明大肠经":"middle_027_dachang","足阳明胃经":"middle_026_wei.png",
-                                "足太阴脾经1":"pi_l","足太阴脾经2":"pis2_l", "手少阴心经":"xin_l",
-                                "手太阳小肠经":"middle_027_xiaochang.png", "足太阳膀胱经1":"pangguangs1_l","足太阳膀胱经2":"pangguangs2_l",
+                                "足太阴脾经1":"right_25_pi.png,left_25_pi.png","足太阴脾经2":"middle_025_pi.png", "手少阴心经":"right_25_xin.png,left_25_xin.png",
+                                "手太阳小肠经":"middle_027_xiaochang.png", "足太阳膀胱经1":"middle_027_pangguang.png","足太阳膀胱经2":"middle_027_pangguang.png",
                                 "足少阴肾经(体后)":"middle_028_shentihou.png" }
     Rectangle{
         id:patientmess

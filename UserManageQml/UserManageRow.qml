@@ -48,7 +48,7 @@ Rectangle {
                     height: 36
                     btnImgUrl:imgaeshprefix+"images/gl-chongzhimima.png"
                     btnImgHovered:imgaeshprefix+"images/gl-chongzhimima-fz.png"
-                    visible: index==6
+                    visible: index===6
                     anchors.centerIn: parent
                     onClicked: {
 
@@ -60,7 +60,7 @@ Rectangle {
                     height: 36
                     btnImgUrl:imgaeshprefix+"images/gl-xiugai.png"
                     btnImgHovered:imgaeshprefix+"images/gl-xiugai-fz.png"
-                    visible: index==7
+                    visible: index===7
                     anchors.centerIn: parent
                     onClicked: {
 
@@ -73,8 +73,8 @@ Rectangle {
                     height: 36
                     x:5
                     y:7
-                    btnImgUrl: (qsTr(String(dataObj[roles[index]]))==qsTr("禁用")) ? imgaeshprefix+"images/gl-jinyong.png":imgaeshprefix+"images/gl-qiyong.png"
-                    btnImgHovered:qsTr(String(dataObj[roles[index]]))==qsTr("禁用") ? imgaeshprefix+"images/gl-jinyong-fz.png":imgaeshprefix+"images/gl-qiyong-fz.png"
+                    btnImgUrl: (qsTr(String(dataObj[roles[index]]))===qsTr("禁用")) ? imgaeshprefix+"images/gl-jinyong.png":imgaeshprefix+"images/gl-qiyong.png"
+                    btnImgHovered:qsTr(String(dataObj[roles[index]]))===qsTr("禁用") ? imgaeshprefix+"images/gl-jinyong-fz.png":imgaeshprefix+"images/gl-qiyong-fz.png"
                     visible: index==8
 
                     onClicked: {

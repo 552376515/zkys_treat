@@ -15,7 +15,8 @@ Item {
     property int chongzhiwidth: 54
     property int spacechongzhi: 12
     property int rightspace: 20
-
+    property int alldoctorscount: 0
+    property int bottomheight: 60
     Rectangle{
         id:usermanage1
         x:leftoffset
@@ -109,7 +110,7 @@ Item {
             anchors.top: usermanageheadRect.bottom
             anchors.topMargin: 10
             width: usermanage1.width-treatmanagerlist.x*2
-            height: usermanage1.height-63
+            height: usermanage1.height-63-bottomheight
             PatientTableHeader{
                 id: treatcaseHeader
                 width: treatmanagerlist.width
@@ -172,19 +173,30 @@ Item {
                 for (var i = 0; i < treatcaseHeader.widthList.length; ++i) {
 
                     tw += treatcaseHeader.widthList[i]
-                    if (mouseX>=tw0 &&mouseX<tw && i>3){
+                    if (mouseX>=tw0 &&mouseX<tw && i>5){
                         indexX=i
                         break;
                     }
                     tw0+=treatcaseHeader.widthList[i]
                 }
-                if (indexX==4){
-                 treatmanagerCheck.visible=true;
+                 var docdataObj = gldoctorModel.data(index)
+                glselecteddoctor=docdataObj[gldoctorModel.headerRoles[1]]
+                if (indexX==6){
+                 userPasswdReset.visible=true;
+
+                }
+
+                if (indexX==7){
+                    userPasswdModify.visible=true
+                }
+                if (indexX==8){
+                    console.log("forbid doctorid="+glselecteddoctor)
+                    gldoctorModel.forbidUser(glselecteddoctor)
                 }
 
                 //realpatient2.visible=true
 
-                if (caseHeader.xList[1] <= mouseX
+                if (treatcaseHeader.xList[1] <= mouseX
                         && mouseX <= treatcaseHeader.xList[2]) {
 
                     editInput.x = treatcaseHeader.xList[1]
@@ -260,7 +272,26 @@ Item {
             }
         }
        }
+        Rectangle{
+            anchors.top: treatmanagerlist.bottom
+            width: usermanage1.width
+            height:bottomheight
+            color: "#ededed"
+            CusPageIndicator{
+                anchors.centerIn: parent
+                count: alldoctorscount
+                currentIndex: 0
+            }
+        }
+
     }
 
+    onVisibleChanged: {
+        if (visible){
+           alldoctorscount= gldoctorModel.rowCount()/10+gldoctorModel.rowCount()%10!==0?1:0
+
+
+        }
+    }
 
 }

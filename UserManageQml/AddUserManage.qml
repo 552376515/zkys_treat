@@ -92,8 +92,8 @@ Rectangle {
             anchors.topMargin: 90
             anchors.left:suserpwdResetStop.right
             anchors.leftMargin: 72
-            btnImgUrl:imgaeshprefix+"images/gl-xingzeng-baocun.png"
-            btnImgHovered:imgaeshprefix+"images/gl-xingzeng-baocun-fz.png"
+            btnImgUrl:imgaeshprefix+"images/ys-xingzeng-baocun.png"
+            btnImgHovered:imgaeshprefix+"images/ys-xingzeng-baocun-fz.png"
             onClicked:{
 //                if (canstartTiaoli){
 //                    senderright.sendMessage(BAT.byteArrayfy("{\"msg\":\"start_cure\",\"args\":{\"meridianbox\":\"shen_tiqian_r\",\"meridianbox_2\":\"shen_tiqian_l\"}}"));
