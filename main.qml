@@ -47,8 +47,9 @@ Window {
 //        }
 //    }
 
-    function loadPatient(){
-        loginrole=0
+    function loadPatient(inputrole){
+//        loginrole=0
+        loginrole=inputrole
 
 
         if (loginrole==2){

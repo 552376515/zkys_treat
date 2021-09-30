@@ -174,7 +174,13 @@ Item {
                              closeAllView()
                             showIndex=1
                             login.visible=false;
-                            loadPatient()
+                            if(nameInput.displayText === '0'){
+                                loginrole = 0
+                            }else {
+                                loginrole = 2
+                            }
+
+                            loadPatient(loginrole)
                          }
                      }
                  }
