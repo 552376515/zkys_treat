@@ -273,7 +273,7 @@ Window {
         anchors.left: doctorImg.right
         anchors.leftMargin: 5
         text: qsTr("医生:")+qsTr(doctorloginname)
-        y:30
+        y: 24
         font.pointSize: 15
         color: "#181818"
         width: 160
@@ -284,7 +284,7 @@ Window {
         source: imgaeshprefix+"images/signout.png"
         anchors.left: doctorName.right
         anchors.leftMargin: 10
-        y:30
+        y: 30
         width: 20
         height: 18
     }
@@ -295,11 +295,11 @@ Window {
         anchors.leftMargin:5
         backgroundColorNormal:"transparent"
         width:80
-        y:30
-        font.pointSize:15
+        y:24
+        font.pointSize: 20
 
         //color:"#181818"
-        height:20
+        height: 30
         onClicked:{
             closeAllView()
             showIndex=0
