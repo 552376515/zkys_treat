@@ -166,7 +166,7 @@ Item {
                      CusButton_Image{
                          width: rectButton.width
                          height: rectButton.height
-                         btnImgUrl:imgaeshprefix+"images/denglu.png"
+                         btnImgNormal: imgaeshprefix+"images/denglu.png"
                          btnImgHovered: imgaeshprefix+"images/denglu2.png"
                          font.pointSize:20
 
