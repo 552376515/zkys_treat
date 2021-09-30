@@ -54,7 +54,7 @@ Window {
     property string glselecteddoctor: ""
 
     function loadPatient(){
-        loginrole=0
+        loginrole=2
 
 
         if (loginrole==2){
@@ -594,6 +594,18 @@ Window {
             height: canceltreatManage.height
         }
 
+    }
+
+    Rectangle{
+        id:addUsermanager
+        width: window.width
+        height: window.height
+        visible: false
+        color: "transparent"
+        AddUserManage{
+            width: addUsermanager.width
+            height: addUsermanager.height
+        }
     }
 
     Rectangle{ //密码重置

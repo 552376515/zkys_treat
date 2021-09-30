@@ -96,7 +96,7 @@ Item {
                     y:(usermanageheadRight.height-glchongzhi.height)/2.0
                    // text:"病情资料"
                     onClicked:{
-
+                        addUsermanager.visible=true
                     }
                 }
             }

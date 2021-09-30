@@ -1,5 +1,9 @@
 import QtQuick 2.0
 import TaoQuick 1.0
+import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.5
+import QtQuick.Controls.Styles 1.4
+import QtQuick.VirtualKeyboard 2.1
 Rectangle {
     id:userpwdReset1
     width: parent.width
@@ -32,40 +36,50 @@ Rectangle {
             }
 
         }
-        Row{
-            id:originname
-            width: 208+70+7
+        Rectangle{
+            id:inputRect
             height: 32
-            anchors.top: usenameResetHead.bottom
+            anchors.top: userpwdResetHead.bottom
             anchors.topMargin: 35
-            Text {
-                id: leftLbl
-                text: qsTr("医生姓名：")
-                color: "black"
-                font.pixelSize: 16
-                height: originname.height
-                width: 70
-                 verticalAlignment: Text.AlignVCenter
-            }
-            TextField{
-                id:inputoriginname
-                width: 208
-                height: originname.height
-                anchors.left: leftLbl.right
-                placeholderText: "点击输入"
-                focus: true
-                echoMode: TextInput.Normal
-                onAccepted: {
-                    color:"#999999"
+            x:116
+            color: "transparent"
+            Row{
+                id:originname
+                width: 208+70+7
+                height: 32
+                anchors.top: userpwdResetHead.bottom
+                anchors.topMargin: 35
+                Text {
+                    id: leftLbl
+                    text: qsTr("医生姓名：")
+                    color: "black"
+                    font.pixelSize: 16
+                    height: originname.height
+                    width: 70
+                     verticalAlignment: Text.AlignVCenter
                 }
-                // 当选择输入框的时候才显示键盘
-                onPressed: {
-//                           inputX = x
-//                           inputY = y + height
-//                           inputPanel1.visible = true
+                TextField{
+                    id:inputoriginname
+                    width: 208
+                    height: originname.height
+                  //  anchors.left: leftLbl.right
+                    placeholderText: "点击输入"
+                    focus: true
+                    echoMode: TextInput.Normal
+                    onAccepted: {
+                        color:"#999999"
+                    }
+                    // 当选择输入框的时候才显示键盘
+                    onPressed: {
+    //                           inputX = x
+    //                           inputY = y + height
+    //                           inputPanel1.visible = true
+                    }
                 }
             }
+
         }
+
 
 
 
@@ -75,21 +89,21 @@ Rectangle {
             id:suserpwdResetStop
             width: 155
             height: 39
-            anchors.top:  originname.bottom
-            anchors.topMargin: 90
+            anchors.top:  inputRect.bottom
+            anchors.topMargin: 45
             x:72
             btnImgUrl:imgaeshprefix+"images/gl-piliang-qvxiao.png"
             btnImgHovered:imgaeshprefix+"images/ys-piliang-qvxiao-fz.png"
             onClicked:{
-
+                    addUsermanager.visible=false
             }
         }
         CusButton_Image{
             id:userpwdResetContinue
             width: 155
             height: 39
-            anchors.top:  originname.bottom
-            anchors.topMargin: 90
+            anchors.top:  inputRect.bottom
+            anchors.topMargin: 45
             anchors.left:suserpwdResetStop.right
             anchors.leftMargin: 72
             btnImgUrl:imgaeshprefix+"images/ys-xingzeng-baocun.png"
