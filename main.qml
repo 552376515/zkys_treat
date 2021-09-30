@@ -315,7 +315,7 @@ Window {
       //  y: (Screen.desktopAvailableHeight-screenHeight)/2.0
         width: window.width
         height: window.height
-        visible: showIndex==0
+        visible: showIndex===0
         PatientLogin{
             id:login
 

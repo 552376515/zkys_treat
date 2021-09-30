@@ -109,7 +109,7 @@ Rectangle {
                     y:(addcasedatahead.height-addcaseQuitBtn.height)/2.0
                    // anchors.left: addcasedataheadButton.right
                    // anchors.leftMargin: 60
-                    btnImgUrl:imgaeshprefix+"images/ys-guanbi.png"
+                    btnImgNormal:imgaeshprefix+"images/ys-guanbi.png"
                     btnImgHovered:imgaeshprefix+"images/sy-guanbi-fz.png"
                     onClicked: {
                           addCaseTreatMent.visible=false;
@@ -566,7 +566,7 @@ Rectangle {
                 height: 155
                 x:(rightcontrolbuttons.width-starttreatbutton.width)/2.0
                 y:320
-                btnImgUrl:imgaeshprefix+"images/ys-kaishibiaoli.png"
+                btnImgNormal:imgaeshprefix+"images/ys-kaishibiaoli.png"
                 btnImgHovered:imgaeshprefix+"images/ys-kaishibiaoli-fz.png"
                 //font.pointSize:20
 
@@ -590,7 +590,7 @@ Rectangle {
                 height: 45
                 x:28
                 y:starttreatbutton.y+starttreatbutton.height+34
-                btnImgUrl:imgaeshprefix+"images/ys-tianjiazhihuanzhe.png"
+                btnImgNormal:imgaeshprefix+"images/ys-tianjiazhihuanzhe.png"
                 btnImgHovered:imgaeshprefix+"images/ys-tianjiazhihuanzhe-fz.png"
                 onClicked:{
                     if (jingluoplannewModel.rowCount()>0){
@@ -606,7 +606,7 @@ Rectangle {
                 height: 45
                 x:28
                 y:savecasebutton.y+savecasebutton.height+34
-                btnImgUrl:imgaeshprefix+"images/ys-fanhui.png"
+                btnImgNormal:imgaeshprefix+"images/ys-fanhui.png"
                 btnImgHovered:imgaeshprefix+"images/ys-fanhui-fz.png"
                 onClicked:{
                     addCaseTreatMent.visible=false;
