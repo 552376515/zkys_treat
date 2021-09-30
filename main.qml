@@ -54,7 +54,7 @@ Window {
     property string glselecteddoctor: ""
 
     function loadPatient(){
-        loginrole=2
+        loginrole=0
 
 
         if (loginrole==2){
