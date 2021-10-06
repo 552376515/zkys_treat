@@ -355,13 +355,22 @@ Item {
                 anchors.top:xyz.bottom
                 anchors.topMargin: 60
                 x:(devicebiaodinginputRect.width-devicestart.width)/2.0
-                CusButton_Image{
+                Button{
                     id:savecasebutton
                     width: devicestart.width
                     height: devicestart.height
+                    background: Rectangle{
+                        width: savecasebutton.width
+                        height: savecasebutton.height
+                        color: "transparent"
+                        Image {
+                            id: savecasebuttonimg
+                            width: savecasebutton.width
+                            height: savecasebutton.height
+                            source: savecasebutton.hovered?imgaeshprefix+"images/gl-Start-fz.png":imgaeshprefix+"images/gl-Start.png"
+                        }
+                    }
 
-                    btnImgUrl:imgaeshprefix+"images/gl-Start.png"
-                    btnImgHovered:imgaeshprefix+"images/gl-Start-fz.png"
                     onClicked:{
 
                     }
@@ -396,42 +405,70 @@ Item {
             }
         }
 
-        CusButton_Image{
+        Button{
             id:forbidprotect
             x:inputcameraleftrect.x+inputcameraleftrect.width+44
             width:197
             height:49
             y:(biaodingbottom.height-forbidprotect.height)/2.0
+            background: Rectangle{
+                width: forbidprotect.width
+                height: forbidprotect.height
+                color: "transparent"
+                Image {
+                    id: forbidprotectimg
+                    width: forbidprotect.width
+                    height: forbidprotect.height
+                    source: forbidprotect.hovered?imgaeshprefix+"images/gl-jiechubaohu-fz.png":imgaeshprefix+"images/gl-jiechubaohu.png"
+                }
+            }
 
-            btnImgUrl:imgaeshprefix+"images/gl-jiechubaohu.png"
-            btnImgHovered:imgaeshprefix+"images/gl-jiechubaohu-fz.png"
             onClicked:{
 
             }
 
         }
-        CusButton_Image{
+        Button{
             id:freeaction
             x:forbidprotect.x+forbidprotect.width+17
             width:136
             height:49
             y:forbidprotect.y
+            background: Rectangle{
+                width: freeaction.width
+                height: freeaction.height
+                color: "transparent"
+                Image {
+                    id: freeactionimg
+                    width: freeaction.width
+                    height: freeaction.height
+                    source: freeaction.hovered?imgaeshprefix+"images/gl-ziyouqvdong-fz.png":imgaeshprefix+"images/gl-ziyouqvdong.png"
+                }
+            }
 
-            btnImgUrl:imgaeshprefix+"images/gl-ziyouqvdong.png"
-            btnImgHovered:imgaeshprefix+"images/gl-ziyouqvdong-fz.png"
             onClicked:{
 
             }
 
         }
-        CusButton_Image{
+        Button{
             id:stopaction
             x:freeaction.x+freeaction.width+17
             width:136
             height:49
             y:forbidprotect.y
-            btnImgUrl:imgaeshprefix+"images/gl-tingzhi.png"
-            btnImgHovered:imgaeshprefix+"images/gl-tingzhi-fz.png"
+            background: Rectangle{
+                width: stopaction.width
+                height: stopaction.height
+                color: "transparent"
+                Image {
+                    id: stopactionimg
+                    width: stopaction.width
+                    height: stopaction.height
+                    source: stopaction.hovered?imgaeshprefix+"images/gl-tingzhi-fz.png":imgaeshprefix+"images/gl-tingzhi.png"
+                }
+            }
+
             onClicked:{
 
             }

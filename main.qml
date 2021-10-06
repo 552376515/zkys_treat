@@ -46,6 +46,8 @@ Window {
     property string anibackimg1: "right_26_dan.png"
     property string anibackimg2: "left_26_dan.png"
     property string anibackimg3: "left_26_dan.png"
+
+    property bool ysCanModifyTreatment: false
 //    Component.onCompleted: {
 //        if (typeof (mainImageResoucePath) != "undefined" && mainImageResoucePath !== null && mainImageResoucePath.length > 0) {
 //            imgaeshprefix = mainImageResoucePath
@@ -54,12 +56,13 @@ Window {
     property string glselecteddoctor: ""
 
     function loadPatient(){
-        loginrole=2
+        loginrole=0
 
 
         if (loginrole==2){
 
             glpatientModel.initData();
+
             glpatientmanager.visible=true
         }else{
             patientManagerRect.visible=true
@@ -68,6 +71,10 @@ Window {
                 var thefirstpatient=deviceAddModel.data(0);
                 currpatientname=thefirstpatient[deviceAddModel.headerRoles[0]];
                 currpatientnum=thefirstpatient[deviceAddModel.headerRoles[1]];
+                currpatientSex=thefirstpatient[deviceAddModel.headerRoles[2]]
+                currpatientAge=thefirstpatient[deviceAddModel.headerRoles[3]]
+                currpatientPhone=thefirstpatient[deviceAddModel.headerRoles[4]]
+                currpatientRegtime=thefirstpatient[deviceAddModel.headerRoles[5]]
 
                 //patientCaseModel.initCaseData()
                 patientCaseModel.loadCaseByPatientId(currpatientnum)
@@ -272,29 +279,32 @@ Window {
         source: imgaeshprefix+"images/touxiang.png"
         anchors.left: sub2.right
         anchors.leftMargin: 890
-        y:22
+
         width: 36
         height: 36
+        anchors.verticalCenter: zhongkeheader.verticalCenter
     }
     Text {
         id: doctorName
         anchors.left: doctorImg.right
         anchors.leftMargin: 5
         text: qsTr("医生:")+qsTr(doctorloginname)
-        y:30
+        //y:30
         font.pointSize: 15
         color: "#181818"
         width: 160
-        height: 15
+        height: 20
+        anchors.verticalCenter: zhongkeheader.verticalCenter
     }
     Image {
         id: exitimg
         source: imgaeshprefix+"images/signout.png"
         anchors.left: doctorName.right
         anchors.leftMargin: 10
-        y:30
+       // y:30
         width: 20
-        height: 18
+        height: 20
+        anchors.verticalCenter: zhongkeheader.verticalCenter
     }
     CusButton{
         id:exitBtn
@@ -303,11 +313,12 @@ Window {
         anchors.leftMargin:5
         backgroundColorNormal:"transparent"
         width:80
-        y:30
+        height:20
+        anchors.verticalCenter: zhongkeheader.verticalCenter
         font.pointSize:15
 
         //color:"#181818"
-        height:20
+
         onClicked:{
             closeAllView()
             showIndex=0
@@ -507,6 +518,20 @@ Window {
             height: choiseCaseTreatMent.height
         }
     }
+
+    Rectangle{
+        id:checkCaseTreatment
+        width: window.width
+        height: window.height
+
+        visible: false
+        color: "transparent"
+        CheckCaseTreatment{
+            width: checkCaseTreatment.width
+            height: checkCaseTreatment.height
+        }
+    }
+
     Rectangle{//管理界面添加处方
         id:addTreatManager
         width: window.width

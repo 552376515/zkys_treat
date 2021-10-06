@@ -86,7 +86,7 @@ Item {
                          id:rightText
                          width: zishi.contentWidth+iconimg.width+10
                          height: 20
-                         color: "#5e5e5e"
+                         color: zishiname===""?"transparent":"#5e5e5e"
                          anchors.left: listLeftLine.right
                          anchors.leftMargin: 10
                          Text {
@@ -263,12 +263,14 @@ Item {
         text:"识别经络"
         backgroundColorNormal:"#f5f6f7"
         backgroundColorPressed:"#f5b750"
+
         selected:true
         onClicked:{//开始识别 先要播放声音 ，声音播放完成，再去识别体位
             recognizeActionPlay()
             startrecognize=false
             starttiaoli=false
             closeAllStatus()
+            realtimeCorrect.visible=true
             currTreatState==1
         }
 
@@ -281,12 +283,18 @@ Item {
         anchors.top: regButton.bottom
         anchors.topMargin: 20
         text:starttiaoli?"停止调理":"开始调理"
-        backgroundColorNormal:(isrecognizesuccess)?"#ededed":"#f5f6f7"
+        backgroundColorNormal:(isrecognizesuccess)?"#f5b750":"#ededed"
         backgroundColorPressed:"#f5b750"
         selected:false
         onClicked:{
-          //  if (isrecognizesuccess){
+        //    if (isrecognizesuccess){
                 tiaoliAction()
+                 musicname=imgaeshprefix+"audios/start_care.mp3"
+                playtiaolimusic.play();
+                closeAllTiaoli()
+                realtimeRoutine.visible=true
+                currTreatState=3;
+            starttiaoli=true
           //  }
 
 

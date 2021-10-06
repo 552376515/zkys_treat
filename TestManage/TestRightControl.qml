@@ -1,6 +1,5 @@
 import QtQuick 2.0
-import QtQuick.Controls 2.0
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.2
 import TaoQuick 1.0
 import zmq.Components 1.0
 import QtMultimedia 5.12
@@ -92,15 +91,22 @@ Item {
 
     }
 
-    CusButton_Image{
+    Button{
         id:sbibiejingluo
         width: 249
         height: 92
         anchors.top:  whitedisp.bottom
         anchors.topMargin: 20
         x:(testrightcontrol.width-sbibiejingluo.width)/2.0
-        btnImgUrl:imgaeshprefix+"images/distinguish.png"
-        btnImgHovered:imgaeshprefix+"images/distinguish-fz.png"
+        background:Rectangle{
+            width: sbibiejingluo.width
+            height: sbibiejingluo.height
+            color: "transparent"
+            Image {
+                id: sbibiejingluoimg
+                source: sbibiejingluo.hovered?imgaeshprefix+"images/distinguish-fz.png":imgaeshprefix+"images/distinguish.png"
+            }
+       }
         onClicked:{
                     if (cuscombox.displayText==="仰卧手向上"){
                         soundname="pose1.mp3"
@@ -130,14 +136,26 @@ Item {
         }
     }
 
-    CusButton_Image{
+    Button{
         id:starttiaoli
         width: 249
         height: 92
         anchors.top:  sbibiejingluo.bottom
         anchors.topMargin: 22
         x:(testrightcontrol.width-sbibiejingluo.width)/2.0
-        btnImgUrl:canstartTiaoli ?imgaeshprefix+"images/start.png":imgaeshprefix+"images/start-cs.png"
+        background:Rectangle{
+            width: starttiaoli.width
+            height: starttiaoli.height
+            color: "transparent"
+            Image{
+                id:starttiaoliimg
+                width: starttiaoli.width
+                height: starttiaoli.height
+                source: canstartTiaoli ?imgaeshprefix+"images/start.png":imgaeshprefix+"images/start-cs.png"
+            }
+
+        }
+
         onClicked:{
         //    if (canstartTiaoli){
                 closeAllStatus()

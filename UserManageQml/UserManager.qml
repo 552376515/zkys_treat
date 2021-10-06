@@ -161,7 +161,7 @@ Item {
             onPositionChanged: {
                 doPositionChanged(mouseX, mouseY)
             }
-            onDoubleClicked: {
+            onSingleClicked:{
                 var index = indexAt(mouseX, mouseY + contentY)
                 if (index < 0 || index >= count) {
                     return
@@ -193,6 +193,15 @@ Item {
                     console.log("forbid doctorid="+glselecteddoctor)
                     gldoctorModel.forbidUser(glselecteddoctor)
                 }
+            }
+
+            onDoubleClicked: {
+                var index = indexAt(mouseX, mouseY + contentY)
+                if (index < 0 || index >= count) {
+                    return
+                }
+
+
 
                 //realpatient2.visible=true
 

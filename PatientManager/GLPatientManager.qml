@@ -26,15 +26,24 @@ Item {
         Row{
             width: glbuttonWidth*4+7*3
             x:gpspaceControl.width-glbuttonWidth*4-7*3-38
-            CusButton_Image{
+            Button{
                 id:glpatientimportBtn
                 width: 133
                 height: 39
                 y:(gpspaceControl.height-glpatientimportBtn.height)/2.0
-               // anchors.left: addcasedataheadButton.right
-               // anchors.leftMargin: 60
-                btnImgUrl:imgaeshprefix+"images/gl-hz-daoru.png"
-                btnImgHovered:imgaeshprefix+"images/gl-hz-daoru-fz.png"
+                background: Rectangle{
+                    width: glpatientimportBtn.width
+                    height: glpatientimportBtn.height
+                    color: "transparent"
+                    Image {
+                        id: glpatientimportBtnimg
+                        width: glpatientimportBtn.width
+                        height: glpatientimportBtn.height
+                        source: glpatientimportBtn.hovered?imgaeshprefix+"images/gl-hz-daoru-fz.png":imgaeshprefix+"images/gl-hz-daoru.png"
+                    }
+                }
+
+
                 onClicked: {
                          patientImport.visible=true
                 }
@@ -44,15 +53,24 @@ Item {
                 height: 39
                 color: "transparent"
             }
-            CusButton_Image{
+            Button{
                 id:glpatientdaochuBtn
                 width: 133
                 height: 39
                 y:(gpspaceControl.height-glpatientdaochuBtn.height)/2.0
-               // anchors.left: addcasedataheadButton.right
-               // anchors.leftMargin: 60
-                btnImgUrl:imgaeshprefix+"images/gl-hz-daochu.png"
-                btnImgHovered:imgaeshprefix+"images/gl-hz-daochu-fz.png"
+                background: Rectangle{
+                    width: glpatientdaochuBtn.width
+                    height: glpatientdaochuBtn.height
+                    color: "transparent"
+                    Image {
+                        id: glpatientdaochuBtnimg
+                        width: glpatientdaochuBtn.width
+                        height: glpatientdaochuBtn.height
+                        source: glpatientdaochuBtn.hovered?imgaeshprefix+"images/gl-hz-daochu-fz.png":imgaeshprefix+"images/gl-hz-daochu.png"
+                    }
+                }
+
+
                 onClicked: {
 
                 }
@@ -62,17 +80,24 @@ Item {
                 height: 39
                 color: "transparent"
             }
-            CusButton_Image{
+            Button{
                 id:glpatientbeifenBtn
                 width: 133
                 height: 39
                 y:(gpspaceControl.height-glpatientbeifenBtn.height)/2.0
-               // anchors.left: addcasedataheadButton.right
-               // anchors.leftMargin: 60
-                btnImgUrl:imgaeshprefix+"images/gl-hz-beifen.png"
-                btnImgHovered:imgaeshprefix+"images/gl-hz-beifen-fz.png"
+                background: Rectangle{
+                    width: glpatientbeifenBtn.width
+                    height: glpatientbeifenBtn.height
+                    color: "transparent"
+                    Image {
+                        id: glpatientbeifenBtnimg
+                        width: glpatientbeifenBtn.width
+                        height: glpatientbeifenBtn.height
+                        source: glpatientbeifenBtn.hovered?imgaeshprefix+"images/gl-hz-beifen-fz.png":imgaeshprefix+"images/gl-hz-beifen.png"
+                    }
+                }
                 onClicked: {
-
+                    glpatientModel.writeGlToExcel("out1.xlsx");
                 }
             }
             Rectangle{
@@ -80,17 +105,25 @@ Item {
                 height: 39
                 color: "transparent"
             }
-            CusButton_Image{
+            Button{
                 id:glpatientshanchuBtn
                 width: 133
                 height: 39
                 y:(gpspaceControl.height-glpatientshanchuBtn.height)/2.0
-               // anchors.left: addcasedataheadButton.right
-               // anchors.leftMargin: 60
-                btnImgUrl:imgaeshprefix+"images/gl-hz-shanchu.png"
-                btnImgHovered:imgaeshprefix+"images/gl-hz-shanchu-fz.png"
-                onClicked: {
+                background: Rectangle{
+                    width: glpatientshanchuBtn.width
+                    height: glpatientshanchuBtn.height
+                    color: "transparent"
+                    Image {
+                        id: glpatientshanchuBtnimg
+                        width: glpatientshanchuBtn.width
+                        height: glpatientshanchuBtn.height
+                        source: glpatientshanchuBtn.hovered?imgaeshprefix+"images/gl-hz-shanchu-fz.png":imgaeshprefix+"images/gl-hz-shanchu.png"
+                    }
+                }
 
+                onClicked: {
+                    glpatientModel.clearAll();
                 }
             }
         }
@@ -241,15 +274,23 @@ Item {
         }
 
 
-        CusButton_Image{
+        Button{
             id:glsousuo
             width:54
             height:36
             anchors.left: lastpickendtime.right
             anchors.leftMargin: 12
-            btnImgNormal:imgaeshprefix+"images/ys-sousuo.png"
-            btnImgHovered:imgaeshprefix+"images/ys-sousuo-fz.png"
             y:(glpatientManager.height-glsousuo.height)/2.0
+            background: Rectangle{
+                width: glsousuo.width
+                height: glsousuo.height
+                color: "transparent"
+                Image {
+                    id: glsousuoimg
+                    source: glsousuo.hovered?imgaeshprefix+"images/ys-sousuo-fz.png":imgaeshprefix+"images/ys-sousuo.png"
+                }
+            }
+
            // text:"病情资料"
             onClicked:{
 
@@ -258,15 +299,25 @@ Item {
 
         }
 
-        CusButton_Image{
+        Button{
             id:glchongzhi
             width:54
             height:36
             anchors.left: glsousuo.right
             anchors.leftMargin: 12
-            btnImgNormal:imgaeshprefix+"images/gl-chongzhi.png"
-            btnImgHovered:imgaeshprefix+"images/gl-chongzhi-fz.png"
-            y:(glpatientManager.height-glchongzhi.height)/2.0
+             y:(glpatientManager.height-glchongzhi.height)/2.0
+            background: Rectangle{
+                width: glchongzhi.width
+                height: glchongzhi.height
+                color: "transparent"
+                Image {
+                    id: glchongzhiimg
+                    width: glchongzhi.width
+                    height: glchongzhi.height
+                    source: glchongzhi.hovered?imgaeshprefix+"images/gl-chongzhi-fz.png":imgaeshprefix+"images/gl-chongzhi.png"
+                }
+            }
+
            // text:"病情资料"
             onClicked:{
 
@@ -314,6 +365,7 @@ Item {
             width: cusHeader.avalidWidth*8
             height: glpatientList.height - cusHeader.height-1-bottomHeight
             model: glpatientModel
+
             onPressed: {
                 doPress(mouseX, mouseY)
             }

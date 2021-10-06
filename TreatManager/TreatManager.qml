@@ -36,14 +36,22 @@ Item {
                 color: "#0F7E8B"
                 font.pixelSize: 19
             }
-            CusButton_Image{
+            Button{
                 id:treataddnewcase
                 width:102
                 height:36
                 y:(treatmanagerheadRect.height-treataddnewcase.height)/2.0
                 x:treatmanagerheadRect.width-treataddnewcase.width-44
-                btnImgUrl:imgaeshprefix+"images/gl-xinzengchufang.png"
-                btnImgHovered:imgaeshprefix+"images/gl-xinzengchufang-fz.png"
+                background: Rectangle{
+                    width:treataddnewcase.width
+                    height: treataddnewcase.height
+                    color: "transparent"
+                    Image {
+                        id: treataddnewcaseimg
+                        source: treataddnewcase.hovered?imgaeshprefix+"images/gl-xinzengchufang-fz.png":imgaeshprefix+"images/gl-xinzengchufang.png"
+                    }
+                }
+
                 onClicked: {
                     //treatmanagerment.visible=false
                     addTreatManager.visible=true
@@ -105,7 +113,7 @@ Item {
             onPositionChanged: {
                 doPositionChanged(mouseX, mouseY)
             }
-            onDoubleClicked: {
+            onSingleClicked:{
                 var index = indexAt(mouseX, mouseY + contentY)
                 if (index < 0 || index >= count) {
                     return
@@ -127,9 +135,18 @@ Item {
                  treatmanagerCheck.visible=true;
                 }
 
+            }
+
+            onDoubleClicked: {
+                var index = indexAt(mouseX, mouseY + contentY)
+                if (index < 0 || index >= count) {
+                    return
+                }
+
+
                 //realpatient2.visible=true
 
-                if (caseHeader.xList[1] <= mouseX
+                if (treatcaseHeader.xList[1] <= mouseX
                         && mouseX <= treatcaseHeader.xList[2]) {
 
                     editInput.x = treatcaseHeader.xList[1]

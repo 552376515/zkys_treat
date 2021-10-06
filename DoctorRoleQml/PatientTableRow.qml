@@ -23,8 +23,9 @@ Rectangle {
     property color textColor: CusConfig.textColor
 
     signal checkedChanged(bool checked)
-    //color: isSelected ? CusConfig.controlColor_pressed : ( isAlternate ? CusConfig.controlColor : Qt.lighter(CusConfig.controlColor, 1.1) )
-    color: "transparent"
+    color: isSelected ?"#ededed":"transparent"
+
+    //color: "transparent"
     Repeater {
         model: roles
         Loader {

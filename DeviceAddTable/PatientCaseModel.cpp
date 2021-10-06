@@ -109,7 +109,7 @@ void PatientCaseModel::loadCaseByPatientId(QString patientId){
     patientscasequery.exec();	//执行
 
     QSqlRecord recode = patientscasequery.record();		//recode保存查询到一些内容信息，如表头、列数等等
-   qDebug()<<"获取读取结果的列数"<<recode.count();
+  // qDebug()<<"获取读取结果的列数"<<recode.count();
     // int column = recode.count();			//获取读取结果的列数
     QString s1 = recode.fieldName(0);
     while (patientscasequery.next())
@@ -132,7 +132,7 @@ void PatientCaseModel::loadCaseByPatientId(QString patientId){
     }else {
         mDatas=objs;
     }
-    sortByAddress(Qt::SortOrder::AscendingOrder);
+    sortByDate(Qt::SortOrder::DescendingOrder);
 }
 
 void PatientCaseModel::addToPatientCase(QString pname,QString pno,QString pcase,QString ptreatment, QString doctor)
@@ -146,12 +146,13 @@ void PatientCaseModel::addToPatientCase(QString pname,QString pno,QString pcase,
     item->set_casename(pcase);
     item->set_treatment(ptreatment);
     item->set_doctor(doctor);
-    item->set_prescriptime(now.toString());
+    item->set_prescriptime(now.toString("yyyy-MM-dd"));
     item->set_tcount("0");
    // item->set_regtime(query.value("regtime").toString());
     item->set_online(false);
     objs.append(item);
-    append(objs);
+    insert(0,objs);
+    //append(objs);
 }
 
 void PatientCaseModel::clearAll()

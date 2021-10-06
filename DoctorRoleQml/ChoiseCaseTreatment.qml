@@ -15,6 +15,16 @@ Rectangle {
     opacity: 0.8
     property string currCaseName: "痛风"
     property string currTreatment: "轻度痛风调理"
+    MouseArea{
+        anchors.fill: parent
+        propagateComposedEvents: false
+        hoverEnabled: true
+        onClicked: {}
+
+        onReleased: {}
+
+        onPressed: {}
+    }
     Rectangle{
         id:choisecasedata1
         x:(choiseCaseTreatMent.width-1130)/2.0
@@ -54,15 +64,26 @@ Rectangle {
                     }
                 }
 
-                CusButton_Image{
+                Button{
                     id:choisecaseQuitBtn
                     width: 30
                     height: 30
                     y:(choisecasedatahead.height-choisecaseQuitBtn.height)/2.0
                    // anchors.left: addcasedataheadButton.right
                    // anchors.leftMargin: 60
-                    btnImgUrl:imgaeshprefix+"images/ys-guanbi.png"
-                    btnImgHovered:imgaeshprefix+"images/sy-guanbi-fz.png"
+                    background: Rectangle{
+                        width: choisecaseQuitBtn.width
+                        height: choisecaseQuitBtn.height
+                        color: "transparent"
+                        Image {
+                            id: choisecaseQuitBtnimg
+                            width: choisecaseQuitBtn.width
+                            height: choisecaseQuitBtn.height
+                            source: choisecaseQuitBtn.hovered?imgaeshprefix+"images/sy-guanbi-fz.png":imgaeshprefix+"images/ys-guanbi.png"
+                        }
+                    }
+
+
                     onClicked: {
                           choiseCaseTreatMent.visible=false;
                     }
@@ -421,14 +442,24 @@ Rectangle {
             anchors.top: choisecasedatahead.bottom
             anchors.topMargin: 0
             color: "#dddddd"
-            CusButton_Image{
+            Button{
                 id:starttreatbutton
                 width: 155
                 height: 155
                 x:(rightcontrolbuttons.width-starttreatbutton.width)/2.0
                 y:320
-                btnImgUrl:imgaeshprefix+"images/ys-kaishibiaoli.png"
-                btnImgHovered:imgaeshprefix+"images/ys-kaishibiaoli-fz.png"
+                background: Rectangle{
+                    width: starttreatbutton.width
+                    height: starttreatbutton.height
+                    color: "transparent"
+                    Image {
+                        id: starttreatbuttonimg
+                        width: starttreatbutton.width
+                        height: starttreatbutton.height
+                        source: starttreatbutton.hovered?imgaeshprefix+"images/ys-kaishibiaoli-fz.png":imgaeshprefix+"images/ys-kaishibiaoli.png"
+                    }
+                }
+
                 //font.pointSize:20
 
                 onClicked:{
@@ -436,26 +467,40 @@ Rectangle {
                 }
 
             }
-            CusButton_Image{
+            Button{
                 id:savecasebutton
                 width: 161
                 height: 45
                 x:28
                 y:starttreatbutton.y+starttreatbutton.height+34
-                btnImgUrl:imgaeshprefix+"images/ys-tianjiazhihuanzhe.png"
-                btnImgHovered:imgaeshprefix+"images/ys-tianjiazhihuanzhe-fz.png"
+                background: Rectangle{
+                    width: savecasebutton.width
+                    height: savecasebutton.height
+                    color: "transparent"
+                    Image {
+                        id: savecasebuttonimg
+                        source: savecasebutton.hovered?imgaeshprefix+"images/ys-tianjiazhihuanzhe-fz.png":imgaeshprefix+"images/ys-tianjiazhihuanzhe.png"
+                    }
+                }
                 onClicked:{
 
                 }
             }
-            CusButton_Image{
+            Button{
                 id:cancelcasebutton
                 width: 161
                 height: 45
                 x:28
                 y:savecasebutton.y+savecasebutton.height+34
-                btnImgUrl:imgaeshprefix+"images/ys-fanhui.png"
-                btnImgHovered:imgaeshprefix+"images/ys-fanhui-fz.png"
+                background: Rectangle{
+                    width: cancelcasebutton.width
+                    height: cancelcasebutton.height
+                    color: "transparent"
+                    Image {
+                        id: cancelcasebuttonimg
+                        source: cancelcasebutton.hovered?imgaeshprefix+"images/ys-fanhui-fz.png":imgaeshprefix+"images/ys-fanhui.png"
+                    }
+                }
                 onClicked:{
                     choiseCaseTreatMent.visible=false;
                 }

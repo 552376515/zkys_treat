@@ -14,6 +14,17 @@ Rectangle {
     opacity: 0.8
     property int dispWidth: 528
     property int dispHeight: 285+52
+    MouseArea{
+        anchors.fill: parent
+        propagateComposedEvents: false
+        hoverEnabled: true
+        onClicked: {}
+
+        onReleased: {}
+
+        onPressed: {}
+    }
+
     Rectangle{
         id:userpwdResetRect
         width: dispWidth
@@ -170,20 +181,31 @@ Rectangle {
 
 
 
-        CusButton_Image{
+        Button{
             id:suserpwdResetStop
             width: 155
             height: 39
             anchors.top:  pwdrect3.bottom
             anchors.topMargin: 45
             x:72
-            btnImgUrl:imgaeshprefix+"images/gl-piliang-qvxiao.png"
-            btnImgHovered:imgaeshprefix+"images/ys-piliang-qvxiao-fz.png"
+            background: Rectangle{
+                width: suserpwdResetStop.width
+                height: suserpwdResetStop.height
+                color: "transparent"
+                Image {
+                    id: suserpwdResetStopimg
+                    width: suserpwdResetStop.width
+                    height: suserpwdResetStop.height
+                    source: suserpwdResetStop.hovered?imgaeshprefix+"images/gl-piliang-qvxiao-fz.png":imgaeshprefix+"images/gl-piliang-qvxiao.png"
+                }
+            }
             onClicked:{
                 userPasswdModify.visible=false
             }
         }
-        CusButton_Image{
+
+
+        Button{
             id:userpwdResetContinue
             width: 155
             height: 39
@@ -191,8 +213,18 @@ Rectangle {
             anchors.topMargin: 45
             anchors.left:suserpwdResetStop.right
             anchors.leftMargin: 72
-            btnImgUrl:imgaeshprefix+"images/ys-xingzeng-baocun.png"
-            btnImgHovered:imgaeshprefix+"images/ys-xingzeng-baocun-fz.png"
+            background: Rectangle{
+                width: userpwdResetContinue.width
+                height: userpwdResetContinue.height
+                color: "transparent"
+                Image {
+                    id: userpwdResetContinueimg
+                    width: suserpwdResetStop.width
+                    height: suserpwdResetStop.height
+                    source: userpwdResetContinue.hovered?imgaeshprefix+"images/ys-xingzeng-baocun-fz.png":imgaeshprefix+"images/ys-xingzeng-baocun.png"
+                }
+            }
+
             onClicked:{
                 if (inputrenewname.text!==inputnewname.text){
                     console.log("两次密码不一致")

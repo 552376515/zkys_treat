@@ -48,24 +48,40 @@ Rectangle {
 
                 }
                 CusButton_Image{
+
                     width: 17
                     height: 17
+
+                    visible: index===3 && dataObj && qsTr(String(dataObj[roles[index]]))==="1"
+                    anchors.centerIn: parent
                     btnImgUrl:imgaeshprefix+"images/cf-shangyi.png"
                     btnImgHovered:imgaeshprefix+"images/cf-shangyi-fz.png"
-                    visible: index==3 && qsTr(String(dataObj[roles[index]]))=="1"
-                    anchors.centerIn: parent
+
+
                     onClicked: {
 
                     }
 
                 }
                 CusButton_Image{
+
                     width: 17
                     height: 17
+
+                    visible:index===4 && dataObj && qsTr(String(dataObj[roles[index]]))==="1"
+                    anchors.centerIn: parent
                     btnImgUrl:imgaeshprefix+"images/cf-xiayi.png"
                     btnImgHovered:imgaeshprefix+"images/cf-xiayi-fz.png"
-                    visible: index==4 && qsTr(String(dataObj[roles[index]]))=="1"
-                    anchors.centerIn: parent
+//                    background: Rectangle{
+//                        width: btn2.width
+//                        height: btn2.height
+//                        color: "transparent"
+//                        Image {
+//                            id: btn2img
+//                            source: btn2.hovered?imgaeshprefix+"images/cf-xiayi-fz.png":imgaeshprefix+"images/cf-xiayi.png"
+//                        }
+//                    }
+
                     onClicked: {
 
                     }
@@ -73,13 +89,23 @@ Rectangle {
                 }
 
                 CusButton_Image{
+
                     width: 17
                     height: 17
                     x:5
                     y:7
-                    btnImgUrl: imgaeshprefix+"images/cf-shanchu.png"
-                    btnImgHovered: imgaeshprefix+"images/cf-shanchu-fz.png"
-                    visible: index==5 && qsTr(String(dataObj[roles[index]]))=="1"
+                    visible:index===5 && dataObj && qsTr(String(dataObj[roles[index]]))==="1"
+                    btnImgUrl:imgaeshprefix+"images/cf-shanchu.png"
+                    btnImgHovered:imgaeshprefix+"images/cf-shanchu-fz.png"
+//                    background: Rectangle{
+//                        width: btn3.width
+//                        height: btn3.height
+//                        color: "transparent"
+//                        Image {
+//                            id: btn3img
+//                            source: btn3.hovered?imgaeshprefix+"images/cf-shanchu-fz.png":imgaeshprefix+"images/cf-shanchu.png"
+//                        }
+//                    }
 
                     onClicked: {
 

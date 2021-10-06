@@ -67,28 +67,28 @@ Item {
 
     //心包
     property variant rxinbao: [Qt.point(892,260),Qt.point(930,216),Qt.point(882,198),Qt.point(804,168),
-                                Qt.point(676,113),Qt.point(643,91),Qt.point(589,73),Qt.point(625.94),Qt.point(589,91)]
+                              Qt.point(676,113),Qt.point(643,91),Qt.point(589,73),Qt.point(625.94),Qt.point(589,91)]
     property variant lxinbao: [Qt.point(894,414),Qt.point(930,447),Qt.point(868,472),Qt.point(797,498),
                                 Qt.point(669,542),Qt.point(631,561),Qt.point(572,567),Qt.point(612,554),Qt.point(573,554)]
     // 膀胱1
-    property variant lpangguang1:[Qt.point(520,161.5),Qt.point(501.5,170),Qt.point(488,162.5),Qt.point(315.5,160.5),Qt.point(322.5,166),Qt.point(308,166),Qt.point(282,152.5),Qt.point(188.5,124.5),Qt.point(187.5,133)]
+    property variant lpangguang1: [Qt.point(520,161.5),Qt.point(501.5,170),Qt.point(488,162.5),Qt.point(315.5,160.5),Qt.point(322.5,166),Qt.point(308,166),Qt.point(282,152.5),Qt.point(188.5,124.5),Qt.point(187.5,133)]
     property variant rpangguang1: [Qt.point(520,178.5),Qt.point(501.5,170),Qt.point(488.5,177.5),Qt.point(315.5,181),Qt.point(322.5,175),Qt.point(308,174.5),Qt.point(282,187.5),Qt.point(189,217),Qt.point(188,208)]
 
     // 膀胱2
-    property variant lpangguang2:[Qt.point(520,161.5),Qt.point(503,156),Qt.point(486.5,143.5),Qt.point(376,144),Qt.point(348,125.5),Qt.point(281,125),Qt.point(127,138),Qt.point(75,145.5),Qt.point(52.5,109.5)]
-    property variant rpangguang2:[Qt.point(520,178.5),Qt.point(503.5,184),Qt.point(487,195),Qt.point(377,195),Qt.point(348,210),Qt.point(281,215.5),Qt.point(124,201.5),Qt.point(74.5,196),Qt.point(51.5,232)]
+    property variant lpangguang2: [Qt.point(520,161.5),Qt.point(503,156),Qt.point(486.5,143.5),Qt.point(376,144),Qt.point(348,125.5),Qt.point(281,125),Qt.point(127,138),Qt.point(75,145.5),Qt.point(52.5,109.5)]
+    property variant rpangguang2: [Qt.point(520,178.5),Qt.point(503.5,184),Qt.point(487,195),Qt.point(377,195),Qt.point(348,210),Qt.point(281,215.5),Qt.point(124,201.5),Qt.point(74.5,196),Qt.point(51.5,232)]
 
 
     // 脾2
     property variant lpi2: [Qt.point(640, 339),Qt.point(728, 339),Qt.point(748, 350),Qt.point(802, 338),Qt.point(802, 353)]
-    property variant rpi2:[Qt.point(640, 331),Qt.point(728, 331),Qt.point(748, 320),Qt.point(802, 331),Qt.point(802, 316)]
+    property variant rpi2: [Qt.point(640, 331),Qt.point(728, 331),Qt.point(748, 320),Qt.point(802, 331),Qt.point(802, 316)]
 
     // 脾1
-    property variant lpi1:[Qt.point(159, 228),Qt.point(169, 243),Qt.point(219, 270),Qt.point(266, 286),Qt.point(333, 269),Qt.point(405, 258),Qt.point(162, 232),Qt.point(503, 256),Qt.point(626, 250),Qt.point(832, 347),Qt.point(862, 355),Qt.point(928, 344),Qt.point(867, 372)]
-    property variant rpi1:[Qt.point(1130, 227),Qt.point(1120, 242),Qt.point(1070, 269),Qt.point(1023, 285),Qt.point(956, 268),Qt.point(884, 257),Qt.point(832, 252),Qt.point(786, 255),Qt.point(663, 249),Qt.point(249, 346),Qt.point(427, 354),Qt.point(354, 343),Qt.point(422, 371)]
+    property variant lpi1: [Qt.point(159, 228),Qt.point(169, 243),Qt.point(219, 270),Qt.point(266, 286),Qt.point(333, 269),Qt.point(405, 258),Qt.point(162, 232),Qt.point(503, 256),Qt.point(626, 250),Qt.point(832, 347),Qt.point(862, 355),Qt.point(928, 344),Qt.point(867, 372)]
+    property variant rpi1: [Qt.point(1130, 227),Qt.point(1120, 242),Qt.point(1070, 269),Qt.point(1023, 285),Qt.point(956, 268),Qt.point(884, 257),Qt.point(832, 252),Qt.point(786, 255),Qt.point(663, 249),Qt.point(249, 346),Qt.point(427, 354),Qt.point(354, 343),Qt.point(422, 371)]
 
     //手少阴心
-    property variant lxin:[Qt.point(889,398),Qt.point(918,442),Qt.point(983,537),Qt.point(1103,453),Qt.point(1130,446),Qt.point(1192,443)]
+    property variant lxin: [Qt.point(889,398),Qt.point(918,442),Qt.point(983,537),Qt.point(1103,453),Qt.point(1130,446),Qt.point(1192,443)]
     property variant rxin: [Qt.point(399,400),Qt.point(370,444),Qt.point(305,539),Qt.point(185,455),Qt.point(158,448),Qt.point(96,445)]
 
     property variant lgan: [Qt.point(128,392),Qt.point(201,376),Qt.point(270,287),Qt.point(378,278),Qt.point(382,262),Qt.point(405,257),
