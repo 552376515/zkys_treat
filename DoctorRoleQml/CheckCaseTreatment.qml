@@ -347,9 +347,10 @@ Rectangle {
                     }
                 }
                 onClicked: {
-                   // addCaseTreatMent.visible=true
+
                     checkCaseTreatment.visible=false
-                    //jingluoplannewModel.loadCaseDataByPatientNo(currpatientnum,currgltreatmentname);
+                    addCaseTreatMent.visible=true
+                    jingluoplannewModel.loadCaseDataByPatientNo(currpatientnum,currgltreatmentname);
 
                 }
 

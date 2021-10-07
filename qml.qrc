@@ -183,6 +183,5 @@
         <file>Resource/images/ys-jilu-kaishitiaoli-fz.png</file>
         <file>Resource/images/ys-jilu-kaishitiaoli.png</file>
         <file>Resource/images/ys-sousuo-fz.png</file>
-        <file>DoctorRoleQml/AddCaseTableview.qml</file>
     </qresource>
 </RCC>

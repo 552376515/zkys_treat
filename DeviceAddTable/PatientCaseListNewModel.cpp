@@ -16,6 +16,8 @@
 
 const static QStringList jHeaderRoles = { "casename","treatment","doctor","checkCase", "editCase","caseState" };
 const static QStringList jHeaders={"","","","","",""};
+QString patientidbak="";
+QString treatmentbak="";
 class PatientCaseListNewModelPrivate
 {
 public:
@@ -107,6 +109,11 @@ void PatientCaseListNewModel::updateCase(){
      emit dataChanged(index(0, 0), index(mDatas.count() - 1, 0));
 }
 void PatientCaseListNewModel::loadCaseDataByPatientNo(QString patientid,QString treatment){
+    if (patientid==patientidbak && treatment==treatmentbak){
+        return;
+    }
+    patientidbak=patientid;
+    treatmentbak=treatment;
     const int N = 50000;
     QList<QuickListItemBase *> objs;
     objs.reserve(N);

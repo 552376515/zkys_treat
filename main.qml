@@ -219,7 +219,7 @@ Window {
         visible:(loginrole==2)
         backgroundColorNormal:"transparent"
         backgroundColorPressed:"#ededed"
-        selected:showIndex==4
+        selected:showIndex==4   
         onClicked: {
 
             closeAllView();

@@ -164,7 +164,7 @@ Item {
                     currgltreatmentname=curdataObj[patientCaseModel.headerRoles[1]]
 
                   //  console.log("treatmentname="+currgltreatmentname)
-                  //  jingluoplannewModel.loadCaseDataByPatientNo(currpatientnum,currgltreatmentname)
+                    jingluoplannewModel.loadCaseDataByPatientNo(currpatientnum,currgltreatmentname)
                     if (indexX===5 && index===0){
                         realpatient.visible=true
                     }
@@ -178,7 +178,7 @@ Item {
                     }
 
                   //  console.log("treatment selected count="+currcount)
-                    if (indexX===1 && currcount!=="0"){
+                    if (indexX===1){
 //                        if (ysCanModifyTreatment){
 //                            addCaseTreatMent.visible=true;
 //                        }else{

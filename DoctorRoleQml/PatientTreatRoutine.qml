@@ -174,7 +174,7 @@ Item {
             width:(patienttreatani.width-cellSpace)/4
             height: (patienttreatani.height-cellSpace-topcellOffset)/4
             x:leftcellOffset+cellSpace
-            color: "green"
+            color: "transparent"
             visible: anicount===2|| anicount===3
             Image {
                 id: backimage1

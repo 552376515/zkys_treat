@@ -77,8 +77,9 @@ Item {
                      Rectangle{
                          id:listLeftLine
                          x:14
+                         y:index===0?listviewcell.height/2.0:0
                          width: 8
-                         height: listviewcell.height
+                         height: index===0 || jingluoplanStep.rowCount()-1==index? listviewcell.height/2.0: listviewcell.height
                          color: "#ededed"
                      }
 
