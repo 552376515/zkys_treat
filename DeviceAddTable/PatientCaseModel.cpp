@@ -141,6 +141,25 @@ void PatientCaseModel::addToPatientCase(QString pname,QString pno,QString pcase,
     QList<QuickListItemBase *> objs;
     objs.reserve(N);
     QDate now=QDate::currentDate();
+    QList<QuickListItemBase *> copyObjs = mDatas;
+ // qDebug()<<"addToPatientCaseGl"<<copyObjs.count();
+    for (int i=0;i<copyObjs.count();i++){
+        //QDebug()<<"addToPatientCaseGl"<<i;
+        PatientCaseItem *tmpmodel=dynamic_cast<PatientCaseItem *>(copyObjs.at(i));
+
+        if (tmpmodel->tcount()=="0"){
+            QSqlQuery query;
+            QString str=QString("DELETE FROM patientscase where patientid='%1' and state='%2'").arg(pno).arg(tmpmodel->tcount());
+          //  qDebug()<<str;
+            query.prepare(str);
+            query.exec();
+            removeAt(i);
+            break;
+        }
+
+    }
+ //   qDebug()<<"addToPatientCaseGl"<<mDatas.count();
+  //  mDatas=copyObjs;
     addPatientCaseNew(pname,pno.toInt(),pcase,ptreatment,doctor,now,0,now);
     auto item = new PatientCaseItem;
     item->set_casename(pcase);

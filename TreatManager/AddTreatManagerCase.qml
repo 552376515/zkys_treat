@@ -636,7 +636,7 @@ Rectangle {
                     }
 
                     if (treatcasemanageModel.rowCount()>0&&inputtreatname.text.length>0 && inputcasename.text.length>0){
-                        treatcasemanageModel.addToCaseGl(inputtreatname.text);
+                        treatcasemanageModel.addToCaseGl(inputcasename.text,inputtreatname.text);
                         treatcaseModel.addToCase(inputcasename.text,inputtreatname.text,doctorloginname)
                         addTreatManager.visible=false
                     }

@@ -47,6 +47,7 @@ INCLUDEPATH += $$PWD/zmqml/ include
 SOURCES += \
     DeviceAddTable/ChoiseCaseItem.cpp \
     DeviceAddTable/ChoiseCaseModel.cpp \
+    DeviceAddTable/ChoiseCasePlanListModel.cpp \
         DeviceAddTable/DeviceAddItem.cpp \
         DeviceAddTable/DeviceAddModel.cpp \
     DeviceAddTable/DoctorManageItem.cpp \
@@ -86,6 +87,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     DeviceAddTable/ChoiseCaseItem.h \
     DeviceAddTable/ChoiseCaseModel.h \
+    DeviceAddTable/ChoiseCasePlanListModel.h \
     DeviceAddTable/DeviceAddItem.h \
     DeviceAddTable/DeviceAddModel.h \
     DeviceAddTable/DoctorManageItem.h \

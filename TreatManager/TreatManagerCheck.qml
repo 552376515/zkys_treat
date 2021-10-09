@@ -152,7 +152,7 @@ Rectangle {
                     color: "white"
                     ListView {
                             anchors.fill: middlejingluoplan;
-                            model: jingluoplanModel;
+                            model: treatManagerCheckModel
                             delegate: delegatejingluo_list
                             spacing: 0;
                         }
@@ -233,7 +233,7 @@ Rectangle {
 
 
                 onClicked:{
-                    if (jingluoplanModel.rowCount()>0){
+                    if (treatManagerCheckModel.rowCount()>0){
 
                     }
                     treatmanagerCheck.visible=false

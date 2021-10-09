@@ -22,7 +22,7 @@ public slots:
     void loadCaseDataByTreatment(QString treatment);
     void changeDataByIndex(int index);
     void addCaseData(QString dataStr,int index);
-    void addToCaseGl(QString ptreatment);
+    void addToCaseGl(QString casename, QString ptreatment);
 
     void swapRow(int from,int to);
 

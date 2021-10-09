@@ -19,7 +19,7 @@
 #include "DeviceAddTable/PatientCaseListNewModel.h" //添加处方界面
 #include "DeviceAddTable/TreatCaseManageListModel.h"
 #include "DeviceAddTable/PatientTreatmentRecordModel.h"
-
+#include "DeviceAddTable/ChoiseCasePlanListModel.h"
 
 static QObject *byteArrayTools_factory(QQmlEngine *, QJSEngine *)
 {
@@ -51,19 +51,22 @@ int main(int argc, char *argv[])
     PatientCaseModel model1;
     engine.rootContext()->setContextProperty("patientCaseModel", &model1); //医生界面 病例
 
-    PatientCaseListModel  model2;
+    ChoiseCasePlanListModel  model2;
 
-//    PatientCaseParaModel parm1;
-//    parm1.paraName="仰卧手向上";
-//    parm1.paraCase = "手少阴心经";
-//    model2.addModel(parm1);
-//    PatientCaseParaModel parm2;
-//    parm2.paraName="仰卧手向上";
-//    parm2.paraCase = "足厥阴肝经";
+    PatientCaseListModel treatManagerCheck;
+    PatientCaseParaModel parm1;
+    parm1.paraName="仰卧手向上";
+    parm1.paraCase = "手少阴心经";
+    treatManagerCheck.addModel(parm1);
+    PatientCaseParaModel parm2;
+    parm2.paraName="仰卧手向上";
+    parm2.paraCase = "足厥阴肝经";
 
 
 
-//    model2.addModel(parm2);
+    treatManagerCheck.addModel(parm2);
+    engine.rootContext()->setContextProperty("treatManagerCheckModel",&treatManagerCheck);  //开处方用的部分
+
     engine.rootContext()->setContextProperty("jingluoplanModel",&model2);  //开处方用的部分
 
     PatientCaseListNewModel newmodel;

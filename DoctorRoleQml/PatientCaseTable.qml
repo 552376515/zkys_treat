@@ -319,6 +319,7 @@ Item {
             onClicked:{
                 choiseCaseTreatMent.visible=true
                 choisecaseModel.initCaseData();
+                ysCanModifyTreatment=false
             }
 
         }

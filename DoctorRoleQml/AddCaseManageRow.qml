@@ -43,7 +43,7 @@ Rectangle {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font.pixelSize: 14
-                    color: textColor
+                    color: "#333333"
                     visible: index<=1
 
                 }

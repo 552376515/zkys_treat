@@ -112,15 +112,24 @@ Rectangle {
                     color: "transparent"
                 }
 
-                CusButton_Image{
+                Button{
                     id:addcaseQuitBtn
                     width: 30
                     height: 30
                     y:(addcasedatahead.height-addcaseQuitBtn.height)/2.0
-                   // anchors.left: addcasedataheadButton.right
-                   // anchors.leftMargin: 60
-                    btnImgUrl:imgaeshprefix+"images/ys-guanbi.png"
-                    btnImgHovered:imgaeshprefix+"images/sy-guanbi-fz.png"
+                   background: Rectangle{
+                       width: addcaseQuitBtn.width
+                       height: addcaseQuitBtn.height
+                       color: "transparent"
+                       Image {
+                           id: addcaseQuitBtnimg
+                           width: addcaseQuitBtn.width
+                           height: addcaseQuitBtn.height
+                           source:addcaseQuitBtn.hovered ? imgaeshprefix+"images/sy-guanbi-fz.png":imgaeshprefix+"images/ys-guanbi.png"
+                       }
+
+                   }
+
                     onClicked: {
                           addCaseTreatMent.visible=false;
                     }
@@ -420,6 +429,7 @@ Rectangle {
                                 return
                             }
                             casetableMenu.popup(mouseX, mouseY)
+
                         }
                         onReleased: {
 
@@ -430,6 +440,7 @@ Rectangle {
                         }
 
                         onSingleClicked:{
+
                             var index = indexAt(mouseX, mouseY + contentY)
                             if (index < 0 || index >= count) {
                                 return
@@ -743,22 +754,6 @@ Rectangle {
         }
     }
 
-//    MouseArea{
-//        id:addCaseMoueseArea
-//        anchors.fill: patientdata
-//        onClicked: {
 
-//            if ((mouseX>(addcasedata1.x+addcasedata1.width) || mouseX<addcasedata1.x) ||(mouseY>(addcasedata1.y+addcasedata1.width) || mouseY<addcasedata1.y) )
-//            {
-//                addCaseTreatMent.visible=false;
-//            }else{
-//                if ((mouseX>inputdoctorname.x &&mouseX<inputdoctorname.x+inputdoctorname.width) || (mouseY>inputdoctorname.y && mouseY<inputdoctorname.y+inputdoctorname.height)){
-//                    inputX=mouseX
-//                    inputY=mouseY
-//                    inputPanel1.visible=true
-//                }
-//            }
-//        }
-//    }
 
 }

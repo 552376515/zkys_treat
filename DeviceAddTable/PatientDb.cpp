@@ -24,7 +24,7 @@ const auto GLTREATMENTCASE_SQL = QLatin1String(R"(
     )");
 
 const auto GLTREATMENTCASEPLAN_SQL = QLatin1String(R"(
-    create table treatmentplan(id integer primary key, treatmentname varchar, treatmentbody varchar, treatmentjingluo varchar)
+    create table treatmentplan(id integer primary key,casename varchar, treatmentname varchar, treatmentbody varchar, treatmentjingluo varchar)
     )");
 
 const auto PATIENTSCASEGL_SQL =  QLatin1String(R"(
@@ -60,8 +60,8 @@ const auto INSERT_GLTREATMENTCASE_SQL =QLatin1String(R"(
     )");
 
 const auto INSERT_GLTREATMENTCASEPLAN_SQL = QLatin1String(R"(
-    insert into treatmentplan(treatmentname,treatmentbody,treatmentjingluo)
-                       values(?,?,?)
+    insert into treatmentplan(casename,treatmentname,treatmentbody,treatmentjingluo)
+                       values(?,?,?,?)
 )");
 
 const auto INSERT_PATIENTSCASEGL_SQL =  QLatin1String(R"(
@@ -180,7 +180,8 @@ void addGlTreatmentNew(const QString &casename,const QString &treatmentname,QDat
      }
 }
 
-QVariant addGlTreatmentPlan(QSqlQuery &q,const QString &treatmentname,const QString &treatmentbody,const QString &treatmentjingluo){
+QVariant addGlTreatmentPlan(QSqlQuery &q,const QString &casename,const QString &treatmentname,const QString &treatmentbody,const QString &treatmentjingluo){
+    q.addBindValue(casename);
     q.addBindValue(treatmentname);
     q.addBindValue(treatmentbody);
     q.addBindValue(treatmentjingluo);
@@ -188,10 +189,10 @@ QVariant addGlTreatmentPlan(QSqlQuery &q,const QString &treatmentname,const QStr
     return q.lastInsertId();
 }
 
-void addGlTreatmentPlanNew(const QString &treatmentname,const QString &treatmentbody,const QString &treatmentjingluo){
+void addGlTreatmentPlanNew(const QString &casename,const QString &treatmentname,const QString &treatmentbody,const QString &treatmentjingluo){
     QSqlQuery q;
     if (q.prepare(INSERT_GLTREATMENTCASEPLAN_SQL)){
-        addGlTreatmentPlan(q,treatmentname,treatmentbody,treatmentjingluo);
+        addGlTreatmentPlan(q,casename,treatmentname,treatmentbody,treatmentjingluo);
     }
 }
 
@@ -305,11 +306,15 @@ QSqlError initDb()
         return q.lastError();
     addGlTreatment(q,QStringLiteral("痛风1"),QStringLiteral("经络疗法1"),QDate(1992,1,12),"启用");
     addGlTreatment(q,QStringLiteral("痛风1"),QStringLiteral("经络疗法1"),QDate(1992,1,12),"禁用");
+    addGlTreatment(q,QStringLiteral("痛风1"),QStringLiteral("经络疗法2"),QDate(1992,1,12),"启用");
+    addGlTreatment(q,QStringLiteral("痛风1"),QStringLiteral("经络疗法2"),QDate(1992,1,12),"禁用");
 
     if (!q.prepare(INSERT_GLTREATMENTCASEPLAN_SQL))
         return q.lastError();
-    addGlTreatmentPlan(q,QStringLiteral("经络疗法1"),QStringLiteral("仰卧手向下"),QStringLiteral("足少阴肾经(体前)"));
-    addGlTreatmentPlan(q,QStringLiteral("经络疗法1"),QStringLiteral("俯卧手向上"),QStringLiteral("心包经络"));
+    addGlTreatmentPlan(q,QStringLiteral("痛风1"),QStringLiteral("经络疗法1"),QStringLiteral("仰卧手向下"),QStringLiteral("足少阴肾经(体前)"));
+    addGlTreatmentPlan(q,QStringLiteral("痛风1"),QStringLiteral("经络疗法1"),QStringLiteral("俯卧手向上"),QStringLiteral("心包经络"));
+    addGlTreatmentPlan(q,QStringLiteral("痛风1"),QStringLiteral("经络疗法2"),QStringLiteral("仰卧手向下"),QStringLiteral("足少阴肾经(体前)"));
+    addGlTreatmentPlan(q,QStringLiteral("痛风1"),QStringLiteral("经络疗法2"),QStringLiteral("俯卧手向上"),QStringLiteral("心包经络"));
 
     if (!q.prepare(INSERT_PATIENTSCASEGL_SQL))
             return q.lastError();
