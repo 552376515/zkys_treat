@@ -142,7 +142,7 @@ Item {
                          anchors.fill: parent
                          hoverEnabled: true
                          onClicked: {
-                             if (listView.currentIndex==index){
+                             if (listView.currentIndex===index){
                                  recognizeActionPlay()
                              }
 
@@ -217,6 +217,8 @@ Item {
         var posture=currmodel.posturebox
         var meridianbox=tianliformR[ currmodel.name]
         var meridianbox_2=tianliformL[currmodel.name]
+        needclear=true
+        needclear1=true
         var pics=picnames[currmodel.name];
         var picsArr=pics.split(",")
         anibackimg1=picsArr[0];
@@ -244,7 +246,8 @@ Item {
             var posture=currmodel.posturebox
             var meridianbox=tianliformR[ currmodel.name]
             var meridianbox_2=tianliformL[currmodel.name]
-
+            needclear=true
+            needclear1=true
             var pics=picnames[currmodel.name]; //切换图片
             var picsArr=pics.split(",")
             anibackimg1=picsArr[0];
@@ -260,7 +263,6 @@ Item {
             if (posture===""){
                 var rightbox="{\"msg\":\"start_cure\",\"args\":{\"meridianbox\":\""+meridianbox+"\",\"meridianbox_2\":\""+meridianbox_2+"\"}}"
                 senderright.sendMessage(BAT.byteArrayfy(rightbox))
-                listView.currentIndex++
             }else{//需要调整体位，播放声音
                 recognizeActionPlay()
             }
@@ -360,8 +362,6 @@ Item {
                 tiaoliActionNext()
 
             }
-
-
 
             console.log("right control onMessageReceived +"+message +" "+ss)
         }

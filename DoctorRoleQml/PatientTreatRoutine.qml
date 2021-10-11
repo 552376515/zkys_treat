@@ -145,6 +145,11 @@ Item {
                     var ctx=getContext('2d')
                     ctx.fillStyle = Qt.rgba(1, 1, 0, 0);
                     ctx.fillRect(backimage.x, backimage.y, backimage.width, backimage.height);
+                    if (needclear){
+                        ctx.clearRect(backimage.x, backimage.y, backimage.width, backimage.height)
+                        needclear=false
+                    }
+
                     ctx.strokeStyle="green"
                     ctx.lineWidth=4
                     ctx.beginPath()
@@ -193,6 +198,10 @@ Item {
                     var ctx=getContext('2d')
                     ctx.fillStyle = Qt.rgba(1, 1, 0, 0);
                     ctx.fillRect(backimage1.x, backimage1.y, backimage1.width, backimage1.height);
+                    if (needclear1){
+                        ctx.clearRect(backimage1.x, backimage1.y, backimage1.width, backimage1.height)
+                        needclear1=false
+                    }
                     ctx.strokeStyle="red"
                     ctx.lineWidth=4
                     ctx.beginPath()

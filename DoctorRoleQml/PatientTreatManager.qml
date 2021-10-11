@@ -17,7 +17,8 @@ Item {
     property int cellSpace: 15
     property int currTreatState: 1
     property string musicname: ""
-
+    property bool needclear: false
+    property bool needclear1: false
     Rectangle{
         id:background
         x:leftcellOffset
