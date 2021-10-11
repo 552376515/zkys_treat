@@ -191,17 +191,17 @@ Rectangle {
 
                          }
                          onClicked:{
-                            // closeAllView()
-                            // showIndex=1
-                            // login.visible=false;
-                            // if(nameInput.displayText === '0'){
-                                // loginrole = 0
-                            // }else {
-                                // loginrole = 2
-                            // }
+                             closeAllView()
+                             showIndex=1
+                             login.visible=false;
+                             if(nameInput.displayText === '0'){
+                                 loginrole = 0
+                             }else {
+                                 loginrole = 2
+                             }
 
-                            // loadPatient(loginrole)
-                            toLoginAction();
+                             loadPatient(loginrole)
+//                            toLoginAction();
                          }
                      }
 
