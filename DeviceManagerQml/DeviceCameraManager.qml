@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import TaoQuick 1.0
+import QtQuick.Controls 2.5
 Item {
     id:devicecameramanager
     width: parent.width
@@ -169,14 +170,21 @@ Item {
         height: camerascroll.height
         anchors.left: camerascroll.right
         anchors.leftMargin: 0
-        CusButton_Image{
+        Button{
             id:camerestartbtn
             width:startbuttonwidth
             height:startbuttonheight
             x:(camerastartRect.width-camerestartbtn.width)/2.0
             y:(camerastartRect.height-camerestartbtn.height)/2.0
-            btnImgUrl:imgaeshprefix+"images/gl-yijianqidong.png"
-            btnImgHovered:imgaeshprefix+"images/gl-yijianqidong-fz.png"
+            background: Rectangle{
+                width: camerestartbtn.width
+                height: camerestartbtn.height
+                color: "transparent"
+                Image {
+                    id: camerestartbtnimg
+                    source: camerestartbtn.hovered?imgaeshprefix+"images/gl-yijianqidong-fz.png":imgaeshprefix+"images/gl-yijianqidong.png"
+                }
+            }
             onClicked:{
 
             }

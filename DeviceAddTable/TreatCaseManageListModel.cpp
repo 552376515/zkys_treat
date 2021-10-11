@@ -181,7 +181,7 @@ void TreatCaseManageListModel::swapRow(int from,int to){
     }
 }
 
-void TreatCaseManageListModel::addToCaseGl(QString ptreatment)
+void TreatCaseManageListModel::addToCaseGl(QString casename, QString ptreatment)
 {
     QList<QuickListItemBase *> copyObjs = mDatas;
 
@@ -189,7 +189,7 @@ void TreatCaseManageListModel::addToCaseGl(QString ptreatment)
     for (int i=0;i<copyObjs.count();i++){
         //QDebug()<<"addToPatientCaseGl"<<i;
         PatientCaseItem *tmpmodel=dynamic_cast<PatientCaseItem *>(copyObjs.at(i));
-        addGlTreatmentPlanNew(ptreatment,tmpmodel->casename(),tmpmodel->treatment());
+        addGlTreatmentPlanNew(casename,ptreatment,tmpmodel->casename(),tmpmodel->treatment());
 
     }
 }

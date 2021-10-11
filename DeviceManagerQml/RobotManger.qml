@@ -2,6 +2,7 @@ import QtQuick 2.0
 
 
 import TaoQuick 1.0
+import QtQuick.Controls 2.0
 Item {
     id:robotmanager
     width: parent.width
@@ -129,45 +130,78 @@ Item {
          height: 413
          y:22
          color: "#f2f2f2"
-         CusButton_Image{
+         Button{
              id:doubleend
              width:156
              height:123
              x:108
              y:57
-             btnImgUrl:imgaeshprefix+"images/gl-sb-jiqiren5.png"
-             btnImgHovered:imgaeshprefix+"images/gl-sb-jiqiren5-fz.png"
+             background: Rectangle{
+                 width: doubleend.width
+                 height: doubleend.height
+                 color: "transparent"
+                 Image {
+                     id: doubleendimg
+                     width: doubleend.width
+                     height: doubleend.height
+                     source: doubleend.hovered?imgaeshprefix+"images/gl-sb-jiqiren5-fz.png":imgaeshprefix+"images/gl-sb-jiqiren5.png"
+                 }
+             }
+//             btnImgUrl:imgaeshprefix+"images/gl-sb-jiqiren5.png"
+//             btnImgHovered:imgaeshprefix+"images/gl-sb-jiqiren5-fz.png"
              onClicked:{
 
              }
          }
-         CusButton_Image{
+         Button{
              id:doublepause
              width:156
              height:123
              anchors.left: doubleend.right
              anchors.leftMargin: 60
              y:57
-             btnImgUrl:imgaeshprefix+"images/gl-sb-jiqiren6.png"
-             btnImgHovered:imgaeshprefix+"images/gl-sb-jiqiren6-fz.png"
+             background: Rectangle{
+                 width: doubleend.width
+                 height: doubleend.height
+                 color: "transparent"
+                 Image {
+                     id: doublepauseimg
+                     width: doublepause.width
+                     height: doublepause.height
+                     source: doublepause.hovered?imgaeshprefix+"images/gl-sb-jiqiren6-fz.png":imgaeshprefix+"images/gl-sb-jiqiren6.png"
+                 }
+             }
+//             btnImgUrl:imgaeshprefix+"images/gl-sb-jiqiren6.png"
+//             btnImgHovered:imgaeshprefix+"images/gl-sb-jiqiren6-fz.png"
              onClicked:{
 
              }
          }
-         CusButton_Image{
+         Button{
              id:doublestart
              width:156
              height:123
              x:108
              anchors.top: doubleend.bottom
              anchors.topMargin: 50
-             btnImgUrl:imgaeshprefix+"images/gl-sb-jiqiren7.png"
-             btnImgHovered:imgaeshprefix+"images/gl-sb-jiqiren7-fz.png"
+             background: Rectangle{
+                 width: doublestart.width
+                 height: doublestart.height
+                 color: "transparent"
+                 Image {
+                     id: doublestartimg
+                     width: doublestart.width
+                     height: doublestart.height
+                     source: doublestart.hovered?imgaeshprefix+"images/gl-sb-jiqiren7-fz.png":imgaeshprefix+"images/gl-sb-jiqiren7.png"
+                 }
+             }
+         //    btnImgUrl:imgaeshprefix+"images/gl-sb-jiqiren7.png"
+         //    btnImgHovered:imgaeshprefix+"images/gl-sb-jiqiren7-fz.png"
              onClicked:{
 
              }
          }
-         CusButton_Image{
+         Button{
              id:alarmreset
              width:156
              height:123
@@ -175,8 +209,19 @@ Item {
              anchors.leftMargin: 60
              anchors.top: doubleend.bottom
              anchors.topMargin: 50
-             btnImgUrl:imgaeshprefix+"images/gl-sb-jiqiren8.png"
-             btnImgHovered:imgaeshprefix+"images/gl-sb-jiqiren8-fz.png"
+             background: Rectangle{
+                 width: alarmreset.width
+                 height: alarmreset.height
+                 color: "transparent"
+                 Image {
+                     id: alarmresetimg
+                     width: alarmreset.width
+                     height: alarmreset.height
+                     source: alarmreset.hovered?imgaeshprefix+"images/gl-sb-jiqiren8-fz.png":imgaeshprefix+"images/gl-sb-jiqiren8.png"
+                 }
+             }
+           //  btnImgUrl:imgaeshprefix+"images/gl-sb-jiqiren8.png"
+            // btnImgHovered:imgaeshprefix+"images/gl-sb-jiqiren8-fz.png"
              onClicked:{
 
              }
@@ -191,27 +236,49 @@ Item {
          anchors.top: robotrightRect.bottom
          anchors.topMargin: 22
          color: "#f2f2f2"
-         CusButton_Image{
+         Button{
              id:yijianstart
              width:156
              height:123
              y:60
              x:108
-             btnImgUrl:imgaeshprefix+"images/gl-sb-jiqiren9.png"
-             btnImgHovered:imgaeshprefix+"images/gl-sb-jiqiren9-fz.png"
+             background: Rectangle{
+                 width: yijianstart.width
+                 height: yijianstart.height
+                 color: "transparent"
+                 Image {
+                     id:yijianstartimg
+                     width: yijianstart.width
+                     height: yijianstart.height
+                     source: yijianstart.hovered?imgaeshprefix+"images/gl-sb-jiqiren9-fz.png":imgaeshprefix+"images/gl-sb-jiqiren9.png"
+                 }
+             }
+           //  btnImgUrl:imgaeshprefix+"images/gl-sb-jiqiren9.png"
+           //  btnImgHovered:imgaeshprefix+"images/gl-sb-jiqiren9-fz.png"
              onClicked:{
 
              }
          }
-         CusButton_Image{
+         Button{
              id:teststart
              width:156
              height:123
              anchors.left: yijianstart.right
              anchors.leftMargin: 60
              y:60
-             btnImgUrl:imgaeshprefix+"images/gl-sb-jiqiren10.png"
-             btnImgHovered:imgaeshprefix+"images/gl-sb-jiqiren10-fz.png"
+             background: Rectangle{
+                 width: yijianstart.width
+                 height: yijianstart.height
+                 color: "transparent"
+                 Image {
+                     id:teststartimg
+                     width: teststart.width
+                     height: teststart.height
+                     source: teststart.hovered?imgaeshprefix+"images/gl-sb-jiqiren10-fz.png":imgaeshprefix+"images/gl-sb-jiqiren10.png"
+                 }
+             }
+       //      btnImgUrl:imgaeshprefix+"images/gl-sb-jiqiren10.png"
+       //      btnImgHovered:imgaeshprefix+"images/gl-sb-jiqiren10-fz.png"
              onClicked:{
 
              }

@@ -14,6 +14,7 @@ Item {
     property int topcellOffset: 27
     property int cellSpace: 15
     property int currTreatState: 1
+
     Rectangle{
         id:background
         x:leftcellOffset
@@ -27,6 +28,7 @@ Item {
         realtimeRecognize.visible=false;
         realtimeRoutine.visible=false
     }
+
 
     Rectangle{
         id:treathead

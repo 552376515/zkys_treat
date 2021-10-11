@@ -106,7 +106,7 @@ Item {
             updateWidthList: function() {
                 avalidWidth = width
                // widthList = [CusTableConstant.column0Width, avalidWidth * 0.33,avalidWidth * 0.33,avalidWidth * 0.33]
-                 widthList = [120,400,120,120,120,80]
+                 widthList = [120,380,120,120,120,100]
             }
         }
         Rectangle{
@@ -141,17 +141,73 @@ Item {
             onPositionChanged: {
                 doPositionChanged(mouseX, mouseY)
             }
+            onSingleClicked:{
+                var index = indexAt(mouseX, mouseY + contentY)
+                if (index < 0 || index >= count) {
+                    return
+                }
+               // if (index===0){
+                    var tw = 0;
+                    var tw0=0;
+                    var indexX=0;
+                    for (var i = 0; i < caseHeader.widthList.length; ++i) {
+
+                        tw += caseHeader.widthList[i]
+                        if (mouseX>=tw0 &&mouseX<tw && i>=1){
+                            indexX=i
+                            break;
+                        }
+                        tw0+=caseHeader.widthList[i]
+                    }
+                    var curdataObj=patientCaseModel.data(index)
+
+                    currgltreatmentname=curdataObj[patientCaseModel.headerRoles[1]]
+
+                  //  console.log("treatmentname="+currgltreatmentname)
+                    jingluoplannewModel.loadCaseDataByPatientNo(currpatientnum,currgltreatmentname)
+                    if (indexX===5 && index===0){
+                        realpatient.visible=true
+                    }
+                    var currcount=curdataObj[patientCaseModel.headerRoles[2]]
+                    if (currcount==="0"){
+                       // console.log("treatment hear")
+                        ysCanModifyTreatment=true
+                    }else{
+                       // console.log("treatment hear1")
+                        ysCanModifyTreatment=false
+                    }
+
+                  //  console.log("treatment selected count="+currcount)
+                    if (indexX===1){
+//                        if (ysCanModifyTreatment){
+//                            addCaseTreatMent.visible=true;
+//                        }else{
+                            //patientTreatmentRecordModel.clearAll();
+//                             patientTreatmentRecordModel.loadCaseTreatmentRecord(currpatientnum,currgltreatmentname)
+                             checkCaseTreatment.visible=true
+                      //  }
+
+
+                    }
+
+
+             //   }
+
+
+
+            }
+
             onDoubleClicked: {
                 var index = indexAt(mouseX, mouseY + contentY)
                 if (index < 0 || index >= count) {
                     return
                 }
-                var curdataObj=patientCaseModel.data(index)
+//                var curdataObj=patientCaseModel.data(index)
 
-                currgltreatmentname=curdataObj[patientCaseModel.headerRoles[1]]
-                console.log("treatmentname="+currgltreatmentname)
-                jingluoplannewModel.loadCaseDataByPatientNo(currpatientnum,currgltreatmentname)
-                realpatient.visible=true
+//                currgltreatmentname=curdataObj[patientCaseModel.headerRoles[1]]
+//                console.log("treatmentname="+currgltreatmentname)
+//                jingluoplannewModel.loadCaseDataByPatientNo(currpatientnum,currgltreatmentname)
+//                realpatient.visible=true
 
 
                 //realpatient2.visible=true
@@ -219,12 +275,14 @@ Item {
                     }
                 }
             }
-            delegate: PatientTableRow {
+            delegate: PatientCaseTableRow {
                 width: caseView.width
                 roles: caseView.model.headerRoles
                 dataObj: model.display
                 widthList: caseHeader.widthList
                 xList: caseHeader.xList
+                height: 40
+                isTheFirst: index===0
                 onCheckedChanged: {
                     patientCaseModel.check(index, checked)
                 }
@@ -259,10 +317,9 @@ Item {
             btnImgNormal:imgaeshprefix+"images/ys-xuanzechufang.png"
             btnImgHovered:imgaeshprefix+"images/ys-xuanzechufang-fz.png"
             onClicked:{
-                closeAllView()
-
                 choiseCaseTreatMent.visible=true
                 choisecaseModel.initCaseData();
+                ysCanModifyTreatment=false
             }
 
         }
@@ -277,6 +334,7 @@ Item {
             btnImgNormal:imgaeshprefix+"images/ys-kaichufang.png"
             btnImgHovered:imgaeshprefix+"images/ys-kaichufang-fz.png"
             onClicked:{
+               jingluoplannewModel.clearAll();
                 addCaseTreatMent.visible=true
                 //jingluoplannewModel.initCaseData()
             }

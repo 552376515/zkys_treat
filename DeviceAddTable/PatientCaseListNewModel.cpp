@@ -11,10 +11,13 @@
 #include <chrono>
 #include <random>
 #include "PatientDb.h"
+#include <QDebug>
 
 
 const static QStringList jHeaderRoles = { "casename","treatment","doctor","checkCase", "editCase","caseState" };
 const static QStringList jHeaders={"","","","","",""};
+QString patientidbak="";
+QString treatmentbak="";
 class PatientCaseListNewModelPrivate
 {
 public:
@@ -106,6 +109,11 @@ void PatientCaseListNewModel::updateCase(){
      emit dataChanged(index(0, 0), index(mDatas.count() - 1, 0));
 }
 void PatientCaseListNewModel::loadCaseDataByPatientNo(QString patientid,QString treatment){
+    if (patientid==patientidbak && treatment==treatmentbak){
+        return;
+    }
+    patientidbak=patientid;
+    treatmentbak=treatment;
     const int N = 50000;
     QList<QuickListItemBase *> objs;
     objs.reserve(N);
@@ -113,10 +121,10 @@ void PatientCaseListNewModel::loadCaseDataByPatientNo(QString patientid,QString 
     auto c1 = std::chrono::high_resolution_clock::now();
    // QString qsql="SELECT * FROM patientscasegl where patientid=";
      QString qsql=QString("SELECT * FROM patientscasegl where patientid='%1' and treatment='%2'").arg(patientid).arg(treatment);
-
+  //  clearAll();
     patientcasequery.prepare(qsql);
     patientcasequery.exec();	//执行
-    qDebug()<<qsql;
+//    qDebug()<<qsql;
 // qWarning() << "general" << N << "cost" << "ms";
     QSqlRecord recode = patientcasequery.record();		//recode保存查询到一些内容信息，如表头、列数等等
    // int column = recode.count();			//获取读取结果的列数
@@ -133,7 +141,7 @@ void PatientCaseListNewModel::loadCaseDataByPatientNo(QString patientid,QString 
        // item->set_regtime(query.value("regtime").toString());
         item->set_online(false);
         objs.append(item);
-//           qWarning() << "general" << N << "cost" << item->casename() << "ms";
+ //          qWarning() << "general" << N << "cost" << item->casename() << "ms";
 
     }
     auto c2 = std::chrono::high_resolution_clock::now();

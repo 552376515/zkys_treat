@@ -16,6 +16,7 @@ Item {
     signal positionChanged(real mouseX, real mouseY)
     signal doubleClicked(real mouseX, real mouseY)
     signal wheelEvent(real angle)
+    signal singleClicked(real mouseX,real mouseY)
     property bool bPressed: false
     property color rectBorderColor: "lightblue"
     MouseArea {
@@ -43,6 +44,11 @@ Item {
         onPositionChanged: {
             drawRectItem.positionChanged(mouseX, mouseY)
         }
+        onClicked: {
+            bPressed = false
+            drawRectItem.singleClicked(mouseX,mouseY)
+        }
+
         onDoubleClicked: {
             bPressed = false
             drawRectItem.doubleClicked(mouseX, mouseY)

@@ -17,10 +17,8 @@ Item {
     property int cellSpace: 15
     property int currTreatState: 1
     property string musicname: ""
-    property int anicount: 1
-    property string anibackimg1: "right_26_dan.png"
-    property string anibackimg2: "left_26_dan.png"
-    property string anibackimg3: "left_26_dan.png"
+    property bool needclear: false
+    property bool needclear1: false
     Rectangle{
         id:background
         x:leftcellOffset

@@ -11,11 +11,25 @@
 #include <QDate>
 #include "PatientDb.h"
 
+#include "xlsxabstractsheet.h"
+#include "xlsxcell.h"
+#include "xlsxcellrange.h"
+#include "xlsxcellreference.h"
+
+
+
+#include "xlsxchartsheet.h"
+#include "xlsxcellrange.h"
+#include "xlsxchart.h"
+#include "xlsxrichstring.h"
+#include "xlsxworkbook.h"
+
 const static QString nameTemplate("item %1");
 const static QString ipTemplate("%1.%2.%3.%4");
 const static QString modelTemplate("model %1");
 const static QStringList glHeaderRoles = { "name","pno","gender", "age","phone", "regtime" ,"lasttreattime","binddoctor"};
 const static QStringList glHeaders={"姓名","编号","性别","年龄","手机号","注册时间","最后调理时间","绑定医生"};
+const static QStringList excelHead={"A","B","C","D","E","F","G","H"};
 const auto INSERT_PATIENTSMANAGER_SQL = QLatin1String(R"(
     insert into patientsmanager(patientname,patientnum,gender, age,phone,regtime,doctor,lasttreattime) values(?, ?, ?, ?, ?, ?,?,?)
     )");
@@ -159,6 +173,45 @@ void GLPatientManagerModel::addMulti(int count)
     append(objs);
 }
 
+void GLPatientManagerModel::readExcelToGl(QString filaname){
+
+
+  //  qDebug()<<"inout="<<filaname;
+    QXlsx::Document xlsx("excelbook.xlsx");
+    int row=xlsx.dimension().lastRow();
+    int col=xlsx.dimension().lastColumn();
+ //   qDebug()<<"xlsx col="<<col;
+ //   qDebug()<<"xlsx row="<<row;
+
+
+    for (int i = 2; i <= row; ++i) {
+        QStringList lists;
+        for (int j=1;j<=col;j++){
+            if (QXlsx::Cell *cell = xlsx.cellAt(i, j)){
+                QVariant curvar=cell->value();
+                lists<<curvar.toString();
+                 //        qDebug() << cell->value();
+            }
+        }
+        auto item = new DeviceAddItem;
+        item->set_name(lists[0]);
+        item->set_pno(lists[1]);
+        item->set_gender(lists[2]);
+        item->set_age(lists[3]);
+        item->set_phone(lists[4]);
+        item->set_regtime(lists[5]);
+        item->set_lasttreattime(lists[6]);
+        item->set_binddoctor(lists[7]);
+        append({ item });
+        QSqlQuery query;	//执行操作类对象
+        if (!query.prepare(INSERT_PATIENTSMANAGER_SQL)){
+            return;
+        }
+        QVariant asimovId = addPatientManager(query,item->name(),mDatas.length(),item->gender(),item->age().toInt(),item->phone(),QDate::fromString(item->regtime()),item->binddoctor(),QDate::fromString(item->lasttreattime()));
+    }
+}
+
+
 void GLPatientManagerModel::insertBeforeSelected()
 {
     if (mDatas.count() <= 0) {
@@ -294,7 +347,77 @@ void GLPatientManagerModel::doUpdateName(int row, const QString &name)
     static_cast<DeviceAddItem *>(mDatas.at(row))->set_name(name);
 }
 
+void GLPatientManagerModel::writeGlToExcel(QString filename){
 
+            // Create a new .xlsx file.
+            QXlsx::Document xlsx1;
+//            xlsx1.write("A1", "Hello Qt!");
+//            xlsx1.write("A2", 12345);
+//            xlsx1.write("A3", "=44+33");
+//            xlsx1.write("A4", true);
+//            xlsx1.write("A5", "http://qt-project.org");
+//            xlsx1.write("A6", QDate(2013, 12, 27));
+//            xlsx1.write("A7", QTime(6, 30));
+//            xlsx1.saveAs("./Book1.xlsx");
+            for (int i=0;i<glHeaders.count();i++){
+                QString aa=glHeaders[i];
+                QString name=excelHead[i];
+                name.append("1");
+                xlsx1.write(name,aa);
+
+
+            }
+            if (mDatas.count() <= 0) {
+                qDebug()<<"mDatas.count() is null!";
+            }
+            else
+            {
+                for (int i = 0; i < mDatas.count(); ++i) {
+                    const auto &obj = mDatas.at(i);
+                    //if (obj->isVisible() && obj->isChecked())
+                    {
+                        auto name= static_cast<DeviceAddItem *>(obj)->name();
+                        auto phone= static_cast<DeviceAddItem *>(obj)->phone();
+                        auto regtime= static_cast<DeviceAddItem *>(obj)->regtime();
+                        auto pno=static_cast<DeviceAddItem *>(obj)->pno();
+                        auto gender=static_cast<DeviceAddItem *>(obj)->gender();
+                        auto age=static_cast<DeviceAddItem *>(obj)->age();
+                        auto lasttime=static_cast<DeviceAddItem *>(obj)->lasttreattime();
+                        auto binddoctor=static_cast<DeviceAddItem *>(obj)->binddoctor();
+                        QString namea=excelHead[0];
+                        namea.append(QString::number(i+2));
+                        QString nameb=excelHead[1];
+                        nameb.append(QString::number(i+2));
+                        QString namec=excelHead[2];
+                        namec.append(QString::number(i+2));
+                        QString named=excelHead[3];
+                        named.append(QString::number(i+2));
+                        QString namee=excelHead[4];
+                        namee.append(QString::number(i+2));
+                        QString namef=excelHead[5];
+                        namef.append(QString::number(i+2));
+                        QString nameg=excelHead[6];
+                        nameg.append(QString::number(i+2));
+                        QString nameh=excelHead[7];
+                        nameh.append(QString::number(i+2));
+
+
+
+                        xlsx1.write(namea,name);
+                        xlsx1.write(nameb,pno);
+                        xlsx1.write(namec,gender);
+                        xlsx1.write(named,age);
+                        xlsx1.write(namee,phone);
+                        xlsx1.write(namef,regtime);
+                        xlsx1.write(nameg,lasttime);
+                        xlsx1.write(nameh,binddoctor);
+
+                    }
+                }
+            }
+             xlsx1.saveAs("./out1.xlsx");
+
+}
 void GLPatientManagerModel::saveTxtItems()
 {
     QFile file("testdata.txt");
@@ -318,11 +441,21 @@ void GLPatientManagerModel::saveTxtItems()
                 auto name= static_cast<DeviceAddItem *>(obj)->name();
                 auto phone= static_cast<DeviceAddItem *>(obj)->phone();
                 auto regtime= static_cast<DeviceAddItem *>(obj)->regtime();
+                auto pno=static_cast<DeviceAddItem *>(obj)->pno();
+                auto gender=static_cast<DeviceAddItem *>(obj)->gender();
+                auto age=static_cast<DeviceAddItem *>(obj)->age();
+                auto lasttime=static_cast<DeviceAddItem *>(obj)->lasttreattime();
+                auto binddoctor=static_cast<DeviceAddItem *>(obj)->binddoctor();
 
-                qDebug()<<"saveTxtItems--->name"<< name;
+              //  qDebug()<<"saveTxtItems--->name"<< name;
                 out << name << ";"
+                    << pno <<";"
+                    << gender <<";"
+                    << age <<";"
                     << phone << ";"
                     << regtime << ";"
+                    << lasttime <<";"
+                    << binddoctor <<";"
                     << "\n";
             }
         }

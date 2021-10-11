@@ -14,6 +14,16 @@ Rectangle {
     anchors.fill: parent
     color: Qt.rgba(0/255,0/255,0/255,1)
     opacity: 0.8
+    MouseArea{
+        anchors.fill: parent
+        propagateComposedEvents: false
+        hoverEnabled: true
+        onClicked: {}
+
+        onReleased: {}
+
+        onPressed: {}
+    }
     property int managerWidth : 854
     property int managerHeight: 758
     property int rightWidth: 215
@@ -142,7 +152,7 @@ Rectangle {
                     color: "white"
                     ListView {
                             anchors.fill: middlejingluoplan;
-                            model: jingluoplanModel;
+                            model: treatManagerCheckModel
                             delegate: delegatejingluo_list
                             spacing: 0;
                         }
@@ -198,35 +208,57 @@ Rectangle {
             height:checkreatcase1.height-checktreathead.height
             anchors.left: middlecaselist.right
             anchors.leftMargin: 0
-//            anchors.top: addcasedatahead.bottom
+            anchors.top: checktreathead.bottom
 //            anchors.topMargin: 0
             color: "#dddddd"
 
-            CusButton_Image{
+            Button{
                 id:savecasebutton
                 width: 161
                 height: 45
 
                 x:28
                 y:550
-                btnImgUrl:imgaeshprefix+"images/ys-tianjiazhihuanzhe.png"
-                btnImgHovered:imgaeshprefix+"images/ys-tianjiazhihuanzhe-fz.png"
-                onClicked:{
-                    if (jingluoplanModel.rowCount()>0){
-
+                background: Rectangle{
+                    width: savecasebutton.width
+                    height: savecasebutton.height
+                    color:"transparent"
+                    Image {
+                        id: savecasebuttonimg
+                        width: savecasebutton.width
+                        height: savecasebutton.height
+                        source: savecasebutton.hovered?imgaeshprefix+"images/ys-tianjiazhihuanzhe-fz.png":imgaeshprefix+"images/ys-tianjiazhihuanzhe.png"
                     }
                 }
+
+
+                onClicked:{
+                    if (treatManagerCheckModel.rowCount()>0){
+
+                    }
+                    treatmanagerCheck.visible=false
+                }
             }
-            CusButton_Image{
+            Button{
                 id:cancelcasebutton
                 width: 161
                 height: 45
                 x:28
                 y:savecasebutton.y+savecasebutton.height+34
-                btnImgUrl:imgaeshprefix+"images/ys-fanhui.png"
-                btnImgHovered:imgaeshprefix+"images/ys-fanhui-fz.png"
+                background: Rectangle{
+                    width:cancelcasebutton.width
+                    height: cancelcasebutton.height
+                    color: "transparent"
+                    Image{
+                        id:cancelcasebuttonimg
+                        width:cancelcasebutton.width
+                        height: cancelcasebutton.height
+                        source: cancelcasebutton.hovered?imgaeshprefix+"images/ys-fanhui-fz.png":imgaeshprefix+"images/ys-fanhui.png"
+                    }
+                }
+
                 onClicked:{
-                    addCaseTreatMent.visible=false;
+                    treatmanagerCheck.visible=false;
                 }
             }
         }

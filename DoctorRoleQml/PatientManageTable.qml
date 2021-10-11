@@ -81,13 +81,22 @@ Item {
                 width: 54
                 color: "transparent"
 
-                CusButton_Image {
+                Button {
+                    id:searchbtn
                     width: watchpatient1.width
                     height: watchpatient1.height
-                   // btnImgUrl: imgPath + (hovered || pressed ? "Window/minimal_white.png" : "Window/minimal_gray.png")
-                    btnImgUrl: imgaeshprefix+ "images/ys-sousuo.png"
+                    background: Rectangle{
+                        width: watchpatient1.width
+                        height: watchpatient1.height
+                        color: "transparent"
+                        Image {
+                            id: searchbtnimg
+                            source: searchbtn.hovered?imgaeshprefix+ "images/ys-sousuo-fz.png":imgaeshprefix+ "images/ys-sousuo.png"
+                        }
+                    }
+
                     onClicked: {
-                        view.showMinimized()
+
                     }
                 }
             }
@@ -136,6 +145,7 @@ Item {
             width: cusHeader.avalidWidth-0
             height: prect1.height - cusHeader.height-1
             model: deviceAddModel
+
             onPressed: {
                 doPress(mouseX, mouseY)
             }
@@ -153,7 +163,7 @@ Item {
             onPositionChanged: {
                 doPositionChanged(mouseX, mouseY)
             }
-            onDoubleClicked: {
+            onSingleClicked:{
                 var index = indexAt(mouseX, mouseY + contentY)
                 if (index < 0 || index >= count) {
                     return
@@ -165,6 +175,16 @@ Item {
                 currpatientAge=dataPobj[deviceAddModel.headerRoles[3]]
                 currpatientPhone=dataPobj[deviceAddModel.headerRoles[4]]
                 currpatientRegtime=dataPobj[deviceAddModel.headerRoles[5]]
+                patientCaseModel.loadCaseByPatientId(currpatientnum)
+                cusView.currentIndex=index
+            }
+
+            onDoubleClicked: {
+                var index = indexAt(mouseX, mouseY + contentY)
+                if (index < 0 || index >= count) {
+                    return
+                }
+
                 if (cusHeader.xList[1] <= mouseX
                         && mouseX <= cusHeader.xList[2]) {
 
@@ -234,7 +254,8 @@ Item {
                 dataObj: model.display
                 widthList: cusHeader.widthList
                 xList: cusHeader.xList
-
+                height: 40
+                isSelected: cusView.currentIndex===index
                 onCheckedChanged: {
                     deviceAddModel.check(index, checked)
                 }

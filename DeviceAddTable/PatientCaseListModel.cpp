@@ -97,6 +97,7 @@ void PatientCaseListModel::loadCaseDataByPatientNoTreatment(QString patientid,QS
     QList<QuickListItemBase *> objs;
     objs.reserve(N);
     QSqlQuery patientcasequery;
+    m_data.clear();
     auto c1 = std::chrono::high_resolution_clock::now();
    // QString qsql="SELECT * FROM patientscasegl where patientid=";
     QString str=QString("SELECT * FROM patientscasegl where patientid='%1' and treatment='%2'").arg(patientid).arg(treatment);
@@ -116,6 +117,9 @@ void PatientCaseListModel::loadCaseDataByPatientNoTreatment(QString patientid,QS
         addModel(parm1);
     }
 }
+
+
+
 //qml通过这里的QByteArray来访问数据
 //首先qml输入"value"知道其role为roles[valueRole]，然后把valueRole输入到data函数返回真实值
 QHash<int, QByteArray> PatientCaseListModel::roleNames() const

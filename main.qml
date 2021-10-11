@@ -42,11 +42,19 @@ Window {
     property string currglcasename: "痛风"
     property string currpatientcasename: "痛风"
     property string currgltreatmentname: "经络疗法1"
+
+    property int anicount: 1
+    property string anibackimg1: "right_26_dan.png"
+    property string anibackimg2: "left_26_dan.png"
+    property string anibackimg3: "left_26_dan.png"
+
+    property bool ysCanModifyTreatment: false
 //    Component.onCompleted: {
 //        if (typeof (mainImageResoucePath) != "undefined" && mainImageResoucePath !== null && mainImageResoucePath.length > 0) {
 //            imgaeshprefix = mainImageResoucePath
 //        }
 //    }
+    property string glselecteddoctor: ""
 
     function loadPatient(inputrole){
 //        loginrole=0
@@ -54,8 +62,10 @@ Window {
 
 
         if (loginrole==2){
-            glpatientmanager.visible=true
+
             glpatientModel.initData();
+
+            glpatientmanager.visible=true
         }else{
             patientManagerRect.visible=true
             deviceAddModel.initData()
@@ -63,6 +73,10 @@ Window {
                 var thefirstpatient=deviceAddModel.data(0);
                 currpatientname=thefirstpatient[deviceAddModel.headerRoles[0]];
                 currpatientnum=thefirstpatient[deviceAddModel.headerRoles[1]];
+                currpatientSex=thefirstpatient[deviceAddModel.headerRoles[2]]
+                currpatientAge=thefirstpatient[deviceAddModel.headerRoles[3]]
+                currpatientPhone=thefirstpatient[deviceAddModel.headerRoles[4]]
+                currpatientRegtime=thefirstpatient[deviceAddModel.headerRoles[5]]
 
                 //patientCaseModel.initCaseData()
                 patientCaseModel.loadCaseByPatientId(currpatientnum)
@@ -154,8 +168,9 @@ Window {
             closeAllView();
             showIndex=2
             if (loginrole==2){
-                gldoctormanager.visible=true;
+
                 gldoctorModel.initCaseData();
+                 gldoctormanager.visible=true;
             }
             if (loginrole==0){
                 realpatient.visible=true
@@ -181,8 +196,9 @@ Window {
             closeAllView()
             showIndex=3
             if (loginrole==2){
-                treatmanagerment.visible=true;
+
                 treatcaseModel.initTreatData();
+                treatmanagerment.visible=true;
             }
 
             if (loginrole==0){
@@ -205,7 +221,7 @@ Window {
         visible:(loginrole==2)
         backgroundColorNormal:"transparent"
         backgroundColorPressed:"#ededed"
-        selected:showIndex==4
+        selected:showIndex==4   
         onClicked: {
 
             closeAllView();
@@ -264,9 +280,10 @@ Window {
         source: imgaeshprefix+"images/touxiang.png"
         anchors.left: sub2.right
         anchors.leftMargin: 890
-        y:22
+
         width: 36
         height: 36
+        anchors.verticalCenter: zhongkeheader.verticalCenter
     }
     Text {
         id: doctorName
@@ -274,10 +291,12 @@ Window {
         anchors.leftMargin: 5
         text: qsTr("医生:")+qsTr(doctorloginname)
         y: 24
+        //y:30
         font.pointSize: 15
         color: "#181818"
         width: 160
-        height: 15
+        height: 20
+        anchors.verticalCenter: zhongkeheader.verticalCenter
     }
     Image {
         id: exitimg
@@ -285,8 +304,10 @@ Window {
         anchors.left: doctorName.right
         anchors.leftMargin: 10
         y: 30
+       // y:30
         width: 20
-        height: 18
+        height: 20
+        anchors.verticalCenter: zhongkeheader.verticalCenter
     }
     CusButton{
         id:exitBtn
@@ -499,6 +520,20 @@ Window {
             height: choiseCaseTreatMent.height
         }
     }
+
+    Rectangle{
+        id:checkCaseTreatment
+        width: window.width
+        height: window.height
+
+        visible: false
+        color: "transparent"
+        CheckCaseTreatment{
+            width: checkCaseTreatment.width
+            height: checkCaseTreatment.height
+        }
+    }
+
     Rectangle{//管理界面添加处方
         id:addTreatManager
         width: window.width
@@ -589,6 +624,18 @@ Window {
     }
 
     Rectangle{
+        id:addUsermanager
+        width: window.width
+        height: window.height
+        visible: false
+        color: "transparent"
+        AddUserManage{
+            width: addUsermanager.width
+            height: addUsermanager.height
+        }
+    }
+
+    Rectangle{ //密码重置
         id:userPasswdReset
         width: window.width
         height: window.height
@@ -599,6 +646,40 @@ Window {
             height: userPasswdReset.height
         }
     }
+
+    Rectangle{ //密码重置
+        id:userPasswdModify
+        width: window.width
+        height: window.height
+        visible: false
+        color: "transparent"
+        UserPwdModify{
+            width: userPasswdModify.width
+            height: userPasswdModify.height
+        }
+    }
+
+    //显示toast
+    ToastMessage{
+        id:toastmessage
+    }
+    function $toastmessage(data){
+        if (data&&data.show){
+            toastmessage.show=data.show
+        }
+        if (data&&data.message){
+            toastmessage.text=data.message
+        }
+        if (data&&data.type){
+            toastmessage.type=data.type
+        }
+        if (data&&data.type &&data.type!=='success'&&data.type!=='error'&&data.type!=='info'){
+            return false
+        }
+        toastmessage.openTimer()
+    }
+
+
 
     //设置音频
        MediaPlayer {

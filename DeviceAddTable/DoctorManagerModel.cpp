@@ -12,6 +12,7 @@
 #include "PatientDb.h"
 const static QStringList dHeaderRoles = { "name","doctorid","regtime", "doctorstate","managertype","doctorspace","resetpwd","editpwd" ,"dstate"};
 const static QStringList dHeaders={"姓名","编号","注册时间","状态","角色","","","",""};
+
 class DoctorManagerModelPrivate
 {
 public:
@@ -99,6 +100,50 @@ void DoctorManagerModel::initCaseData(){
         auto micro = std::chrono::duration_cast<std::chrono::milliseconds>(c2 - c1).count();
         //qWarning() << "general" << N << "cost" << micro << "ms";
         resetData(objs);
+}
+
+void DoctorManagerModel::updateData()
+{
+    emit dataChanged(index(0, 0), index(mDatas.count() - 1, 0));
+}
+
+void DoctorManagerModel::modifyDoctorPwd(QString doctorid,QString newpwd){
+    QSqlQuery docquery;	//执行操作类对象
+    QString qsql=QString("UPDATE doctormanager set docpassword='%1' where doctorid='%2'").arg(newpwd).arg(doctorid);
+   docquery.prepare(qsql);
+   docquery.exec();	//执行
+}
+
+void DoctorManagerModel::resetAllDocPwd(){
+    QSqlQuery docquery;	//执行操作类对象
+    QString qsql=QString("UPDATE doctormanager set docpassword='111111'");
+   docquery.prepare(qsql);
+   docquery.exec();	//执行
+}
+
+void DoctorManagerModel::forbidUser(QString doctorid){
+    QList<QuickListItemBase *> copyObjs = mDatas;
+    for (int i=0;i<copyObjs.count();i++){
+        DoctorManageItem *tmpmodel=dynamic_cast<DoctorManageItem *>(copyObjs.at(i));
+         qDebug()<<"forbidUserid="<<doctorid<<" doctrid="<<tmpmodel->doctorid();
+        if (tmpmodel->doctorid()==doctorid){
+            qDebug()<<"forbidUserid===="<<tmpmodel->doctorstate();
+
+
+            if (tmpmodel->doctorstate()==QStringLiteral("启用")){
+                tmpmodel->set_doctorstate(QStringLiteral("禁用"));
+                tmpmodel->set_dstate(QStringLiteral("禁用"));
+            }else {
+                tmpmodel->set_doctorstate(QStringLiteral("启用"));
+                tmpmodel->set_dstate(QStringLiteral("启用"));
+            }
+
+        }
+
+    }
+    mDatas=copyObjs;
+    updateData();
+
 }
 
 void DoctorManagerModel::clearAll()
