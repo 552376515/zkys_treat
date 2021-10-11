@@ -1,6 +1,7 @@
 import QtQuick 2.0
 
 import TaoQuick 1.0
+import QtQuick.Controls 2.5
 Rectangle {
     id:devicemanager
     width: parent.width
@@ -141,14 +142,23 @@ Rectangle {
                         color: "white"
                     }
         } //row
-        CusButton_Image{
+        Button{
             id:deviceheaderyjqd
             width:96
             y:2
             x:devicemanagerrect.width-20-deviceheaderyjqd.width
             height:36
-            btnImgNormal:imgaeshprefix+"images/gl-sb-yijianqidong.png"
-            btnImgHovered:imgaeshprefix+"images/gl-sb-yijianqidong-fz.png"
+            background: Rectangle{
+                width: deviceheaderyjqd.width
+                height: deviceheaderyjqd.height
+                color: "transparent"
+                Image {
+                    id: deviceheaderyjqdimg
+                    width: deviceheaderyjqd.width
+                    height: deviceheaderyjqd.height
+                    source: deviceheaderyjqd.hovered?imgaeshprefix+"images/gl-sb-yijianqidong-fz.png":imgaeshprefix+"images/gl-sb-yijianqidong.png"
+                }
+            }
             onClicked:{
 
             }

@@ -14,6 +14,16 @@ Rectangle {
     color: Qt.rgba(0/255,0/255,0/255,1)
     opacity: 0.8
     property int curentLiaofaIndex: 0
+    MouseArea{
+        anchors.fill: parent
+        propagateComposedEvents: false
+        hoverEnabled: true
+        onClicked: {}
+
+        onReleased: {}
+
+        onPressed: {}
+    }
     Rectangle{
         id:addcasedata1
         x:(addCaseTreatMent.width-1130)/2.0
@@ -102,15 +112,24 @@ Rectangle {
                     color: "transparent"
                 }
 
-                CusButton_Image{
+                Button{
                     id:addcaseQuitBtn
                     width: 30
                     height: 30
                     y:(addcasedatahead.height-addcaseQuitBtn.height)/2.0
-                   // anchors.left: addcasedataheadButton.right
-                   // anchors.leftMargin: 60
-                    btnImgNormal:imgaeshprefix+"images/ys-guanbi.png"
-                    btnImgHovered:imgaeshprefix+"images/sy-guanbi-fz.png"
+                   background: Rectangle{
+                       width: addcaseQuitBtn.width
+                       height: addcaseQuitBtn.height
+                       color: "transparent"
+                       Image {
+                           id: addcaseQuitBtnimg
+                           width: addcaseQuitBtn.width
+                           height: addcaseQuitBtn.height
+                           source:addcaseQuitBtn.hovered ? imgaeshprefix+"images/sy-guanbi-fz.png":imgaeshprefix+"images/ys-guanbi.png"
+                       }
+
+                   }
+
                     onClicked: {
                           addCaseTreatMent.visible=false;
                     }
@@ -277,14 +296,17 @@ Rectangle {
                                     verticalAlignment: Text.AlignVCenter 	//垂直居中，控件必须有height才可以使用
                                     horizontalAlignment: Text.AlignHCenter 	//水平居中，控件必须有width才可以使用
                                    // rotation: -90
+                                    color: gridview.currentIndex===index ?"orange":"black"
 
 
                                 }
                                 MouseArea {
                                            anchors.fill: parent
+
+
                                            onClicked: {
 
-
+                                                gridview.currentIndex=index
                                                 if (landscape_name.text=="手少阴心经" ||landscape_name.text=="足厥阴肝经"){
                                                     jingluoplannewModel.addCaseData("仰卧手向上 "+landscape_name.text,curentLiaofaIndex)
                                                   //  console.log("enter to selected")
@@ -326,7 +348,7 @@ Rectangle {
             }
         }
         Rectangle{
-            id:middlecaselist
+            id:middlecaselistadd
 
             width: 580
             height: addcasedata1.height-addcasedatahead.height
@@ -339,14 +361,14 @@ Rectangle {
             Column{
                 Rectangle{
                     id:addcasemiddlehead
-                    width: middlecaselist.width
+                    width: middlecaselistadd.width
                     //x:10
                     height: 40
                     color: "white"
                     Text {
-                        id: jinluoguihualist
+                        id: jinluoguihualistadd
                         x:10
-                        width: addcasemiddlehead.width-jinluoguihualist.x*2
+                        width: addcasemiddlehead.width-jinluoguihualistadd.x*2
                         height: addcasemiddlehead.height-1
                         text: qsTr("经络调理规划")
                         color: "#EF6001"
@@ -360,29 +382,29 @@ Rectangle {
                     Rectangle{
                         id:jingluoSpace1
                         x:10
-                        width: addcasemiddlehead.width-jinluoguihualist.x*2
+                        width: addcasemiddlehead.width-jinluoguihualistadd.x*2
                         height: 1
                         color: "#3DA5B0"
-                        anchors.top: jinluoguihualist.bottom
+                        anchors.top: jinluoguihualistadd.bottom
                     }
                 }
                 Rectangle{
-                    id:middlejingluoplan
+                    id:middlejingluoplanadd
                    // x:10
-                    width: middlecaselist.width
-                    height: middlecaselist.height-40
+                    width: middlecaselistadd.width
+                    height: middlecaselistadd.height-40
                     color: "white"
 
                     PatientTableHeader{
-                        id: caseHeader
+                        id: caseAddHeader
                         x:25
-                        width: middlejingluoplan.width-caseHeader.x*2
+                        width: middlejingluoplanadd.width-caseAddHeader.x*2
                         height: 10
                         dataObj: jingluoplannewModel
                         headerNames: jingluoplannewModel.tableHeaders;
                         headerRoles: jingluoplannewModel.headerRoles
-                        widthList: caseView.widthList
-                        xList: caseView.xList
+                        widthList: caseAddView.widthList
+                        xList: caseAddView.xList
                         property real avalidWidth
                         updateWidthList: function() {
                             avalidWidth = width
@@ -391,11 +413,11 @@ Rectangle {
                         }
                     }
                     CusTableView {
-                        id: caseView
-                        x:caseHeader.x
-                        y:caseHeader.y+caseHeader.height
-                        width: caseHeader.avalidWidth
-                        height: middlejingluoplan.height - caseHeader.height-80
+                        id: caseAddView
+                        x:caseAddHeader.x
+                        y:caseAddHeader.y+caseAddHeader.height
+                        width: caseAddHeader.avalidWidth
+                        height: middlejingluoplanadd.height - caseAddHeader.height-80
                         model: jingluoplannewModel
 
                         onPressed: {
@@ -407,6 +429,7 @@ Rectangle {
                                 return
                             }
                             casetableMenu.popup(mouseX, mouseY)
+
                         }
                         onReleased: {
 
@@ -416,24 +439,23 @@ Rectangle {
                             doPositionChanged(mouseX, mouseY)
                         }
 
+                        onSingleClicked:{
 
-                        onDoubleClicked: {
                             var index = indexAt(mouseX, mouseY + contentY)
                             if (index < 0 || index >= count) {
                                 return
                             }
-
                             var tw = 0;
                             var tw0=0;
                             var indexX=0;
-                            for (var i = 0; i < caseHeader.widthList.length; ++i) {
+                            for (var i = 0; i < caseAddHeader.widthList.length; ++i) {
 
-                                tw += caseHeader.widthList[i]
+                                tw += caseAddHeader.widthList[i]
                                 if (mouseX>=tw0 &&mouseX<tw && i>=3){
                                     indexX=i
                                     break;
                                 }
-                                tw0+=caseHeader.widthList[i]
+                                tw0+=caseAddHeader.widthList[i]
                             }
 
 
@@ -452,12 +474,22 @@ Rectangle {
                                 jingluoplannewModel.removeRow(index);
                             }
 
-                            if (caseHeader.xList[1] <= mouseX
-                                    && mouseX <= caseHeader.xList[2]) {
 
-                                editInput.x = caseHeader.xList[1]
-                                editInput.y = caseView.y + (parseInt(mouseY / CusConfig.fixedHeight)) * CusConfig.fixedHeight
-                                editInput.width = caseHeader.widthList[1]
+                        }
+
+                        onDoubleClicked: {
+                            var index = indexAt(mouseX, mouseY + contentY)
+                            if (index < 0 || index >= count) {
+                                return
+                            }
+
+
+                            if (caseAddHeader.xList[1] <= mouseX
+                                    && mouseX <= caseAddHeader.xList[2]) {
+
+                                editInput.x = caseAddHeader.xList[1]
+                                editInput.y = caseAddView.y + (parseInt(mouseY / CusConfig.fixedHeight)) * CusConfig.fixedHeight
+                                editInput.width = caseAddHeader.widthList[1]
                                 editInput.height = CusConfig.fixedHeight
                                 editInput.index = index
                                 var dataObj = jingluoplannewModel.data(index)
@@ -473,14 +505,14 @@ Rectangle {
                                 onTriggered: {
                                     var mouseX = tableMenu.x
                                     var mouseY = tableMenu.y
-                                    var index = caseView.indexAt(mouseX, mouseY + caseView.contentY)
-                                    if (index < 0 || index >= caseView.count) {
+                                    var index = caseAddView.indexAt(mouseX, mouseY + caseAddView.contentY)
+                                    if (index < 0 || index >= caseAddView.count) {
                                         return
                                     }
-                                    if (caseHeader.xList[1] <= mouseX && mouseX <= caseHeader.xList[2]) {
-                                        editInput.x = caseHeader.xList[1]
-                                        editInput.y = caseView.y + (parseInt(mouseY / CusConfig.fixedHeight)) * CusConfig.fixedHeight
-                                        editInput.width = caseHeader.widthList[1]
+                                    if (caseAddHeader.xList[1] <= mouseX && mouseX <= caseAddHeader.xList[2]) {
+                                        editInput.x = caseAddHeader.xList[1]
+                                        editInput.y = caseAddView.y + (parseInt(mouseY / CusConfig.fixedHeight)) * CusConfig.fixedHeight
+                                        editInput.width = caseAddHeader.widthList[1]
                                         editInput.height = CusConfig.fixedHeight
                                         editInput.index = index
                                         var dataObj = jingluoplannewModel.data(index)
@@ -495,8 +527,8 @@ Rectangle {
                                 onTriggered: {
                                     var mouseX = casetableMenu.x
                                     var mouseY = casetableMenu.y
-                                    var index = caseView.indexAt(mouseX, mouseY + caseView.contentY)
-                                    if (index < 0 || index >= caseView.count) {
+                                    var index = caseAddView.indexAt(mouseX, mouseY + caseAddView.contentY)
+                                    if (index < 0 || index >= caseAddView.count) {
                                         return
                                     }
                                     jingluoplannewModel.insertBeforeRow(index)
@@ -507,8 +539,8 @@ Rectangle {
                                 onTriggered: {
                                     var mouseX = casetableMenu.x
                                     var mouseY = casetableMenu.y
-                                    var index = caseView.indexAt(mouseX, mouseY + caseView.contentY)
-                                    if (index < 0 || index >= caseView.count) {
+                                    var index = caseAddView.indexAt(mouseX, mouseY + caseAddView.contentY)
+                                    if (index < 0 || index >= caseAddView.count) {
                                         return
                                     }
                                     jingluoplannewModel.removeRow(index)
@@ -516,11 +548,12 @@ Rectangle {
                             }
                         }
                         delegate: AddCaseManageRow {
-                            width: caseView.width
-                            roles: caseView.model.headerRoles
+                            width: caseAddView.width
+                            roles: caseAddView.model.headerRoles
                             dataObj: model.display
-                            widthList: caseHeader.widthList
-                            xList: caseHeader.xList
+                            widthList: caseAddHeader.widthList
+                            xList: caseAddHeader.xList
+                            textColor: "black"
                             onCheckedChanged: {
                             }
                         }
@@ -536,7 +569,7 @@ Rectangle {
             id:rightcontrolbuttons
             width: 220
             height:addcasedata1.height-addcasedatahead.height
-            anchors.left: middlecaselist.right
+            anchors.left: middlecaselistadd.right
             anchors.leftMargin: 0
             anchors.top: addcasedatahead.bottom
             anchors.topMargin: 0
@@ -560,54 +593,107 @@ Rectangle {
 
                 }
             }
-            CusButton_Image{
+
+            Button{
                 id:starttreatbutton
                 width: 155
                 height: 155
                 x:(rightcontrolbuttons.width-starttreatbutton.width)/2.0
                 y:320
-                btnImgNormal:imgaeshprefix+"images/ys-kaishibiaoli.png"
-                btnImgHovered:imgaeshprefix+"images/ys-kaishibiaoli-fz.png"
-                //font.pointSize:20
 
-                onClicked:{
-                    addCaseTreatMent.visible=false;
-                    realpatient.visible=true;
-                    if (inputdoctorname.text.length>0){
-                        currgltreatmentname=inputdoctorname+Qt.formatDate(new Date(),"yyyy-MM-dd")
+                background: Rectangle{
+                    width: starttreatbutton.width
+                    height: starttreatbutton.height
+                    color: "transparent"
+                    Image {
+                        id: backImage
+                        width: starttreatbutton.width
+                        height: starttreatbutton.height
+                        source: starttreatbutton.hovered?imgaeshprefix+"images/ys-kaishibiaoli-fz.png":imgaeshprefix+"images/ys-kaishibiaoli.png"
+                        anchors.centerIn: parent
                     }
 
-                    if (jingluoplannewModel.rowCount()>0){
-                        jingluoplannewModel.addToPatientCaseGl(currpatientnum,currgltreatmentname);
-                        patientCaseModel.addToPatientCase(currpatientname,currpatientnum,currpatientcasename,currgltreatmentname,doctorloginname);
-                    }
                 }
+                onClicked:{
 
+                    if (inputdoctorname.text.length>0){
+                        currgltreatmentname=inputdoctorname.text+Qt.formatDate(new Date(),"yyyy-MM-dd")
+                        addCaseTreatMent.visible=false;
+                        if (jingluoplannewModel.rowCount()>0){
+                            jingluoplannewModel.addToPatientCaseGl(currpatientnum,currgltreatmentname);
+                            patientCaseModel.addToPatientCase(currpatientname,currpatientnum,currpatientcasename,currgltreatmentname,doctorloginname);
+                        }
+                        realpatient.visible=true;
+                    }else{
+                        $toastmessage({
+                                      "message":"请输入病症名称！",
+                                       "type":'info',
+                                       "show":true
+                                      }
+                                     )
+                    }
+
+
+                }
             }
-            CusButton_Image{
+
+            Button{
                 id:savecasebutton
                 width: 161
                 height: 45
                 x:28
                 y:starttreatbutton.y+starttreatbutton.height+34
-                btnImgNormal:imgaeshprefix+"images/ys-tianjiazhihuanzhe.png"
-                btnImgHovered:imgaeshprefix+"images/ys-tianjiazhihuanzhe-fz.png"
-                onClicked:{
-                    if (jingluoplannewModel.rowCount()>0){
-                        jingluoplannewModel.addToPatientCaseGl(currpatientnum,currgltreatmentname);
-                        patientCaseModel.addToPatientCase(currpatientname,currpatientnum,currpatientcasename,currgltreatmentname,doctorloginname);
-                        addCaseTreatMent.visible=false;
+
+                background:Rectangle{
+                    width: savecasebutton.width
+                    height:savecasebutton.height
+                    color: "transparent"
+                    Image {
+                        id: savebackimg
+                        width: savecasebutton.width
+                        height: savecasebutton.height
+                        source: savecasebutton.hovered?imgaeshprefix+"images/ys-tianjiazhihuanzhe-fz.png":imgaeshprefix+"images/ys-tianjiazhihuanzhe.png"
                     }
                 }
+
+                onClicked:{
+                    if (inputdoctorname.text.length>0){
+                        currgltreatmentname=inputdoctorname.text+Qt.formatDate(new Date(),"yyyy-MM-dd")
+                        if (jingluoplannewModel.rowCount()>0){
+                            jingluoplannewModel.addToPatientCaseGl(currpatientnum,currgltreatmentname);
+                            patientCaseModel.addToPatientCase(currpatientname,currpatientnum,currpatientcasename,currgltreatmentname,doctorloginname);
+
+                        }
+                        addCaseTreatMent.visible=false;
+                    }else{
+                        $toastmessage({
+                                      "message":"请输入病症名称！",
+                                       "type":'info',
+                                       "show":true
+                                      }
+                                     )
+                    }
+
+                }
             }
-            CusButton_Image{
+            Button{
                 id:cancelcasebutton
                 width: 161
                 height: 45
                 x:28
                 y:savecasebutton.y+savecasebutton.height+34
-                btnImgNormal:imgaeshprefix+"images/ys-fanhui.png"
-                btnImgHovered:imgaeshprefix+"images/ys-fanhui-fz.png"
+
+                background: Rectangle{
+                    width: cancelcasebutton.width
+                    height: cancelcasebutton.height
+                    color: "transparent"
+                    Image {
+                        id: cancelbackimg
+                        width: cancelcasebutton.width
+                        height: cancelcasebutton.height
+                        source: cancelcasebutton.hovered?imgaeshprefix+"images/ys-fanhui-fz.png":imgaeshprefix+"images/ys-fanhui.png"
+                    }
+                }
                 onClicked:{
                     addCaseTreatMent.visible=false;
                 }
@@ -660,24 +746,14 @@ Rectangle {
                 if(!active) { visible = false }
             }
         }
+    onVisibleChanged: {
+        if (visible){
+                if (ysCanModifyTreatment){
+                    jingluoplannewModel.loadCaseDataByPatientNo(currpatientnum,currgltreatmentname);
+                }
+        }
+    }
 
 
-//    MouseArea{
-//        id:addCaseMoueseArea
-//        anchors.fill: patientdata
-//        onClicked: {
-
-//            if ((mouseX>(addcasedata1.x+addcasedata1.width) || mouseX<addcasedata1.x) ||(mouseY>(addcasedata1.y+addcasedata1.width) || mouseY<addcasedata1.y) )
-//            {
-//                addCaseTreatMent.visible=false;
-//            }else{
-//                if ((mouseX>inputdoctorname.x &&mouseX<inputdoctorname.x+inputdoctorname.width) || (mouseY>inputdoctorname.y && mouseY<inputdoctorname.y+inputdoctorname.height)){
-//                    inputX=mouseX
-//                    inputY=mouseY
-//                    inputPanel1.visible=true
-//                }
-//            }
-//        }
-//    }
 
 }

@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include "QuickModel/QuickListModel.h"
+#include <QtCore>
+#include "xlsx/xlsxdocument.h"
 class DeviceAddItem;
 class GLPatientManagerModelPrivate;
 class GLPatientManagerModel : public QuickListModel
@@ -23,6 +25,8 @@ public slots:
 
     void genTxtItems();
     void saveTxtItems();
+    void readExcelToGl(QString filename);
+    void writeGlToExcel(QString filename);
 
     void insertBeforeSelected();
     void insertBeforeRow(int row);

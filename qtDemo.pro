@@ -38,12 +38,16 @@ DISTFILES += \
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 include($$PWD/zmqml/zmq.pri)
+include($$PWD/TaoQuick/imports/imports.pri)
+include($$PWD/TaoCommon/TaoCommon.pri)
+include($$PWD/xlsx/qtxlsx.pri)
 
 INCLUDEPATH += $$PWD/zmqml/ include
 
 SOURCES += \
     DeviceAddTable/ChoiseCaseItem.cpp \
     DeviceAddTable/ChoiseCaseModel.cpp \
+    DeviceAddTable/ChoiseCasePlanListModel.cpp \
         DeviceAddTable/DeviceAddItem.cpp \
         DeviceAddTable/DeviceAddModel.cpp \
     DeviceAddTable/DoctorManageItem.cpp \
@@ -54,6 +58,7 @@ SOURCES += \
         DeviceAddTable/PatientCaseModel.cpp \
         DeviceAddTable/PatientDb.cpp \
     DeviceAddTable/PatientPresAddModel.cpp \
+    DeviceAddTable/PatientTreatmentRecordModel.cpp \
     DeviceAddTable/TreatCaseManageListModel.cpp \
     DeviceAddTable/TreatCaseModel.cpp \
         DeviceAddTable/patientcaseitem.cpp \
@@ -66,8 +71,7 @@ SOURCES += \
 
 RESOURCES += qml.qrc
 
-include($$PWD/TaoQuick/imports/imports.pri)
-include($$PWD/TaoCommon/TaoCommon.pri)
+
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH +=$$PWD/TaoQuick/imports/TaoQuick
@@ -83,6 +87,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     DeviceAddTable/ChoiseCaseItem.h \
     DeviceAddTable/ChoiseCaseModel.h \
+    DeviceAddTable/ChoiseCasePlanListModel.h \
     DeviceAddTable/DeviceAddItem.h \
     DeviceAddTable/DeviceAddModel.h \
     DeviceAddTable/DoctorManageItem.h \
@@ -92,6 +97,7 @@ HEADERS += \
     DeviceAddTable/PatientCaseListNewModel.h \
     DeviceAddTable/PatientCaseModel.h \
     DeviceAddTable/PatientPresAddModel.h \
+    DeviceAddTable/PatientTreatmentRecordModel.h \
     DeviceAddTable/TreatCaseManageListModel.h \
     DeviceAddTable/TreatCaseModel.h \
     DeviceAddTable/patientcaseitem.h \

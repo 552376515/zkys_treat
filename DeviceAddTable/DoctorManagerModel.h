@@ -25,6 +25,10 @@ public slots:
 //    void saveTxtItems();
 
 //    void insertBeforeSelected();
+
+    void modifyDoctorPwd(QString doctorid,QString newpwd);
+    void resetAllDocPwd();
+    void forbidUser(QString doctorid);
     void insertBeforeRow(int row);
 
     void clearAll();
@@ -36,6 +40,7 @@ private:
     void sortByName(Qt::SortOrder order);
     void sortByAddress(Qt::SortOrder order);
     void sortByModel(Qt::SortOrder order);
+    void updateData();
 private:
     DoctorManagerModelPrivate *d;
 };

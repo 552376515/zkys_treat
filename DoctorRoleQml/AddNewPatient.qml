@@ -12,7 +12,16 @@ Rectangle {
     anchors.fill: addnewpt
     color: Qt.rgba(0/255,0/255,0/255,1)
     opacity: 0.8
+    MouseArea{
+        anchors.fill: parent
+        propagateComposedEvents: false
+        hoverEnabled: true
+        onClicked: {}
 
+        onReleased: {}
+
+        onPressed: {}
+    }
 
     Rectangle{
         id:addrect1
@@ -303,7 +312,7 @@ Rectangle {
                 }
             }
 
-            CusButton_Image{
+            Button{
                 id:addQuxiao
                 x:72
                 width: 155
@@ -311,14 +320,24 @@ Rectangle {
                 anchors.top: addinput4.bottom
                 anchors.topMargin: 10
                 //text: "退出"
-                btnImgNormal:imgaeshprefix+"images/ys-xingzeng-qvxiao.png"
-                btnImgHovered:imgaeshprefix+"images/ys-xingzeng-qvxiao-fz.png"
+                background: Rectangle{
+                    width: addQuxiao.width
+                    height: addQuxiao.height
+                    color: "transparent"
+                    Image {
+                        id: addQuxiaoimg
+                        width: addQuxiao.width
+                        height: addQuxiao.height
+                        source: addQuxiao.hovered?imgaeshprefix+"images/ys-xingzeng-qvxiao-fz.png":imgaeshprefix+"images/ys-xingzeng-qvxiao.png"
+                    }
+                }
+
                 onClicked: {
                       addnewpt.visible=false;
 
                 }
             }
-            CusButton_Image{
+            Button{
                 id:addBaocun
                 width: addQuxiao.width
                 height:addQuxiao.height
@@ -326,9 +345,20 @@ Rectangle {
                 anchors.leftMargin: 70
                 anchors.top: addinput4.bottom
                 anchors.topMargin: 10
+                background: Rectangle{
+                    width: addBaocun.width
+                    height: addBaocun.height
+                    color: "transparent"
+                    Image {
+                        id: addBaocunimg
+                        width: addBaocun.width
+                        height: addBaocun.height
+                        source: addBaocun.hovered?imgaeshprefix+"images/ys-xingzeng-baocun-fz.png":imgaeshprefix+"images/ys-xingzeng-baocun.png"
+                    }
+                }
                 //text: "退出"
-                btnImgNormal:imgaeshprefix+"images/ys-xingzeng-baocun.png"
-                btnImgHovered:imgaeshprefix+"images/ys-xingzeng-baocun-fz.png"
+              //  btnImgNormal:imgaeshprefix+"images/ys-xingzeng-baocun.png"
+              //  btnImgHovered:imgaeshprefix+"images/ys-xingzeng-baocun-fz.png"
                 onClicked: {
                       addnewpt.visible=false;;
                     if (pinputname.text.length >0 ){

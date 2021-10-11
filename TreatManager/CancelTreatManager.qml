@@ -1,4 +1,6 @@
 import QtQuick 2.0
+import QtQuick.Controls 2.2
+import QtQuick.Controls.Styles 1.4
 import TaoQuick 1.0
 Rectangle {
     id:cancelTreat
@@ -9,6 +11,16 @@ Rectangle {
     opacity: 0.8
     property int dispWidth: 528
     property int dispHeight: 372
+    MouseArea{
+        anchors.fill: parent
+        propagateComposedEvents: false
+        hoverEnabled: true
+        onClicked: {}
+
+        onReleased: {}
+
+        onPressed: {}
+    }
     Rectangle{
         id:cancelTreatdispRect
         width: dispWidth
@@ -89,20 +101,30 @@ Rectangle {
             font.pixelSize: 16
         }
 
-        CusButton_Image{
+        Button {
             id:qvquxiao
             width: 155
             height: 39
             anchors.top:  shibieflaimess5.bottom
             anchors.topMargin: 50
             x:72
-            btnImgUrl:imgaeshprefix+"images/ys-xingzeng-qvxiao.png"
-            btnImgHovered:imgaeshprefix+"images/ys-xingzeng-qvxiao-fz.png"
+            background:Rectangle{
+                width: qvquxiao.width
+                height: qvquxiao.height
+                color: "transparent"
+                Image{
+                    id:qvquxiaoimg
+                    width: qvquxiao.width
+                    height: qvquxiao.height
+                    source: qvquxiao.hovered?imgaeshprefix+"images/ys-xingzeng-qvxiao-fz.png":imgaeshprefix+"images/ys-xingzeng-qvxiao.png"
+                }
+            }
+
             onClicked:{
                 canceltreatManage.visible=false
             }
         }
-        CusButton_Image{
+        Button{
             id:qvshanchu
             width: 155
             height: 39
@@ -110,12 +132,23 @@ Rectangle {
             anchors.topMargin: 50
             anchors.left:qvquxiao.right
             anchors.leftMargin: 70
-            btnImgUrl:imgaeshprefix+"images/gl-qvrenshanchu.png"
-            btnImgHovered:imgaeshprefix+"images/gl-qvrenshanchu-fz.png"
+            background:Rectangle{
+                width: qvshanchu.width
+                height: qvshanchu.height
+                color: "transparent"
+                Image{
+                    id:qvshanchuimg
+                    width: qvshanchu.width
+                    height: qvshanchu.height
+                    source: qvshanchu.hovered?imgaeshprefix+"images/gl-qvrenshanchu-fz.png":imgaeshprefix+"images/gl-qvrenshanchu.png"
+                }
+            }
+
             onClicked:{
 //                if (canstartTiaoli){
 //                    senderright.sendMessage(BAT.byteArrayfy("{\"msg\":\"start_cure\",\"args\":{\"meridianbox\":\"shen_tiqian_r\",\"meridianbox_2\":\"shen_tiqian_l\"}}"));
 //                }
+                canceltreatManage.visible=false
             }
         }
 

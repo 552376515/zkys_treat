@@ -15,6 +15,16 @@ Rectangle {
     color: Qt.rgba(0/255,0/255,0/255,1)
     property int curentLiaofaIndex: 0
     opacity: 0.8
+    MouseArea{
+        anchors.fill: parent
+        propagateComposedEvents: false
+        hoverEnabled: true
+        onClicked: {}
+
+        onReleased: {}
+
+        onPressed: {}
+    }
     Rectangle{
         id:addcasedata1
         x:(addCaseTreatMent.width-1130)/2.0
@@ -194,6 +204,7 @@ Rectangle {
 
                         anchors.fill: addcasedataleft
                         clip: true
+
                         model:  ListModel {
                             ListElement {
                                 eachname: "足少阴肾经"
@@ -269,6 +280,7 @@ Rectangle {
                             //border.color: "6aaeb9"
                            // border.width: 1
 
+
                             Rectangle{
                                 id:leftname
                                 width: wrapper.width
@@ -288,13 +300,13 @@ Rectangle {
                                     verticalAlignment: Text.AlignVCenter 	//垂直居中，控件必须有height才可以使用
                                     horizontalAlignment: Text.AlignHCenter 	//水平居中，控件必须有width才可以使用
                                    // rotation: -90
-
+                                    color: gridview.currentIndex===index ?"orange":"black"
 
                                 }
                                 MouseArea {
                                            anchors.fill: parent
                                            onClicked: {
-
+                                                gridview.currentIndex=index
 
                                                if (landscape_name.text=="手少阴心经" ||landscape_name.text=="足厥阴肝经"){
                                                    treatcasemanageModel.addCaseData("仰卧手向上 "+landscape_name.text,curentLiaofaIndex)
@@ -427,8 +439,7 @@ Rectangle {
                             doPositionChanged(mouseX, mouseY)
                         }
 
-
-                        onDoubleClicked: {
+                        onSingleClicked:{
                             var index = indexAt(mouseX, mouseY + contentY)
                             if (index < 0 || index >= count) {
                                 return
@@ -462,6 +473,16 @@ Rectangle {
 
                                 treatcasemanageModel.removeRow(index);
                             }
+
+                        }
+
+                        onDoubleClicked: {
+                            var index = indexAt(mouseX, mouseY + contentY)
+                            if (index < 0 || index >= count) {
+                                return
+                            }
+
+
 
                             if (caseHeader.xList[1] <= mouseX
                                     && mouseX <= caseHeader.xList[2]) {
@@ -586,33 +607,62 @@ Rectangle {
 //                }
 
 //            }
-            CusButton_Image{
+            Button{
                 id:savecasebutton
                 width: 161
                 height: 45
                 x:28
                 y:320+155+34
-                btnImgUrl:imgaeshprefix+"images/ys-xingzeng-baocun.png"
-                btnImgHovered:imgaeshprefix+"images/ys-xingzeng-baocun-fz.png"
+                background: Rectangle{
+                    width: savecasebutton.width
+                    height: savecasebutton.height
+                    color: "transparent"
+                    Image {
+                        id: saveBtnimg
+                        width: savecasebutton.width
+                        height: savecasebutton.height
+                        source:savecasebutton.hovered?imgaeshprefix+"images/ys-xingzeng-baocun-fz.png":imgaeshprefix+"images/ys-xingzeng-baocun.png"
+                    }
+                }
+
+
                 onClicked:{
+                    if (inputcasename.text.length==0){
+                        $toastmessage({
+                            "message":"还未输入病名",
+                            "type":'success',
+                            "show":true
+                        })
+                    }
+
                     if (treatcasemanageModel.rowCount()>0&&inputtreatname.text.length>0 && inputcasename.text.length>0){
-                        treatcasemanageModel.addToCaseGl(inputtreatname.text);
+                        treatcasemanageModel.addToCaseGl(inputcasename.text,inputtreatname.text);
                         treatcaseModel.addToCase(inputcasename.text,inputtreatname.text,doctorloginname)
                         addTreatManager.visible=false
                     }
 
                 }
             }
-            CusButton_Image{
+            Button{
                 id:cancelcasebutton
                 width: 161
                 height: 45
                 x:28
                 y:savecasebutton.y+savecasebutton.height+34
-                btnImgUrl:imgaeshprefix+"images/ys-fanhui.png"
-                btnImgHovered:imgaeshprefix+"images/ys-fanhui-fz.png"
+                background: Rectangle{
+                    width: cancelcasebutton.width
+                    height: cancelcasebutton.height
+                    color: "transparent"
+                    Image {
+                        id: cancelcasebuttonimg
+                        width: cancelcasebutton.width
+                        height: cancelcasebutton.height
+                        source: cancelcasebutton.hovered?imgaeshprefix+"images/ys-fanhui-fz.png":imgaeshprefix+"images/ys-fanhui.png"
+                    }
+                }
+
                 onClicked:{
-                    addCaseTreatMent.visible=false;
+                    addTreatManager.visible=false;
                 }
             }
         }

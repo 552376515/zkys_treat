@@ -11,6 +11,16 @@ Rectangle {
     anchors.fill: patientdatacheck
     color: Qt.rgba(0/255,0/255,0/255,1)
     opacity: 0.8
+    MouseArea{
+        anchors.fill: parent
+        propagateComposedEvents: false
+        hoverEnabled: true
+        onClicked: {}
+
+        onReleased: {}
+
+        onPressed: {}
+    }
     Rectangle{
         id:patientdata1
         x:(patientdatacheck.width-890)/2.0//(Screen.desktopAvailableWidth-890)/2.0

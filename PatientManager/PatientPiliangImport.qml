@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import TaoQuick 1.0
 import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.0
 Rectangle {
     id:patientimport
     width: parent.width
@@ -8,6 +9,16 @@ Rectangle {
     anchors.fill: parent
     color: Qt.rgba(0/255,0/255,0/255,1)
     opacity: 0.8
+    MouseArea{
+        anchors.fill: parent
+        propagateComposedEvents: false
+        hoverEnabled: true
+        onClicked: {}
+
+        onReleased: {}
+
+        onPressed: {}
+    }
     property int dispWidth: 528
     property int dispHeight: 462
     property string filePath: ""
@@ -33,14 +44,23 @@ Rectangle {
             }
 
        }
-            CusButton_Image {
+            Button {
                 id: importImage
                 width: 253
                 height: 126
                 anchors.top: patientImportAreahead.bottom
                 anchors.topMargin: 17
                 x:(patientImportAreahead.width-importImage.width)/2.0
-                btnImgUrl:imgaeshprefix+"images/gl-tuozhuaiqv.png"
+                background: Rectangle{
+                    width: importImage.width
+                    height: importImage.height
+                    color: "transparent"
+                    Image {
+                        id: importImageimg
+                        source: imgaeshprefix+"images/gl-tuozhuaiqv.png"
+                    }
+
+                }
                 onClicked: {
                     fileDialog.open()
                 }
@@ -108,20 +128,32 @@ Rectangle {
                 x:modelDownload.x
             }
 
-            CusButton_Image {
+            Button {
                 id: importqv
                 width: 155
                 height: 40
                 anchors.top: modelDownloadShuomingontext2.bottom
                 anchors.topMargin: 28
                 x:73
-                btnImgUrl:imgaeshprefix+"images/gl-piliang-qvxiao.png"
-                btnImgHovered: imgaeshprefix+"images/gl-piliang-qvxiao-fz.png"
+                background: Rectangle{
+                    width: importqv.width
+                    height: importqv.height
+                    color: "transparent"
+                    Image {
+                        id: importqvimg
+                        width: importqv.width
+                        height: importqv.height
+                        source: importqv.hovered?imgaeshprefix+"images/gl-piliang-qvxiao-fz.png":imgaeshprefix+"images/gl-piliang-qvxiao.png"
+                    }
+
+                }
+
+
                 onClicked: {
                      patientImport.visible=false
                 }
             }
-            CusButton_Image {
+            Button {
                 id: importsure
                 width: 155
                 height: 40
@@ -129,10 +161,19 @@ Rectangle {
                 anchors.topMargin: 28
                 anchors.left: importqv.right
                 anchors.leftMargin: 71
-                btnImgUrl:imgaeshprefix+"images/gl-kaishidaoru.png"
-                btnImgHovered: imgaeshprefix+"images/gl-kaishidaoru-fz.png"
+                background: Rectangle{
+                    width: importsure.width
+                    height: importsure.height
+                    color: "transparent"
+                    Image {
+                        id: importsureimg
+                        width: importsure.width
+                        height: importsure.height
+                        source: importsure.hovered?imgaeshprefix+"images/gl-kaishidaoru-fz.png":imgaeshprefix+"images/gl-kaishidaoru.png"
+                    }
+                }
                 onClicked: {
-
+                    glpatientModel.readExcelToGl(filePath)
                 }
             }
 

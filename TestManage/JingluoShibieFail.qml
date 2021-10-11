@@ -7,6 +7,16 @@ Rectangle {
     anchors.fill: parent
     color: Qt.rgba(0/255,0/255,0/255,1)
     opacity: 0.8
+    MouseArea{
+        anchors.fill: parent
+        propagateComposedEvents: false
+        hoverEnabled: true
+        onClicked: {}
+
+        onReleased: {}
+
+        onPressed: {}
+    }
     property int dispWidth: 552
     property int dispHeight: 274
     Rectangle{

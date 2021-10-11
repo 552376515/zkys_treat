@@ -13,5 +13,5 @@ extern void addPatientCaseNew(const QString &patientname, int patientid, const Q
 extern void addPatientCaseGLNew( int patientid, const QString &treatment,  const QString &directlay,const QString &jingluo, QDate treatdate);
 
 extern void addGlTreatmentNew(const QString &casename,const QString &treatmentname,QDate treatmenttime,const QString &treatstate);
-extern void addGlTreatmentPlanNew(const QString &treatmentname,const QString &treatmentbody,const QString &treatmentjingluo);
+extern void addGlTreatmentPlanNew(const QString &casename,const QString &treatmentname,const QString &treatmentbody,const QString &treatmentjingluo);
 #endif // PATIENTDB_H

@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import TaoQuick 1.0
+import QtQuick.Controls 2.0
 Rectangle {
     id:userpwdReset1
     width: parent.width
@@ -7,8 +8,18 @@ Rectangle {
     anchors.fill: parent
     color: Qt.rgba(0/255,0/255,0/255,1)
     opacity: 0.8
-    property int dispWidth: 552
-    property int dispHeight: 372+94
+    MouseArea{
+        anchors.fill: parent
+        propagateComposedEvents: false
+        hoverEnabled: true
+        onClicked: {}
+
+        onReleased: {}
+
+        onPressed: {}
+    }
+    property int dispWidth: 528
+    property int dispHeight: 372
     Rectangle{
         id:userpwdResetRect
         width: dispWidth
@@ -48,7 +59,7 @@ Rectangle {
             x:52
             text: qsTr("111111")
             anchors.top: userpwdResetHead.bottom
-            anchors.topMargin: 20
+            anchors.topMargin: 30
             anchors.left: userpwdResetmes.right
             color: "#BF0000"
             font.pixelSize: 16
@@ -65,20 +76,29 @@ Rectangle {
 
 
 
-        CusButton_Image{
+        Button{
             id:suserpwdResetStop
             width: 155
             height: 39
             anchors.top:  userpwdResetmess2.bottom
             anchors.topMargin: 90
             x:72
-            btnImgUrl:imgaeshprefix+"images/gl-piliang-qvxiao.png"
-            btnImgHovered:imgaeshprefix+"images/ys-piliang-qvxiao-fz.png"
-            onClicked:{
+            background: Rectangle{
+                width: suserpwdResetStop.width
+                height: suserpwdResetStop.height
+                color: "transparent"
+                Image {
+                    id: suserpwdResetStopimg
+                    source: suserpwdResetStop.hovered?imgaeshprefix+"images/gl-piliang-qvxiao-fz.png":imgaeshprefix+"images/gl-piliang-qvxiao.png"
+                }
+            }
 
+
+            onClicked:{
+                userPasswdReset.visible=false
             }
         }
-        CusButton_Image{
+        Button{
             id:userpwdResetContinue
             width: 155
             height: 39
@@ -86,9 +106,20 @@ Rectangle {
             anchors.topMargin: 90
             anchors.left:suserpwdResetStop.right
             anchors.leftMargin: 72
-            btnImgUrl:imgaeshprefix+"images/gl-chongzhimima.png"
-            btnImgHovered:imgaeshprefix+"images/gl-chongzhimima-fz.png"
+            background: Rectangle{
+                width: userpwdResetContinue.width
+                height: userpwdResetContinue.height
+                color: "transparent"
+                Image {
+                    id: userpwdResetContinueimg
+                    width: userpwdResetContinue.width
+                    height: userpwdResetContinue.height
+                    source: userpwdResetContinue.hovered?imgaeshprefix+"images/gl-chongzhimima1-fz.png":imgaeshprefix+"images/gl-chongzhimima1.png"
+                }
+            }
+
             onClicked:{
+                gldoctorModel.modifyDoctorPwd(glselecteddoctor,"111111")
 //                if (canstartTiaoli){
 //                    senderright.sendMessage(BAT.byteArrayfy("{\"msg\":\"start_cure\",\"args\":{\"meridianbox\":\"shen_tiqian_r\",\"meridianbox_2\":\"shen_tiqian_l\"}}"));
 //                }

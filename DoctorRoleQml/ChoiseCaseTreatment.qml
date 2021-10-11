@@ -15,6 +15,16 @@ Rectangle {
     opacity: 0.8
     property string currCaseName: "痛风"
     property string currTreatment: "轻度痛风调理"
+    MouseArea{
+        anchors.fill: parent
+        propagateComposedEvents: false
+        hoverEnabled: true
+        onClicked: {}
+
+        onReleased: {}
+
+        onPressed: {}
+    }
     Rectangle{
         id:choisecasedata1
         x:(choiseCaseTreatMent.width-1130)/2.0
@@ -54,15 +64,26 @@ Rectangle {
                     }
                 }
 
-                CusButton_Image{
+                Button{
                     id:choisecaseQuitBtn
                     width: 30
                     height: 30
                     y:(choisecasedatahead.height-choisecaseQuitBtn.height)/2.0
                    // anchors.left: addcasedataheadButton.right
                    // anchors.leftMargin: 60
-                    btnImgUrl:imgaeshprefix+"images/ys-guanbi.png"
-                    btnImgHovered:imgaeshprefix+"images/sy-guanbi-fz.png"
+                    background: Rectangle{
+                        width: choisecaseQuitBtn.width
+                        height: choisecaseQuitBtn.height
+                        color: "transparent"
+                        Image {
+                            id: choisecaseQuitBtnimg
+                            width: choisecaseQuitBtn.width
+                            height: choisecaseQuitBtn.height
+                            source: choisecaseQuitBtn.hovered?imgaeshprefix+"images/sy-guanbi-fz.png":imgaeshprefix+"images/ys-guanbi.png"
+                        }
+                    }
+
+
                     onClicked: {
                           choiseCaseTreatMent.visible=false;
                     }
@@ -175,78 +196,35 @@ Rectangle {
                         onPositionChanged: {
                             doPositionChanged(mouseX, mouseY)
                         }
-                        onDoubleClicked: {
+                        onSingleClicked:{
+
                             var index = indexAt(mouseX, mouseY + contentY)
                             if (index < 0 || index >= count) {
                                 return
                             }
                             var dataObj1 = choisecaseModel.data(index)
+                            var casename=dataObj1[choisecaseModel.headerRoles[0]];
                             var treatment=dataObj1[choisecaseModel.headerRoles[1]];
-                            console.log("treatment="+treatment)
-                            jingluoplanModel.loadCaseDataByPatientNoTreatment(currpatientnum,treatment)
-                            if (choiseHeader.xList[1] <= mouseX
-                                    && mouseX <= choiseHeader.xList[2]) {
+                            if (casename!==currCaseName || treatment!==currTreatment){
+                                currCaseName=casename
+                                currTreatment=treatment
+                                //console.log("treatment="+treatment)
+                                jingluoplanModel.loadCaseDataByCaseTreatment(casename,treatment)
+                                //console.log("treatment1="+treatment)
+                                choisejingluoplanlist.clear()
+                                //console.log("treatment2="+treatment)
+                                for (var i=0;i<jingluoplanModel.rowCount();i++){
+                                    var datatmp=jingluoplanModel.data(i);
+                                    var jingluoname=datatmp[jingluoplanModel.headerRoles[1]]
+                                    var tiweiname=datatmp[jingluoplanModel.headerRoles[0]]
+                                    choisejingluoplanlist.append({"layName":tiweiname,"jingluoName":jingluoname})
+                                }
+                            }
 
-//                                editInput.x = choiseHeader.xList[1]
-//                                editInput.y = choiseView.y + (parseInt(mouseY / CusConfig.fixedHeight)) * CusConfig.fixedHeight
-//                                editInput.width = choiseHeader.widthList[1]
-//                                editInput.height = CusConfig.fixedHeight
-//                                editInput.index = index
-//                                var dataObj = choisecaseModel.data(index)
-//                                editInput.text = dataObj[choisecaseModel.headerRoles[0]]
-//                                editInput.visible = true
-//                                editInput.focus = true
-                            }
+
                         }
-                        Menu {
-                            id: choisetableMenu
-                            MenuItem {
-                                text: qsTr("Edit row")
-                                onTriggered: {
-                                    var mouseX = choisetableMenu.x
-                                    var mouseY = choisetableMenu.y
-                                    var index = choiseView.indexAt(mouseX, mouseY + choiseView.contentY)
-                                    if (index < 0 || index >= choiseView.count) {
-                                        return
-                                    }
-                                    if (choiseHeader.xList[1] <= mouseX && mouseX <= choiseHeader.xList[2]) {
-//                                        editInput.x = choiseHeader.xList[1]
-//                                        editInput.y = choiseView.y + (parseInt(mouseY / CusConfig.fixedHeight)) * CusConfig.fixedHeight
-//                                        editInput.width = choiseHeader.widthList[1]
-//                                        editInput.height = CusConfig.fixedHeight
-//                                        editInput.index = index
-//                                        var dataObj = choisecaseModel.data(index)
-//                                        editInput.text = dataObj[choisecaseModel.headerRoles[0]]
-//                                        editInput.visible = true
-//                                        editInput.focus = true
-                                    }
-                                }
-                            }
-                            MenuItem {
-                                text: qsTr("Insert before row")
-                                onTriggered: {
-                                    var mouseX = choisetableMenu.x
-                                    var mouseY = choisetableMenu.y
-                                    var index = choiseView.indexAt(mouseX, mouseY + choiseView.contentY)
-                                    if (index < 0 || index >= choiseView.count) {
-                                        return
-                                    }
-                                    choisecaseModel.insertBeforeRow(index)
-                                }
-                            }
-                            MenuItem {
-                                text: qsTr("Remov row")
-                                onTriggered: {
-                                    var mouseX = choisetableMenu.x
-                                    var mouseY = choisetableMenu.y
-                                    var index = choiseView.indexAt(mouseX, mouseY + choiseView.contentY)
-                                    if (index < 0 || index >= choiseView.count) {
-                                        return
-                                    }
-                                    choisecaseModel.removeRow(index)
-                                }
-                            }
-                        }
+
+
                         delegate: PatientTableRow {
                             width: choiseView.width
                             roles: choiseView.model.headerRoles
@@ -364,7 +342,15 @@ Rectangle {
                     color: "white"
                     ListView {
                             anchors.fill: middlejingluoplan;
-                            model: jingluoplanModel;
+                            model:
+                                ListModel{
+                                id:choisejingluoplanlist
+                                ListElement {
+                                    layName: ""
+                                    jingluoName:""
+                                }
+
+                            }
                             delegate: delegatejingluo_list
                             spacing: 0;
                         }
@@ -376,12 +362,12 @@ Rectangle {
                                 x:20
                                 width: middlejingluoplan.width-40;
                                 height: 40;
-                                color: Qt.rgba(0,0,0,0)
-
+                              //  color: Qt.rgba(0,0,0,0)
+                                color: layName ==="仰卧手向上"?"#f9e4c6": layName==="俯卧手向下" ?"#edfbd0":"#cfe7fa"
 
                                 Text {
                                     id: para_name;
-                                    text: paraName + "      "+paraCase;
+                                    text: layName + "      "+jingluoName;
                                     font.pixelSize: 15;
                                     anchors.centerIn: parent;
                                     width: jingluorect.width
@@ -421,41 +407,79 @@ Rectangle {
             anchors.top: choisecasedatahead.bottom
             anchors.topMargin: 0
             color: "#dddddd"
-            CusButton_Image{
+            Button{
                 id:starttreatbutton
                 width: 155
                 height: 155
                 x:(rightcontrolbuttons.width-starttreatbutton.width)/2.0
                 y:320
-                btnImgUrl:imgaeshprefix+"images/ys-kaishibiaoli.png"
-                btnImgHovered:imgaeshprefix+"images/ys-kaishibiaoli-fz.png"
+                background: Rectangle{
+                    width: starttreatbutton.width
+                    height: starttreatbutton.height
+                    color: "transparent"
+                    Image {
+                        id: starttreatbuttonimg
+                        width: starttreatbutton.width
+                        height: starttreatbutton.height
+                        source: starttreatbutton.hovered?imgaeshprefix+"images/ys-kaishibiaoli-fz.png":imgaeshprefix+"images/ys-kaishibiaoli.png"
+                    }
+                }
+
                 //font.pointSize:20
 
                 onClicked:{
-
+                    currgltreatmentname=currTreatment
+                    jingluoplannewModel.addToPatientCaseGl(currpatientnum,currTreatment);
+                    currpatientcasename=currCaseName
+                    patientCaseModel.addToPatientCase(currpatientname,currpatientnum,currpatientcasename,currgltreatmentname,doctorloginname);
+                    choiseCaseTreatMent.visible=false;
+                    realpatient.visible=true;
                 }
 
             }
-            CusButton_Image{
+            Button{
                 id:savecasebutton
                 width: 161
                 height: 45
                 x:28
                 y:starttreatbutton.y+starttreatbutton.height+34
-                btnImgUrl:imgaeshprefix+"images/ys-tianjiazhihuanzhe.png"
-                btnImgHovered:imgaeshprefix+"images/ys-tianjiazhihuanzhe-fz.png"
+                background: Rectangle{
+                    width: savecasebutton.width
+                    height: savecasebutton.height
+                    color: "transparent"
+                    Image {
+                        id: savecasebuttonimg
+                        width: savecasebutton.width
+                        height: savecasebutton.height
+                        source: savecasebutton.hovered?imgaeshprefix+"images/ys-tianjiazhihuanzhe-fz.png":imgaeshprefix+"images/ys-tianjiazhihuanzhe.png"
+                    }
+                }
                 onClicked:{
+                    currgltreatmentname=currTreatment
+                    jingluoplannewModel.addToPatientCaseGl(currpatientnum,currTreatment);
+                    currpatientcasename=currCaseName
+                    patientCaseModel.addToPatientCase(currpatientname,currpatientnum,currpatientcasename,currgltreatmentname,doctorloginname);
+                    choiseCaseTreatMent.visible=false;
 
                 }
             }
-            CusButton_Image{
+            Button{
                 id:cancelcasebutton
                 width: 161
                 height: 45
                 x:28
                 y:savecasebutton.y+savecasebutton.height+34
-                btnImgUrl:imgaeshprefix+"images/ys-fanhui.png"
-                btnImgHovered:imgaeshprefix+"images/ys-fanhui-fz.png"
+                background: Rectangle{
+                    width: cancelcasebutton.width
+                    height: cancelcasebutton.height
+                    color: "transparent"
+                    Image {
+                        id: cancelcasebuttonimg
+                        width: cancelcasebutton.width
+                        height: cancelcasebutton.height
+                        source: cancelcasebutton.hovered?imgaeshprefix+"images/ys-fanhui-fz.png":imgaeshprefix+"images/ys-fanhui.png"
+                    }
+                }
                 onClicked:{
                     choiseCaseTreatMent.visible=false;
                 }

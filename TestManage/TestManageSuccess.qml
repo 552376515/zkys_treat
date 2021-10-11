@@ -11,6 +11,16 @@ Rectangle {
     property int dispHeight: 660
     property int rightcontrol: 224
     property int showImageIndex: 4
+    MouseArea{
+        anchors.fill: parent
+        propagateComposedEvents: false
+        hoverEnabled: true
+        onClicked: {}
+
+        onReleased: {}
+
+        onPressed: {}
+    }
     Rectangle{
         id:testmanageArea
         width: dispWidth

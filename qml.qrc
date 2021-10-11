@@ -16,7 +16,6 @@
         <file>DoctorRoleQml/CheckCaseTreatment.qml</file>
         <file>DoctorRoleQml/PatientTreatRecognize.qml</file>
         <file>DoctorRoleQml/PatientTreatRoutine.qml</file>
-        <file>Resource/middle_026_shenshang.jpg</file>
         <file>Resource/audios/bgm_gaoshanliushui.mp3</file>
         <file>Resource/audios/keep_pose.mp3</file>
         <file>Resource/audios/pose1.mp3</file>
@@ -168,5 +167,22 @@
         <file>Resource/bgimage/middle_028_shentihou.png</file>
         <file>Resource/bgimage/right_26_dan.png</file>
         <file>Resource/bgimage/left_26_dan.png</file>
+        <file>UserManageQml/ToastMessage.qml</file>
+        <file>Resource/images/failicon.png</file>
+        <file>Resource/images/remind.png</file>
+        <file>Resource/images/success.png</file>
+        <file>Resource/bgimage/left_25_gan.png</file>
+        <file>Resource/bgimage/left_25_pi.png</file>
+        <file>Resource/bgimage/left_25_xin.png</file>
+        <file>Resource/bgimage/right_25_gan.png</file>
+        <file>Resource/bgimage/right_25_pi.png</file>
+        <file>Resource/bgimage/right_25_xin.png</file>
+        <file>Resource/bgimage/middle_025_pi.png</file>
+        <file>Resource/bgimage/middle_027_pangguang.png</file>
+        <file>DoctorRoleQml/PatientCaseTableRow.qml</file>
+        <file>Resource/images/ys-jilu-kaishitiaoli-fz.png</file>
+        <file>Resource/images/ys-jilu-kaishitiaoli.png</file>
+        <file>Resource/images/ys-sousuo-fz.png</file>
+        <file>Resource/audios/cure_success.mp3</file>
     </qresource>
 </RCC>

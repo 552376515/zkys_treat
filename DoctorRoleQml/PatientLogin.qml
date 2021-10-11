@@ -5,11 +5,18 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.VirtualKeyboard 2.1
 import QtQuick.VirtualKeyboard.Settings 2.1
 import TaoQuick 1.0
-Item {
+Rectangle {
     id:loginid
     width: login.width
     height: login.height
     anchors.fill: parent
+    function toLoginAction(){
+       closeAllView()
+       showIndex=1
+       login.visible=false;
+       loadPatient()
+    }
+
     Image {
         id: backimage
         width: loginid.width
@@ -162,27 +169,42 @@ Item {
                      width: 165
                      height: rect2.height
                      x:rect2.width-rectButton.width
-                     color: "transparent"
-                     CusButton_Image{
+                     color: "#ededed"
+
+                     Button{
+                         id:dengluBtn
                          width: rectButton.width
                          height: rectButton.height
-                         btnImgNormal: imgaeshprefix+"images/denglu.png"
-                         btnImgHovered: imgaeshprefix+"images/denglu2.png"
+                        //  btnImgNormal: imgaeshprefix+"images/denglu.png"
+                        //  btnImgHovered: imgaeshprefix+"images/denglu2.png"
                          font.pointSize:20
+                         background: Rectangle{
+                             width: dengluBtn.width
+                             height: dengluBtn.height
+                             Image {
+                                 id: backImage
+                                 width: rectButton.width
+                                 height: rectButton.height
+                                 source: dengluBtn.hovered?imgaeshprefix+"images/denglu2.png":imgaeshprefix+"images/denglu.png"
+                                 anchors.centerIn: parent
+                             }
 
+                         }
                          onClicked:{
-                             closeAllView()
-                            showIndex=1
-                            login.visible=false;
-                            if(nameInput.displayText === '0'){
-                                loginrole = 0
-                            }else {
-                                loginrole = 2
-                            }
+                            // closeAllView()
+                            // showIndex=1
+                            // login.visible=false;
+                            // if(nameInput.displayText === '0'){
+                                // loginrole = 0
+                            // }else {
+                                // loginrole = 2
+                            // }
 
-                            loadPatient(loginrole)
+                            // loadPatient(loginrole)
+                            toLoginAction();
                          }
                      }
+
                  }
 
              }
@@ -233,6 +255,20 @@ Item {
                          if(!active) { visible = false }
                      }
                  }
+            Keys.enabled: true
 
+           Keys.onPressed: {
+                 switch (event.key){
+                 case Qt.Key_Return:
+                 case Qt.Key_Enter:
+                     toLoginAction()
+                     break
+                 default:
+                    // console.log("evevt key="+event.key)
+                     break;
+                     // This is available in al
+
+                 }
+             }
 
 }

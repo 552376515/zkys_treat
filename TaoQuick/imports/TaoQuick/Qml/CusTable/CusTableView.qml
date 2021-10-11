@@ -12,6 +12,7 @@ ListView {
     signal released()
     signal positionChanged(real mouseX, real mouseY)
     signal doubleClicked(real mouseX, real mouseY)
+    signal singleClicked(real mouseX, real mouseY)
 
 
     focus: true
@@ -125,6 +126,7 @@ ListView {
     //            cusTableView.model.deselectAll()
     //        }
     //    }
+
     highlightFollowsCurrentItem: false
     add: null
     addDisplaced: null
@@ -161,6 +163,10 @@ ListView {
         onPositionChanged: {
             cusTableView.positionChanged(mouseX + tableAreaX, mouseY)
         }
+        onSingleClicked: {
+            cusTableView.singleClicked(mouseX+tableAreaX,mouseY)
+        }
+
         onDoubleClicked: {
             cusTableView.doubleClicked(mouseX + tableAreaX, mouseY)
         }
