@@ -102,13 +102,13 @@ Rectangle {
                              focus: true
                              placeholderText:qsTr("请输入名字")
                              echoMode: TextInput.Normal
-                             onAccepted: {
-                             color:"#999999"
-                             }
+//                             onAccepted: {
+//                             color:"#999999"
+//                             }
                              // 当选择输入框的时候才显示键盘
                              onPressed: {
-                                        inputX = x
-                                        inputY = y + height
+                                        inputX = 200
+                                        inputY = 20
                                         inputPanel.visible = true
                              }
                          }
@@ -155,8 +155,8 @@ Rectangle {
                              }
                              // 当选择输入框的时候才显示键盘
                              onPressed: {
-                                        inputX = x
-                                        inputY = y + height
+                                        inputX = 100
+                                        inputY = 30
                                         inputPanel.visible = true
                              }
                          }
@@ -175,6 +175,9 @@ Rectangle {
                          id:dengluBtn
                          width: rectButton.width
                          height: rectButton.height
+                        //  btnImgNormal: imgaeshprefix+"images/denglu.png"
+                        //  btnImgHovered: imgaeshprefix+"images/denglu2.png"
+                         font.pointSize:20
                          background: Rectangle{
                              width: dengluBtn.width
                              height: dengluBtn.height
@@ -188,7 +191,17 @@ Rectangle {
 
                          }
                          onClicked:{
-                            toLoginAction();
+                             closeAllView()
+                             showIndex=1
+                             login.visible=false;
+                             if(nameInput.displayText === '0'){
+                                 loginrole = 0
+                             }else {
+                                 loginrole = 2
+                             }
+
+                             loadPatient(loginrole)
+//                            toLoginAction();
                          }
                      }
 
@@ -216,7 +229,7 @@ Rectangle {
                      x: 100
                      y: rect2.height
                      //更改width即可更改键盘大小
-                     width: rect2.width+200
+                     width: rect2.width+400
                      visible: false
 
                      externalLanguageSwitchEnabled: false
@@ -233,8 +246,8 @@ Rectangle {
                      }
 
                      Component.onCompleted: {
-                         //VirtualKeyboardSettings.locale = "eesti" // 复古键盘样式
-                         VirtualKeyboardSettings.wordCandidateList.alwaysVisible = true
+                         VirtualKeyboardSettings.locale = "eesti" // 复古键盘样式
+//                         VirtualKeyboardSettings.wordCandidateList.alwaysVisible = true
                      }
 
                      // 这种集成方式下点击隐藏键盘的按钮是没有效果的，只会改变active，因此我们自己处理一下

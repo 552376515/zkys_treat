@@ -32,6 +32,7 @@ Window {
     property var musicArr: ["start_iden.mp3","start_care.mp3","relax_hand.mp3","relax_foot.mp3","pose1.mp3","pose2.mp3","pose3.mp3","pose4.mp3","keep_pose.mp3","bgm_gaoshanliushui.mp3"]
     property double screenWidth: 1600
     property double screenHeight: 900
+    property double headButtondownSpace: 5
     property string currpatientname: ""
     property string currpatientnum: ""
     property string currpatientSex: ""
@@ -55,8 +56,9 @@ Window {
 //    }
     property string glselecteddoctor: ""
 
-    function loadPatient(){
-        loginrole=0
+    function loadPatient(inputrole){
+//        loginrole=0
+        loginrole=inputrole
 
 
         if (loginrole==2){
@@ -110,8 +112,8 @@ Window {
         id:zhongkeheader
         width: window.width
         height: 75
-       color: "#52bad6"
-       visible: loginrole==0||loginrole==2
+        color: "#52bad6"
+        visible: loginrole==0||loginrole==2
        Image{
            id:zhongketop
            source:imgaeshprefix+"images/top-bj.png"
@@ -129,7 +131,7 @@ Window {
         visible:loginrole==0||loginrole==2
         x:32
         y:26
-        height: zhongkeheader.height-sub1.y
+        height: zhongkeheader.height-sub1.y-headButtondownSpace
         width: 122
         backgroundColorNormal:"transparent"
         backgroundColorPressed:"#ededed"
@@ -155,7 +157,7 @@ Window {
         anchors.left: sub1.right
         anchors.leftMargin: 20
         y:26
-        height: zhongkeheader.height-sub2.y
+        height: zhongkeheader.height-sub2.y-headButtondownSpace
         width: 122
         visible:loginrole==0 ||loginrole==2
         backgroundColorNormal:"transparent"
@@ -184,7 +186,7 @@ Window {
         anchors.left: sub2.right
         anchors.leftMargin: 20
         y:26
-        height: zhongkeheader.height-sub2.y
+        height: zhongkeheader.height-sub3.y-headButtondownSpace
         width: 122
         visible:(loginrole==0||loginrole==2)
         backgroundColorNormal:"transparent"
@@ -214,7 +216,7 @@ Window {
         anchors.left: sub3.right
         anchors.leftMargin: 20
         y:26
-        height: zhongkeheader.height-sub2.y
+        height: zhongkeheader.height-sub4.y-headButtondownSpace
         width: 122
         visible:(loginrole==2)
         backgroundColorNormal:"transparent"
@@ -236,7 +238,7 @@ Window {
         anchors.left: sub4.right
         anchors.leftMargin: 20
         y:26
-        height: zhongkeheader.height-sub5.y
+        height: zhongkeheader.height-sub5.y-headButtondownSpace
         width: 122
         visible:(loginrole==2)
         backgroundColorNormal:"transparent"
@@ -258,14 +260,13 @@ Window {
         anchors.left: sub5.right
         anchors.leftMargin: 20
         y:26
-        height: zhongkeheader.height-sub5.y
+        height: zhongkeheader.height-sub6.y-headButtondownSpace
         width: 122
         visible:(loginrole==2)
         backgroundColorNormal:"transparent"
         backgroundColorPressed:"#ededed"
         selected:showIndex==6
         onClicked: {
-
             closeAllView();
             showIndex=6;
             testmanage.visible=true;
@@ -289,6 +290,7 @@ Window {
         anchors.left: doctorImg.right
         anchors.leftMargin: 5
         text: qsTr("医生:")+qsTr(doctorloginname)
+        y: 24
         //y:30
         font.pointSize: 15
         color: "#181818"
@@ -301,6 +303,7 @@ Window {
         source: imgaeshprefix+"images/signout.png"
         anchors.left: doctorName.right
         anchors.leftMargin: 10
+        y: 30
        // y:30
         width: 20
         height: 20
@@ -313,12 +316,11 @@ Window {
         anchors.leftMargin:5
         backgroundColorNormal:"transparent"
         width:80
-        height:20
-        anchors.verticalCenter: zhongkeheader.verticalCenter
-        font.pointSize:15
+        y:24
+        font.pointSize: 20
 
         //color:"#181818"
-
+        height: 30
         onClicked:{
             closeAllView()
             showIndex=0
@@ -334,7 +336,7 @@ Window {
       //  y: (Screen.desktopAvailableHeight-screenHeight)/2.0
         width: window.width
         height: window.height
-        visible: showIndex==0
+        visible: showIndex===0
         PatientLogin{
             id:login
 
